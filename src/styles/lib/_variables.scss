@@ -6,13 +6,18 @@
 * Branding Colors
 */
 
-$color-brand: #42bf57;
-$color-secondary: #ededed;
+$color-brand: #0c4886;
+$color-header: #f5faff;
+
+$color-blue: #369dd8;
+$color-green: #567929;
+$color-lightblue: #9ccae1;
+$color-lightgreen: #91b869;
 
 $color-black: rgb(0, 0, 0);
 $color-darkgrey: #4d4d4d;
 $color-grey: #737373;
-$color-lightgrey: #bfbfbf;
+$color-lightgrey: #f7f7f7;
 $color-white: rgb(255, 255, 255);
 
 /*
@@ -21,8 +26,8 @@ $color-white: rgb(255, 255, 255);
 
 $color-alert: rgb(252, 228, 207);
 $color-error: rgb(218, 79, 73);
-$color-info: rgb(66, 184, 221);
-$color-success: rgb(91, 183, 91);
+$color-info: $color-blue;
+$color-success: $color-green;
 
 /*
 * Buttons colors
@@ -39,7 +44,6 @@ $buttonbackgroundcolor: $color-brand;
 * Typography
 */
 
-$basefont: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$basefont: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+  "Segoe UI Emoji", "Segoe UI Symbol";
 $basefontsize: 14px;
-
-
