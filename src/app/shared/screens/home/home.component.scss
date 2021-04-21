@@ -1,0 +1,25 @@
+.actions {
+  width: 100px !important;
+}
+
+.category,
+.date,
+.license,
+.periodicity {
+  width: 150px;
+}
+
+.entity,
+.name {
+  width: 200px;
+}
+
+.table {
+  margin: 20px;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr > td,
+::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  border-width: 1px;
+  padding: 5px !important;
+}
