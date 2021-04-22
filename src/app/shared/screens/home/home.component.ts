@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit {
 
   values: any[] = [];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     for (let index = 0; index < 10; index++) {
@@ -33,6 +34,10 @@ export class HomeComponent implements OnInit {
         periodicity: 'Periodicidad ' + index
       })
     }
+  }
+
+  public navigateToViewer(data: any): void {
+    this.router.navigate(['viewer'], {queryParams: {name: data.name}});
   }
 
 }

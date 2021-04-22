@@ -11,7 +11,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr>
+      <tr (click)="navigateToViewer(rowData)">
         <td *ngFor="let col of columns">
           {{rowData[col.field]}}
         </td>
