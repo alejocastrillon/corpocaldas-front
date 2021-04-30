@@ -1,0 +1,29 @@
+.actions {
+  width: 150px !important;
+  text-align: center;
+}
+
+.table {
+  margin: 20px;
+}
+
+::ng-deep .p-datatable .p-datatable-tbody > tr > td,
+::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  border-width: 1px;
+  padding: 5px !important;
+}
+
+::ng-deep .p-dialog {
+  width: 800px;
+}
+
+.flex {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+}
+
+.flex button {
+  width: 30%;
+}
+

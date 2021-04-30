@@ -1,0 +1,42 @@
+<div class="table">
+  <p-table class="esri-widget__table" [columns]="cols" [value]="values" styleClass="p-datatable-striped">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" class="{{col.field}}">
+          {{col.header}}
+        </th>
+        <th class="actions"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns">
+          {{rowData[col.field]}}
+        </td>
+        <td>
+          <button pButton type="button" label="Ver detalles" icon="pi pi-eye" class="p-button-sm" (click)="openDialog(rowData)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+
+<p-dialog *ngIf="display" header="Solicitud #0001" [(visible)]="display" modal="true">
+  <h3>Solicitante:</h3>
+  <p>{{valueDialog.name}}</p>
+
+  <h3>Entidad a la que pertenece:</h3>
+  <p>{{valueDialog.entity}}</p>
+
+  <h3>Capa que solicita:</h3>
+  <p>{{valueDialog.layer}}</p>
+
+  <h3>Razón:</h3>
+  <p>{{valueDialog.observation}}</p>
+
+  <div class="flex">
+    <button pButton type="button" label="Rechazar" icon="pi pi-times" class="p-button-raised p-button-warning" (click)="reject()"></button>
+    <button pButton type="button" label="Aceptar" icon="pi pi-check" class="p-button-raised p-button-success" (click)="accept()"></button>
+  </div>
+</p-dialog>

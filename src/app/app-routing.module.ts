@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'viewer',
     loadChildren: () => import('./shared/screens/viewer/viewer.module').then(m => m.ViewerModule)
   },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+  },
 ];
 
 @NgModule({

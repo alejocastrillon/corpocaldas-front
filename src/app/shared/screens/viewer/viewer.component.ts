@@ -21,7 +21,6 @@ export class ViewerComponent implements OnInit {
   }
 
   public addControls(): void {
-    this.addLogoControl();
     this.addScaleControl();
     this.addSearchControl();
     this.addZoomControl();
@@ -31,10 +30,10 @@ export class ViewerComponent implements OnInit {
    * Añade logo al mapa
    */
   public addLogoControl(): void {
-    const logo = L.control({ position: 'topright' });
+    const logo = L.control({ position: 'topleft' });
     logo.onAdd = () => {
       const div = L.DomUtil.create('div', 'info');
-      div.innerHTML = `<img src="assets/images/SIR.bmp" width="188px" height="70px"></img>`;
+      div.innerHTML = `<img src="assets/images/logo-corpocaldas.png" width="139px" height="100px"></img>`;
       return div;
     };
     logo.addTo(this.map);
@@ -133,11 +132,13 @@ export class ViewerComponent implements OnInit {
     };
 
     this.map = L.map('map', {
-      center: L.latLng(4.80045, -75.65844),
+      center: L.latLng(5.309346, -75.307057),
       zoomControl: false,
-      zoom: 12,
+      zoom: 10,
       layers: [openStreetMap]
     });
+
+    this.addLogoControl();
 
     this.layersControl = L.control.layers(baselayers, null, { position: 'topleft', collapsed: false });
     this.layersControl.addTo(this.map);

@@ -1,0 +1,34 @@
+.container {
+  width: calc(100vw - 20px);
+  height: calc(100vh - 160px);
+  margin: 10px;
+  // border: 1px solid #555;
+
+  .mat-drawer,
+  .mat-drawer-content {
+    padding: 5px;
+  }
+
+  .mat-drawer {
+    min-width: 250px;
+    width: 15vw;
+    z-index: 0;
+  }
+
+  .mat-drawer-content {
+    min-width: 500px;
+    overflow: auto;
+  }
+}
+
+::ng-deep .p-panelmenu .p-panelmenu-header > a:focus,
+::ng-deep .p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link:focus {
+  box-shadow: none;
+}
+
+::ng-deep .p-card {
+  border: 1px solid #dee2e6;
+  box-shadow: none;
+  height: 100%;
+}
+

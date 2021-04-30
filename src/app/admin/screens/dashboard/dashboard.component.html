@@ -1,0 +1,10 @@
+<mat-drawer-container class="container">
+  <mat-drawer mode="side" opened>
+    <p-panelMenu [model]="items"></p-panelMenu>
+  </mat-drawer>
+  <mat-drawer-content>
+    <p-card>
+      <router-outlet></router-outlet>
+    </p-card>
+  </mat-drawer-content>
+</mat-drawer-container>
