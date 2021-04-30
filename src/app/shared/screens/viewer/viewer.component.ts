@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
 import * as L from 'leaflet';
 
 declare let L;
@@ -12,8 +13,14 @@ export class ViewerComponent implements OnInit {
 
   layersControl: any;
   map: any;
+  name: string;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { 
+    this.route.queryParams.subscribe(params => {
+      this.name = params.name;
+      console.log(this.name);
+    })
+  }
 
   ngOnInit(): void {
     this.initializeMap();
