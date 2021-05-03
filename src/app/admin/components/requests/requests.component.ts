@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from './../../services/admin.service';
 
 @Component({
   selector: 'app-requests',
   templateUrl: './requests.component.html',
-  styleUrls: ['./requests.component.scss']
+  styleUrls: ['./requests.component.scss'],
+  providers: [AdminService]
 })
 export class RequestsComponent implements OnInit {
 
@@ -18,7 +20,7 @@ export class RequestsComponent implements OnInit {
   values: any[] = [];
 
 
-  constructor() { }
+  constructor(private service: AdminService) { }
 
   ngOnInit(): void {
     for (let index = 0; index < 10; index++) {
@@ -30,6 +32,15 @@ export class RequestsComponent implements OnInit {
         observation: 'Observación ' + index
       })
     }
+    this.getRequestWaitingForApproval();
+  }
+
+  getRequestWaitingForApproval() {
+    this.service.waitingForApproval().subscribe((success) => {
+      console.log(success);
+    }, (error) => {
+      console.error(error);
+    });
   }
 
   openDialog(data: any) {

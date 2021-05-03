@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
@@ -28,7 +29,8 @@ import { DialogModule } from 'primeng/dialog';
     CardModule,
     TableModule,
     ButtonModule,
-    DialogModule
+    DialogModule,
+    HttpClientModule
   ]
 })
 export class AdminModule { }
