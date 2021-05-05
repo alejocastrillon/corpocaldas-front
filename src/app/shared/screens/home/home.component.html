@@ -1,5 +1,7 @@
+<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-messages></p-messages>
 <div class="table">
-  <p-table class="esri-widget__table" [columns]="cols" [value]="values" styleClass="p-datatable-striped">
+  <p-table class="esri-widget__table" [columns]="cols" [value]="layers" styleClass="p-datatable-striped">
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of columns" class="{{col.field}}">
@@ -14,7 +16,8 @@
           {{rowData[col.field]}}
         </td>
         <td>
-          Visor
+          <i class="pi pi-eye" *ngIf="rowData.accessGranted === 1 || rowData.accessGranted === 2"></i>
+          <i class="pi pi-lock" *ngIf="rowData.accessGranted === 3"></i>
         </td>
       </tr>
     </ng-template>

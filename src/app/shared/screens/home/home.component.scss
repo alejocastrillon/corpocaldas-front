@@ -18,6 +18,10 @@
   margin: 20px;
 }
 
+td {
+  cursor: pointer;
+}
+
 ::ng-deep .p-datatable .p-datatable-tbody > tr > td,
 ::ng-deep .p-datatable .p-datatable-thead > tr > th {
   border-width: 1px;
