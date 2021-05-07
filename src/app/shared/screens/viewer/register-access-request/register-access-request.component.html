@@ -1,0 +1,51 @@
+<form [formGroup]="accessRequestForm" (ngSubmit)="accessRequestForm.valid && saveAccessRequest()">
+    <div class="p-g p-fluid">
+        <div class="p-field p-col-12 p-md-12">
+            <br>
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <input type="email" id="email" autofocus formControlName="email" [(ngModel)]="accessRequest.email"
+                        pInputText>
+                    <label for="email">Correo electrónico</label>
+                    <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                </span>
+            </div>
+            <div class="error"
+                *ngIf="accessRequestForm.controls.email.touched && accessRequestForm.controls.email.dirty && accessRequestForm.controls.email.invalid">
+                <span class="pi pi-times error"></span>
+                <span *ngIf="accessRequestForm.controls.email.errors.required">
+                    El correo electrónico es requerido
+                </span>
+                <span *ngIf="accessRequestForm.controls.email.errors.email">
+                    El correo electrónico es invalido
+                </span>
+            </div>
+        </div>
+        <br>
+        <div class="p-field p-col-12 p-md-12">
+            <div class="p-inputgroup">
+                <span class="p-float-label">
+                    <textarea id="description" rows="5" cols="30" [(ngModel)]="accessRequest.description"
+                        formControlName="description" pInputTextarea></textarea>
+                    <label for="description">Observación</label>
+                </span>
+            </div>
+            <div class="error"
+                *ngIf="accessRequestForm.controls.description.touched && accessRequestForm.controls.description.dirty && accessRequestForm.controls.description.invalid">
+                <span class="pi pi-times error"></span>
+                <span *ngIf="accessRequestForm.controls.description.errors.required">
+                    La observación es requerida
+                </span>
+            </div>
+        </div>
+        <br>
+        <div class="button-container">
+            <button pButton [disabled]="!accessRequestForm.valid" icon="pi pi-check"
+                class="p-button-rounded p-button-success" label="Registrar"></button>
+        </div>
+        <div class="button-container">
+            <button pButton icon="pi pi-times" class="p-button-rounded" label="Cancelar" type="button"
+                (click)="cancel()"></button>
+        </div>
+    </div>
+</form>

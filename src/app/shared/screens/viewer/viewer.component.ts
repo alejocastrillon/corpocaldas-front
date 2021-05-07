@@ -1,24 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import * as L from 'leaflet';
+import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { Layer } from 'src/app/model/Layer';
+import { HomeService } from '../home/home.service';
+import { RegisterAccessRequestComponent } from './register-access-request/register-access-request.component';
+import { VerifyAccessTokenComponent } from './verify-access-token/verify-access-token.component';
 
 declare let L;
 
 @Component({
   selector: 'app-viewer',
   templateUrl: './viewer.component.html',
-  styleUrls: ['./viewer.component.scss']
+  styleUrls: ['./viewer.component.scss'],
+  providers: [MessageService, DialogService, ConfirmationService]
 })
 export class ViewerComponent implements OnInit {
 
   layersControl: any;
+  layer: Layer;
   map: any;
   name: string;
 
-  constructor(private route: ActivatedRoute) { 
+  constructor(private route: ActivatedRoute, private service: HomeService, private confirmService: ConfirmationService, private messageService: MessageService, private dialogService: DialogService) { 
     this.route.queryParams.subscribe(params => {
       this.name = params.name;
-      console.log(this.name);
+      this.getLayerInfo();
     })
   }
 
@@ -31,6 +39,7 @@ export class ViewerComponent implements OnInit {
     this.addScaleControl();
     this.addSearchControl();
     this.addZoomControl();
+    this.addDownloadControl();
   }
 
   /**
@@ -44,6 +53,30 @@ export class ViewerComponent implements OnInit {
       return div;
     };
     logo.addTo(this.map);
+  }
+
+  private getLayerInfo(): void {
+    this.service.getLayerByName(this.name).subscribe(res => {
+      this.layer = res;
+    }, err => {
+      console.error(err);
+    });
+  }
+
+  private addDownloadControl(): void {
+    let controls = document.getElementsByClassName('leaflet-top leaflet-left')[0];
+    let button = document.createElement('button');
+    button.classList.add('leaflet-control');
+    button.classList.add('leaflet-control-layers');
+    button.setAttribute('style', 'padding: 5px 7px !important; cursor: pointer;');
+    button.addEventListener('click', () => {
+      this.downloadLayer();
+    });
+    let icon = document.createElement('i');
+    icon.classList.add('pi');
+    icon.classList.add('pi-download');
+    button.appendChild(icon);
+    controls.appendChild(button);
   }
 
   /**
@@ -199,6 +232,61 @@ export class ViewerComponent implements OnInit {
       color: name !== 'Veredas' ? categories[this.getColorProperty(layer.feature.properties, name)] : 'black',
       fillOpacity: 0.8,
       fillColor: name !== 'Veredas' ? categories[this.getColorProperty(layer.feature.properties, name)] : 'transparent'
+    });
+  }
+
+  public downloadLayer(): void {
+    debugger;
+    if (this.layer.accessGranted === 1) {
+      //this.router.navigate(['viewer'], { queryParams: { name: data.name } });
+    } else if (this.layer.accessGranted === 2) {
+       this.sendRequestAccessLayer();
+    } else {
+      this.haveCredentials();
+    }
+    //this.router.navigate(['viewer'], { queryParams: { name: data.name } });
+  }
+
+  private haveCredentials(): void {
+    this.confirmService.confirm({
+      message: `¿Tienes las credenciales para acceder a ${this.layer.name}?`,
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      accept: () => {
+        this.verifyTokenAccess();
+      },
+      reject: (type) => {
+        type === ConfirmEventType.REJECT ? this.sendRequestAccessLayer() : null;
+      }
+    });
+  }
+
+  private verifyTokenAccess(): void {
+    let dialog = this.dialogService.open(VerifyAccessTokenComponent, {
+      width: '50%',
+      data: {layerId: this.layer.id},
+      header: 'Verificación de token'
+    });
+  }
+
+  private sendRequestAccessLayer(): void {
+    let dialog = this.dialogService.open(RegisterAccessRequestComponent, {
+      width: '50%',
+      data: {layer: this.layer},
+      header: `Petición de acceso a ${this.layer.name}`
+    });
+    dialog.onClose.subscribe(res => {
+      if (res !== null && res !== undefined) {
+        this.service.saveAccessRequest(res).subscribe(res => {
+          if (this.layer.accessGranted === 2) {
+            //this.router.navigate(['viewer'], { queryParams: { name: data.name } });
+          } else {
+            this.messageService.add({severity: 'success', summary: 'Petición de acceso', detail: 'La petición de acceso fue radicada exitosamente, en el transcurso de las 24 horas se le dará acceso'});
+          }
+        }, err => {
+          console.log(err);
+        });
+      }
     });
   }
 

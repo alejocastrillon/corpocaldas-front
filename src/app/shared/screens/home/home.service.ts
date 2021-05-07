@@ -18,6 +18,14 @@ export class HomeService {
     return this.http.get<Array<Layer>>("/api/layers");
   }
 
+  public getLayer(id: number): Observable<Layer> {
+    return this.http.get<Layer>(`/api/layers/${id}`);
+  }
+
+  public getLayerByName(name: string): Observable<Layer> {
+    return this.http.get<Layer>(`/api/layers/name/${name}`);
+  }
+
   public saveAccessRequest(accessRequest: AccessRequest): Observable<AccessRequest> {
     return this.http.post<AccessRequest>('/api/access-request', accessRequest);
   }

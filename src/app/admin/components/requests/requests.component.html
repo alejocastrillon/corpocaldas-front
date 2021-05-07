@@ -1,5 +1,5 @@
 <div class="table">
-  <p-table class="esri-widget__table" [columns]="cols" [value]="values" styleClass="p-datatable-striped">
+  <p-table class="esri-widget__table" [columns]="cols" [value]="accessRequests" styleClass="p-datatable-striped">
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of columns" class="{{col.field}}">

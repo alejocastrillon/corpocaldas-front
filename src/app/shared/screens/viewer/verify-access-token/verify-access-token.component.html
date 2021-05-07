@@ -1,22 +1,21 @@
-<form [formGroup]="accessRequestForm" (ngSubmit)="accessRequestForm.valid && saveAccessRequest()">
+<form [formGroup]="verifyForm">
     <div class="p-g p-fluid">
         <div class="p-field p-col-12 p-md-12">
             <br>
             <div class="p-inputgroup">
                 <span class="p-float-label">
-                    <input type="email" id="email" autofocus formControlName="email" [(ngModel)]="accessRequest.email"
-                        pInputText>
+                    <input type="email" id="email" autofocus formControlName="email" [(ngModel)]="email" pInputText>
                     <label for="email">Correo electrónico</label>
                     <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                 </span>
             </div>
             <div class="error"
-                *ngIf="accessRequestForm.controls.email.touched && accessRequestForm.controls.email.dirty && accessRequestForm.controls.email.invalid">
+                *ngIf="verifyForm.controls.email.touched && verifyForm.controls.email.dirty && verifyForm.controls.email.invalid">
                 <span class="pi pi-times error"></span>
-                <span *ngIf="accessRequestForm.controls.email.errors.required">
+                <span *ngIf="verifyForm.controls.email.errors.required">
                     El correo electrónico es requerido
                 </span>
-                <span *ngIf="accessRequestForm.controls.email.errors.email">
+                <span *ngIf="verifyForm.controls.email.errors.email">
                     El correo electrónico es invalido
                 </span>
             </div>
@@ -25,22 +24,22 @@
         <div class="p-field p-col-12 p-md-12">
             <div class="p-inputgroup">
                 <span class="p-float-label">
-                    <textarea id="description" rows="5" cols="30" [(ngModel)]="accessRequest.description"
-                        formControlName="description" pInputTextarea></textarea>
-                    <label for="description">Observación</label>
+                    <input type="text" id="token" autofocus formControlName="token" [(ngModel)]="token" pInputText>
+                    <label for="token">Token de acceso</label>
+                    <span class="p-inputgroup-addon"><i class="pi pi-unlock"></i></span>
                 </span>
             </div>
             <div class="error"
-                *ngIf="accessRequestForm.controls.description.touched && accessRequestForm.controls.description.dirty && accessRequestForm.controls.description.invalid">
+                *ngIf="verifyForm.controls.token.touched && verifyForm.controls.token.dirty && verifyForm.controls.token.invalid">
                 <span class="pi pi-times error"></span>
-                <span *ngIf="accessRequestForm.controls.email.description.required">
-                    La observación es requerida
+                <span *ngIf="verifyForm.controls.token.errors.required">
+                    El token de acceso es requerido
                 </span>
             </div>
         </div>
         <br>
         <div class="button-container">
-            <button pButton [disabled]="!accessRequestForm.valid" icon="pi pi-check"
+            <button pButton [disabled]="!verifyForm.valid" icon="pi pi-check"
                 class="p-button-rounded p-button-success" label="Registrar"></button>
         </div>
         <div class="button-container">

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccessRequest } from 'src/app/model/AccessRequest';
 import { AdminService } from './../../services/admin.service';
 
 @Component({
@@ -10,34 +11,23 @@ import { AdminService } from './../../services/admin.service';
 export class RequestsComponent implements OnInit {
 
   cols = [
-    { field: 'name', header: 'Nombre' },
-    { field: 'mail', header: 'Correo' },
-    { field: 'entity', header: 'Entidad' },
-    { field: 'layer', header: 'Capa Asociada' },
+    { field: 'email', header: 'Correo electronico' },
+    { field: 'nameLayer', header: 'Nombre de la capa' }
   ];
+  accessRequests: Array<AccessRequest> = [];
   display = false;
   valueDialog: any;
-  values: any[] = [];
 
 
   constructor(private service: AdminService) { }
 
   ngOnInit(): void {
-    for (let index = 0; index < 10; index++) {
-      this.values.push({
-        name: 'Nombre ' + index,
-        mail: 'Correo ' + index,
-        entity: 'Entidad ' + index,
-        layer: 'Capa ' + index,
-        observation: 'Observación ' + index
-      })
-    }
     this.getRequestWaitingForApproval();
   }
 
   getRequestWaitingForApproval() {
     this.service.waitingForApproval().subscribe((success) => {
-      console.log(success);
+      this.accessRequests = success;
     }, (error) => {
       console.error(error);
     });
