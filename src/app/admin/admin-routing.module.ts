@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PublicResourcesComponent } from './components/public-resources/public-resources.component';
 import { RequestsComponent } from './components/requests/requests.component';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
 
@@ -7,6 +8,7 @@ const routes: Routes = [
   {
     path: '', component: DashboardComponent, children: [
       { path: 'requests', component: RequestsComponent },
+      { path: 'public-resources', component: PublicResourcesComponent}
     ]
   },
 ];

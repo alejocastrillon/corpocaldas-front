@@ -258,7 +258,7 @@ export class ViewerComponent implements OnInit {
       reject: (type) => {
         type === ConfirmEventType.REJECT ? this.sendRequestAccessLayer() : null;
       }
-    });
+    }); 
   }
 
   private verifyTokenAccess(): void {

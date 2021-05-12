@@ -1,20 +1,41 @@
+<p-dropdown [options]="optionsFilter" [(ngModel)]="optionFilterSelected" (onChange)="changeFilter()" optionLabel="name"
+  optionValue="code">
+</p-dropdown>
 <div class="table">
-  <p-table class="esri-widget__table" [columns]="cols" [value]="accessRequests" styleClass="p-datatable-striped">
+  <p-table class="esri-widget__table" [lazy]="true" (onLazyLoad)="getFilterAccessRequest($event)"
+    [paginator]="true" [rows]="10" [totalRecords]="numberOfRows" [loading]="loading"
+    [globalFilterFields]="['name', 'email']" [value]="accessRequests" styleClass="p-datatable-striped">
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <th *ngFor="let col of columns" class="{{col.field}}">
-          {{col.header}}
+        <th>
+          Nombre
+        </th>
+        <th>
+          Correo Electrónico
         </th>
         <th class="actions"></th>
       </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
       <tr>
-        <td *ngFor="let col of columns">
-          {{rowData[col.field]}}
+        <th>
+          <p-columnFilter type="text" field="name"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="email"></p-columnFilter>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-access>
+      <tr>
+        <td>
+          {{access.name}}
         </td>
         <td>
-          <button pButton type="button" label="Ver detalles" icon="pi pi-eye" class="p-button-sm" (click)="openDialog(rowData)"></button>
+          {{access.email}}
+        </td>
+        <td>
+          <button pButton type="button" label="Ver detalles" icon="pi pi-eye" class="p-button-sm"
+            (click)="openDialog(rowData)"></button>
         </td>
       </tr>
     </ng-template>
@@ -36,7 +57,9 @@
   <p>{{valueDialog.observation}}</p>
 
   <div class="flex">
-    <button pButton type="button" label="Rechazar" icon="pi pi-times" class="p-button-raised p-button-warning" (click)="reject()"></button>
-    <button pButton type="button" label="Aceptar" icon="pi pi-check" class="p-button-raised p-button-success" (click)="accept()"></button>
+    <button pButton type="button" label="Rechazar" icon="pi pi-times" class="p-button-raised p-button-warning"
+      (click)="reject()"></button>
+    <button pButton type="button" label="Aceptar" icon="pi pi-check" class="p-button-raised p-button-success"
+      (click)="accept()"></button>
   </div>
 </p-dialog>
