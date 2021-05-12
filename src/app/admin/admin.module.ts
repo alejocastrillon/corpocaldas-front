@@ -18,6 +18,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
 import { DetailRequestComponent } from './components/detail-request/detail-request.component';
 import { LayerComponent } from './components/layer/layer.component';
 import { CreateLayerComponent } from './components/create-layer/create-layer.component';
@@ -44,6 +45,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     InputTextModule,
     DropdownModule,
     ConfirmDialogModule,
+    ToastModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

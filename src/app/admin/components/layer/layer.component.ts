@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Layer } from 'src/app/model/Layer';
 import { AdminService } from '../../services/admin.service';
@@ -9,7 +9,7 @@ import { CreateLayerComponent } from '../create-layer/create-layer.component';
   selector: 'app-layer',
   templateUrl: './layer.component.html',
   styleUrls: ['./layer.component.scss'],
-  providers: [DialogService, ConfirmationService]
+  providers: [DialogService, ConfirmationService, MessageService]
 })
 export class LayerComponent implements OnInit {
 
@@ -22,7 +22,8 @@ export class LayerComponent implements OnInit {
   layer: Layer = new Layer();
 
   layers = Array<Layer>();
-  constructor(private service: AdminService, private dialogService: DialogService, private confirmService: ConfirmationService) { }
+  constructor(private service: AdminService, private dialogService: DialogService, private confirmService: ConfirmationService,
+              private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.getLayers();
@@ -37,11 +38,11 @@ export class LayerComponent implements OnInit {
 
     dialog.onClose.subscribe(response => {
       if (response !== null && response !== undefined) {
-        this.service.saveLayer(response).subscribe(success => {
-          console.log(success);
+        this.service.saveLayer(response).subscribe(() => {
+          this.messageService.add({ severity: 'success', summary: 'Capas', detail: 'La capa ha sido creada exitosamente' });
           this.getLayers();
         }, error => {
-          console.error(error);
+          this.messageService.add({ severity: 'error', summary: 'Capas', detail: 'Error : ' + error.status + error.message });
         });
       }
     }, error => {
@@ -56,10 +57,14 @@ export class LayerComponent implements OnInit {
       rejectLabel: 'No',
       accept: () => {
         this.service.deleteLayer(layer.id).subscribe(success => {
-          console.log(success);
+          if (success) {
+            this.messageService.add({ severity: 'success', summary: 'Capas', detail: 'La capa ha sido eliminada exitosamente' });
+          } else {
+            this.messageService.add({ severity: 'warning', summary: 'Capas', detail: 'La capa no ha sido eliminada exitosamente' });
+          }
           this.getLayers();
         }, error => {
-          console.error(error);
+          this.messageService.add({ severity: 'error', summary: 'Capas', detail: 'Error: ' + error.status + ' ' + error.statusText });
         });
       }
     });
@@ -75,11 +80,11 @@ export class LayerComponent implements OnInit {
 
     dialog.onClose.subscribe(response => {
       if (response !== null) {
-        this.service.editLayer(response).subscribe(success => {
-          console.log(success);
+        this.service.editLayer(response).subscribe(() => {
+          this.messageService.add({ severity: 'success', summary: 'Capas', detail: 'La capa ha sido modificada exitosamente' });
           this.getLayers();
         }, error => {
-          console.error(error);
+          this.messageService.add({ severity: 'error', summary: 'Capas', detail: 'Error: ' + error.status + ' ' + error.statusText });
         });
       }
     }, error => {
@@ -88,10 +93,10 @@ export class LayerComponent implements OnInit {
   }
 
   public getLayers(): void {
-    this.service.getLayers().subscribe(success => {
+    this.service.getLayers().subscribe((success: Array<Layer>) => {
       this.layers = success;
     }, error => {
-      console.error(error);
+      this.messageService.add({ severity: 'error', summary: 'Capas', detail: 'Error: ' + error.status + ' ' + error.statusText });
     });
   }
 
