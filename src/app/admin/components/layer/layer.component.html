@@ -1,0 +1,51 @@
+<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<div class="title">
+  <h2>Capas</h2>
+</div>
+
+<div class="content">
+
+  <div class="create">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+        placeholder="Búsqueda..." />
+    </span>
+    <button pButton pRipple type="button" label="Nueva capa" icon="pi pi-plus"
+      class="p-button-raised p-button-success p-button-sm" (click)="createLayer()"></button>
+  </div>
+
+  <p-table #dt class="esri-widget__table" [columns]="cols" [value]="layers" styleClass="p-datatable-sm"
+    [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+    currentPageReportTemplate="{first} - {last} de {totalRecords} Capas">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" class="{{col.field}}" pSortableColumn="{{col.field}}">
+          {{col.header}} <p-sortIcon field="{{col.field}}"></p-sortIcon>
+        </th>
+        <th class="actions"></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-layer let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns">
+          {{layer[col.field]}}
+        </td>
+        <td class="actions">
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info" (click)="editLayer(layer)" ></button> &nbsp;
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteLayer(layer)"></button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="columns.length + 1" class="emptymessage">
+          <b>No se encontraron capas</b>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

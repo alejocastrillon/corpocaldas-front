@@ -1,0 +1,27 @@
+.title {
+  padding-left: 10px;
+}
+
+.actions,
+.accessGranted {
+  width: 180px !important;
+  text-align: center;
+}
+
+.create {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.emptymessage{
+  text-align: center !important;
+}
+
+.table {
+  margin: 20px;
+}
+
+i {
+  cursor: pointer;
+}

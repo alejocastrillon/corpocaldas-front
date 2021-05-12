@@ -3,13 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { PublicResourcesComponent } from './components/public-resources/public-resources.component';
 import { RequestsComponent } from './components/requests/requests.component';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
+import { LayerComponent } from './components/layer/layer.component';
 
 const routes: Routes = [
   {
     path: '', component: DashboardComponent, children: [
       { path: 'requests', component: RequestsComponent },
-      { path: 'public-resources', component: PublicResourcesComponent}
-    ]
+      { path: 'layer', component: LayerComponent }
+    ],
   },
 ];
 

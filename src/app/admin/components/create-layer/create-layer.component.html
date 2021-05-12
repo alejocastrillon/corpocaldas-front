@@ -1,0 +1,26 @@
+<form [formGroup]="layerForm" class="p-fluid" (ngSubmit)="saveLayer()">
+
+  <div class="p-field">
+    <label>Nombre</label>
+    <input type="text" class="p-inputtext-sm" pInputText id="name" formControlName="name" required autofocus />
+  </div>
+
+  <div class="p-field">
+    <label>URL</label>
+    <input type="text" class="p-inputtext-sm" pInputText id="url" formControlName="url" />
+  </div>
+
+  <div class="p-field">
+    <label>Nivel de acceso</label>
+    <p-dropdown [options]="accessGrantedOptions" formControlName="accessGranted" optionLabel="name" optionValue="code"
+      placeholder="Seleccione"></p-dropdown>
+  </div>
+
+  <div class="footer">
+    <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-raised p-button-success"
+      [disabled]="!layerForm.valid"></button>
+    <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-raised p-button-warning" type="button"
+      (click)="cancel()"></button>
+  </div>
+
+</form>

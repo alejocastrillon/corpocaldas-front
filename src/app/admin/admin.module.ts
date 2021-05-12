@@ -15,9 +15,13 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
-import { DropdownModule } from 'primeng/dropdown';
-import { DetailRequestComponent } from './components/detail-request/detail-request.component';
 import { PublicResourcesComponent } from './components/public-resources/public-resources.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DetailRequestComponent } from './components/detail-request/detail-request.component';
+import { LayerComponent } from './components/layer/layer.component';
+import { CreateLayerComponent } from './components/create-layer/create-layer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -25,7 +29,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DashboardComponent,
     RequestsComponent,
     DetailRequestComponent,
-    PublicResourcesComponent
+    PublicResourcesComponent,
+    LayerComponent,
+    CreateLayerComponent
   ],
   imports: [
     CommonModule,
@@ -39,6 +45,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TableModule,
     ButtonModule,
     DialogModule,
+    InputTextModule,
+    DropdownModule,
+    ConfirmDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     DynamicDialogModule,
     DropdownModule

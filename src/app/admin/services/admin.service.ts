@@ -57,5 +57,17 @@ export class AdminService {
   public getLayers(): Observable<Array<Layer>> {
     return this.http.get<Array<Layer>>('/api/layers');
   }
-  
+
+  public editLayer(layer: Layer): Observable<Layer> {
+    return this.http.put<Layer>('/api/layers/' + layer.id, layer);
+  }
+
+  public saveLayer(layer: Layer): Observable<Layer> {
+    return this.http.post<Layer>('/api/layers', layer);
+  }
+
+  public deleteLayer(idLayer: number): Observable<boolean> {
+    return this.http.delete<boolean>('/api/layers/' + idLayer);
+  }
+
 }
