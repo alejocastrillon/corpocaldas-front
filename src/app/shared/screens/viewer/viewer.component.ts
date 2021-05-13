@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 import * as L from 'leaflet';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -23,11 +23,12 @@ export class ViewerComponent implements OnInit {
   map: any;
   name: string;
 
-  constructor(private route: ActivatedRoute, private service: HomeService, private confirmService: ConfirmationService, private messageService: MessageService, private dialogService: DialogService) { 
+  constructor(private route: ActivatedRoute, private service: HomeService, private confirmService: ConfirmationService,
+    private messageService: MessageService, private dialogService: DialogService) {
     this.route.queryParams.subscribe(params => {
       this.name = params.name;
       this.getLayerInfo();
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -55,24 +56,16 @@ export class ViewerComponent implements OnInit {
     logo.addTo(this.map);
   }
 
-  private getLayerInfo(): void {
-    this.service.getLayerByName(this.name).subscribe(res => {
-      this.layer = res;
-    }, err => {
-      console.error(err);
-    });
-  }
-
   private addDownloadControl(): void {
-    let controls = document.getElementsByClassName('leaflet-top leaflet-left')[0];
-    let button = document.createElement('button');
+    const controls = document.getElementsByClassName('leaflet-top leaflet-left')[0];
+    const button = document.createElement('button');
     button.classList.add('leaflet-control');
     button.classList.add('leaflet-control-layers');
     button.setAttribute('style', 'padding: 5px 7px !important; cursor: pointer;');
     button.addEventListener('click', () => {
       this.downloadLayer();
     });
-    let icon = document.createElement('i');
+    const icon = document.createElement('i');
     icon.classList.add('pi');
     icon.classList.add('pi-download');
     button.appendChild(icon);
@@ -112,21 +105,40 @@ export class ViewerComponent implements OnInit {
     this.map.addControl(zoomControl);
   }
 
-  /**
-   * Determina cual llave de las propiedades es el clasificador de una capa determinada.
-   * @param properties Propiedades del feature
-   * @param nameLayer Nombre de la capa
-   */
-  public getColorProperty(properties: any, nameLayer: string): string {
-    let value: string;
-    if (nameLayer === 'Risaralda') {
-      value = properties.Subcategor;
-    } else if (nameLayer === 'Paisaje Cultural Cafetero') {
-      value = properties.ZONA;
-    } else {
-      value = properties.NOMJERARQ;
+  public downloadLayer(): void {
+    if (this.layer.accessGranted === 1) {
+      this.sendRequestAccessLayer();
+    } else if (this.layer.accessGranted === 2) {
+      this.haveCredentials();
     }
-    return value;
+  }
+
+  public downloadShapefile(): void {
+    const link = document.createElement('a');
+    link.target = '_blank';
+    link.download = this.name;
+    link.href = 'http://18.209.57.83:8080/geoserver/' + this.layer.workspace +
+      '/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=' + this.layer.workspace + '%3A' + this.name + '&maxFeatures=50&outputFormat=SHAPE-ZIP';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    link.remove();
+  }
+
+  private getLayerInfo(): void {
+    this.service.getLayerByName(this.name).subscribe(res => {
+      this.layer = res;
+      this.name = this.layer.name.split(' ').join('_').toLocaleLowerCase();
+      const layer = L.tileLayer.wms('http://18.209.57.83:8080/geoserver/' + this.layer.workspace + '/wms?', {
+        layers: this.name,
+        format: 'image/png',
+        transparent: true,
+      }).addTo(this.map);
+
+      this.layersControl.addOverlay(layer, this.layer.name);
+    }, err => {
+      console.error(err);
+    });
   }
 
   /**
@@ -185,66 +197,18 @@ export class ViewerComponent implements OnInit {
   }
 
   /**
-   * Renderiza la capa en el mapa.
-   * @param infoLayer Información de la capa
-   * @param name Nombre de la capa
-   * @param categories Categorias asociadas a la capa
-   */
-  private loadLayer(infoLayer: any, name: string, categories: any): void {
-    const layer = L.geoJSON(infoLayer, {
-      pointToLayer: (feature, latlng) => {
-        return new L.CircleMarker(latlng, {
-          radius: 5,
-        });
-      },
-      style: (feature) => {
-        return {
-          weight: 3,
-          opacity: 0.5,
-          color: name !== 'Veredas' ? categories[this.getColorProperty(feature.properties, name)] : 'black',
-          fillOpacity: 0.8,
-          fillColor: name !== 'Veredas' ? categories[this.getColorProperty(feature.properties, name)] : 'transparent'
-        };
-      },
-      onEachFeature: (_, layer) => (
-        name === 'Veredas' ? layer.bindTooltip(String(_.properties.NOMBRE), { opacity: 0.7 }) : null,
-        layer.on({
-          mouseover: (e) => (this.highlightFeature(e)),
-          mouseout: (e) => (this.resetFeature(e, name, categories)),
-        })
-      )
-    }).bindPopup((layer: any) => {
-      return this.infoFeature(layer.feature.properties);
-    });
-    this.layersControl.addOverlay(layer, name);
-    name !== 'Bocatomas' && name !== 'Veredas' ? layer.remove() : null;
-  }
-
-  /**
    * Limpia la animación cuando el feature haya sido dejado por el mouse.
    * @param e Información del feature
    */
-  private resetFeature(e: any, name: string, categories: any): void {
+  private resetFeature(e: any): void {
     const layer = e.target;
     layer.setStyle({
       weight: 3,
       opacity: 0.5,
-      color: name !== 'Veredas' ? categories[this.getColorProperty(layer.feature.properties, name)] : 'black',
+      color: 'black',
       fillOpacity: 0.8,
-      fillColor: name !== 'Veredas' ? categories[this.getColorProperty(layer.feature.properties, name)] : 'transparent'
+      fillColor: 'transparent'
     });
-  }
-
-  public downloadLayer(): void {
-    debugger;
-    if (this.layer.accessGranted === 1) {
-      //this.router.navigate(['viewer'], { queryParams: { name: data.name } });
-    } else if (this.layer.accessGranted === 2) {
-       this.sendRequestAccessLayer();
-    } else {
-      this.haveCredentials();
-    }
-    //this.router.navigate(['viewer'], { queryParams: { name: data.name } });
   }
 
   private haveCredentials(): void {
@@ -258,30 +222,30 @@ export class ViewerComponent implements OnInit {
       reject: (type) => {
         type === ConfirmEventType.REJECT ? this.sendRequestAccessLayer() : null;
       }
-    }); 
+    });
   }
 
   private verifyTokenAccess(): void {
-    let dialog = this.dialogService.open(VerifyAccessTokenComponent, {
+    const dialog = this.dialogService.open(VerifyAccessTokenComponent, {
       width: '50%',
-      data: {layerId: this.layer.id},
+      data: { layerId: this.layer.id },
       header: 'Verificación de token'
     });
   }
 
   private sendRequestAccessLayer(): void {
-    let dialog = this.dialogService.open(RegisterAccessRequestComponent, {
+    const dialog = this.dialogService.open(RegisterAccessRequestComponent, {
       width: '50%',
-      data: {layer: this.layer},
+      data: { layer: this.layer },
       header: `Petición de acceso a ${this.layer.name}`
     });
     dialog.onClose.subscribe(res => {
       if (res !== null && res !== undefined) {
-        this.service.saveAccessRequest(res).subscribe(res => {
-          if (this.layer.accessGranted === 2) {
-            //this.router.navigate(['viewer'], { queryParams: { name: data.name } });
+        this.service.saveAccessRequest(res).subscribe(() => {
+          if (this.layer.accessGranted === 1) {
+            this.downloadShapefile();
           } else {
-            this.messageService.add({severity: 'success', summary: 'Petición de acceso', detail: 'La petición de acceso fue radicada exitosamente, en el transcurso de las 24 horas se le dará acceso'});
+            this.messageService.add({ severity: 'success', summary: 'Petición de acceso', detail: 'La petición de acceso fue radicada exitosamente, en el transcurso de las 24 horas se le dará acceso' });
           }
         }, err => {
           console.log(err);
