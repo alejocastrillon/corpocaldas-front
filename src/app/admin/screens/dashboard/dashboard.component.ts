@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
       },
       {
         label: 'Capas',
-        icon: 'pi pi-fw pi-pencil',
+        icon: 'pi pi-fw pi-clone',
         command: () => {
           this.router.navigate(['admin/layer']);
         }
