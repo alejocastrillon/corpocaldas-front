@@ -15,33 +15,22 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router) { }
 
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.items = [
       {
         label: 'Solicitudes',
         icon: 'pi pi-pw pi-file',
         command: () => {
-          this.goToRequests()
+          this.router.navigate(['admin/layer']);
         }
       },
       {
-        label: 'Registros',
+        label: 'Capas',
         icon: 'pi pi-fw pi-pencil',
-        items: [
-          {
-            label: 'Recursos Públicos',
-            icon: 'pi pi-fw pi-globe',
-            command: () => {
-              this.router.navigate(['admin/public-resources']);
-            }
-          }
-        ]
+        command: () => {
+          this.router.navigate(['admin/layer']);
+        }
       }
     ];
   }
-
-  goToRequests() {
-    this.router.navigate(['admin/requests']);
-  }
-
 }
