@@ -12,8 +12,7 @@ export class CreateLayerComponent implements OnInit {
 
   accessGrantedOptions = [
     { name: 'Capa Pública', code: 1 },
-    { name: 'Capa Público/Privada', code: 2 },
-    { name: 'Caoa Privada', code: 3 }
+    { name: 'Capa Privada', code: 2 }
   ];
 
   layer: Layer = new Layer();
