@@ -111,9 +111,11 @@ export class LayerComponent implements OnInit {
     let name: string = event !== null && event.filters.name !== null && event.filters.name !== undefined ? event.filters.name.value : null;
     this.service.getLayers(name, this.value, event !== null ? event.first / event.rows : null, event !== null ? event.rows : null).subscribe((success: PaginatorDto) => {
       let data:Array<Layer> = [];
-      for (const r of success.data) {
-        let layer: Layer = new Layer().fromJSON(r);
-        data.push(layer);
+      if (success.data !== null && success.data.length > 0) {
+        for (const r of success.data) {
+          let layer: Layer = new Layer().fromJSON(r);
+          data.push(layer);
+        }
       }
       this.layers = data;
       debugger;

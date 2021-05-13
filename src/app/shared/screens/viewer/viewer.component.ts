@@ -128,7 +128,7 @@ export class ViewerComponent implements OnInit {
   private getLayerInfo(): void {
     this.service.getLayerByName(this.name).subscribe(res => {
       this.layer = res;
-      this.name = this.layer.name.split(' ').join('_').toLocaleLowerCase();
+      this.name = this.layer.referenceName;
       const layer = L.tileLayer.wms('http://18.209.57.83:8080/geoserver/' + this.layer.workspace + '/wms?', {
         layers: this.name,
         format: 'image/png',

@@ -31,7 +31,8 @@ export class CreateLayerComponent implements OnInit {
     this.layerForm = this.fb.group({
       'id': [this.layer.id],
       'name': [this.layer.name, [Validators.required]],
-      'url': [this.layer.url, [Validators.required]],
+      'referenceName': [this.layer.referenceName, [Validators.required]],
+      'workspace': [this.layer.workspace, [Validators.required]],
       'accessGranted': [this.layer.accessGranted, [Validators.required]]
     });
   }

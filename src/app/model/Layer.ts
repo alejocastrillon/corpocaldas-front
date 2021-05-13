@@ -3,7 +3,7 @@ import { Serializable } from "./Serializable";
 export class Layer extends Serializable {
     public id: number;
     public name: string;
-    public url: string;
+    public referenceName: string;
     public workspace: string;
     public accessGranted: number;
 
