@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Layer } from 'src/app/model/Layer';
+import { PaginatorDto } from 'src/app/model/PaginatorDto';
 import { AdminService } from '../../services/admin.service';
 import { CreateLayerComponent } from '../create-layer/create-layer.component';
 
@@ -13,20 +14,31 @@ import { CreateLayerComponent } from '../create-layer/create-layer.component';
 })
 export class LayerComponent implements OnInit {
 
-  cols = [
-    { field: 'name', header: 'Nombre de la capa' },
-    { field: 'url', header: 'URL' },
-    { field: 'accessGranted', header: 'Nivel de sensibilidad' }
+  optionsFilter: Array<any> = [
+    {
+      name: "Todas las capas",
+      code: null
+    },
+    {
+      name: "Publico",
+      code: 1
+    },
+    {
+      name: "Privado",
+      code: 2
+    }
   ];
-
+  value: number;
+  numberOfRows: number;
+  eventPage: LazyLoadEvent = null;
+  loading: boolean = false;
   layer: Layer = new Layer();
 
   layers = Array<Layer>();
   constructor(private service: AdminService, private dialogService: DialogService, private confirmService: ConfirmationService,
-              private messageService: MessageService) { }
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.getLayers();
   }
 
   public createLayer(): void {
@@ -40,7 +52,7 @@ export class LayerComponent implements OnInit {
       if (response !== null && response !== undefined) {
         this.service.saveLayer(response).subscribe(() => {
           this.messageService.add({ severity: 'success', summary: 'Capas', detail: 'La capa ha sido creada exitosamente' });
-          this.getLayers();
+          this.getLayers(this.eventPage, this.value);
         }, error => {
           this.messageService.add({ severity: 'error', summary: 'Capas', detail: 'Error : ' + error.status + error.message });
         });
@@ -62,7 +74,7 @@ export class LayerComponent implements OnInit {
           } else {
             this.messageService.add({ severity: 'warning', summary: 'Capas', detail: 'La capa no ha sido eliminada exitosamente' });
           }
-          this.getLayers();
+          this.getLayers(this.eventPage, this.value);
         }, error => {
           this.messageService.add({ severity: 'error', summary: 'Capas', detail: 'Error: ' + error.status + ' ' + error.statusText });
         });
@@ -82,7 +94,7 @@ export class LayerComponent implements OnInit {
       if (response !== null) {
         this.service.editLayer(response).subscribe(() => {
           this.messageService.add({ severity: 'success', summary: 'Capas', detail: 'La capa ha sido modificada exitosamente' });
-          this.getLayers();
+          this.getLayers(this.eventPage, this.value);
         }, error => {
           this.messageService.add({ severity: 'error', summary: 'Capas', detail: 'Error: ' + error.status + ' ' + error.statusText });
         });
@@ -92,9 +104,21 @@ export class LayerComponent implements OnInit {
     });
   }
 
-  public getLayers(): void {
-    this.service.getLayers().subscribe((success: Array<Layer>) => {
-      this.layers = success;
+  public getLayers(event: LazyLoadEvent, value: number): void {
+    debugger;
+    this.loading = true;
+    this.value = value;
+    let name: string = event !== null && event.filters.name !== null && event.filters.name !== undefined ? event.filters.name.value : null;
+    this.service.getLayers(name, this.value, event !== null ? event.first / event.rows : null, event !== null ? event.rows : null).subscribe((success: PaginatorDto) => {
+      let data:Array<Layer> = [];
+      for (const r of success.data) {
+        let layer: Layer = new Layer().fromJSON(r);
+        data.push(layer);
+      }
+      this.layers = data;
+      debugger;
+      this.numberOfRows = success.numberRows;
+      this.loading = false;
     }, error => {
       this.messageService.add({ severity: 'error', summary: 'Capas', detail: 'Error: ' + error.status + ' ' + error.statusText });
     });

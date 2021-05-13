@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <p-dropdown [options]="optionsFilter" [(ngModel)]="optionFilterSelected" (onChange)="changeFilter()" optionLabel="name"
   optionValue="code">
 </p-dropdown>
@@ -13,7 +14,6 @@
         <th>
           Correo Electrónico
         </th>
-        <th class="actions"></th>
       </tr>
       <tr>
         <th>
@@ -22,20 +22,15 @@
         <th>
           <p-columnFilter type="text" field="email"></p-columnFilter>
         </th>
-        <th></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-access>
-      <tr>
+      <tr (click)="openDialog(access)">
         <td>
           {{access.name}}
         </td>
         <td>
           {{access.email}}
-        </td>
-        <td>
-          <button pButton type="button" label="Ver detalles" icon="pi pi-eye" class="p-button-sm"
-            (click)="openDialog(rowData)"></button>
         </td>
       </tr>
     </ng-template>

@@ -8,35 +8,65 @@
 <div class="content">
 
   <div class="create">
-    <span class="p-input-icon-left">
+    <!-- <span class="p-input-icon-left">
       <i class="pi pi-search"></i>
       <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
         placeholder="Búsqueda..." />
-    </span>
+    </span> -->
     <button pButton pRipple type="button" label="Nueva capa" icon="pi pi-plus"
       class="p-button-raised p-button-success p-button-sm" (click)="createLayer()"></button>
   </div>
 
-  <p-table #dt class="esri-widget__table" [columns]="cols" [value]="layers" styleClass="p-datatable-sm"
-    [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-    currentPageReportTemplate="{first} - {last} de {totalRecords} Capas">
+  <p-table #dt class="esri-widget__table" [value]="layers" [lazy]="true" (onLazyLoad)="getLayers($event, value)"
+    [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="numberOfRows" [loading]="loading"
+    [globalFilterFields]="['name', 'accessGranted']" styleClass="p-datatable-sm" [paginator]="true" [rows]="10"
+    [showCurrentPageReport]="true" currentPageReportTemplate="{first} - {last} de {totalRecords} Capas">
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <th *ngFor="let col of columns" class="{{col.field}}" pSortableColumn="{{col.field}}">
-          {{col.header}} <p-sortIcon field="{{col.field}}"></p-sortIcon>
+        <th pSortableColumn="name">
+          Nombre de la Capa <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="url">
+          URL <p-sortIcon field="url"></p-sortIcon>
+        </th>
+        <th pSortableColumn="accessGranted">
+          Nivel de sensibilidad <p-sortIcon field="accessGranted"></p-sortIcon>
         </th>
         <th class="actions"></th>
       </tr>
-    </ng-template>
-
-    <ng-template pTemplate="body" let-layer let-columns="columns">
       <tr>
-        <td *ngFor="let col of columns">
-          {{layer[col.field]}}
+        <th>
+          <p-columnFilter type="text" field="name"></p-columnFilter>
+        </th>
+        <th></th>
+        <th>
+          <p-columnFilter field="accessGranted" [showMenu]="false">
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-dropdown [ngModel]="value" [options]="optionsFilter" (onChange)="getLayers(eventPage, $event.value)"
+                optionLabel="name" optionValue="code" [showClear]="true">
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-layer>
+      <tr>
+        <td>
+          {{layer.name}}
+        </td>
+        <td>
+          {{layer.url}}
+        </td>
+        <td>
+          {{layer.accessType}}
         </td>
         <td class="actions">
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info" (click)="editLayer(layer)" ></button> &nbsp;
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteLayer(layer)"></button>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info"
+            (click)="editLayer(layer)"></button> &nbsp;
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+            (click)="deleteLayer(layer)"></button>
         </td>
       </tr>
     </ng-template>

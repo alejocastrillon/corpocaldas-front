@@ -238,13 +238,10 @@ export class ViewerComponent implements OnInit {
   public downloadLayer(): void {
     debugger;
     if (this.layer.accessGranted === 1) {
-      //this.router.navigate(['viewer'], { queryParams: { name: data.name } });
-    } else if (this.layer.accessGranted === 2) {
        this.sendRequestAccessLayer();
     } else {
       this.haveCredentials();
     }
-    //this.router.navigate(['viewer'], { queryParams: { name: data.name } });
   }
 
   private haveCredentials(): void {
@@ -278,7 +275,7 @@ export class ViewerComponent implements OnInit {
     dialog.onClose.subscribe(res => {
       if (res !== null && res !== undefined) {
         this.service.saveAccessRequest(res).subscribe(res => {
-          if (this.layer.accessGranted === 2) {
+          if (this.layer.accessGranted === 1) {
             //this.router.navigate(['viewer'], { queryParams: { name: data.name } });
           } else {
             this.messageService.add({severity: 'success', summary: 'Petición de acceso', detail: 'La petición de acceso fue radicada exitosamente, en el transcurso de las 24 horas se le dará acceso'});

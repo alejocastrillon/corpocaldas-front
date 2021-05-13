@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 import { VerifyAccessTokenComponent } from './verify-access-token/verify-access-token.component';
 
 
@@ -30,7 +31,8 @@ import { VerifyAccessTokenComponent } from './verify-access-token/verify-access-
     ToastModule,
     InputTextModule,
     InputTextareaModule,
-    ButtonModule
+    ButtonModule,
+    DropdownModule
   ]
 })
 export class ViewerModule { }

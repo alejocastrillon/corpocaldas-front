@@ -50,12 +50,30 @@ export class AdminService {
     return params;
   }
 
-  public updateAccess(access: AccessRequest): Observable<AccessRequest> {
-    return this.http.put<AccessRequest>(`/api/access-request/${access.id}`, access);
+  public getLayers(name: string, accessGranted: number, page: number, size: number): Observable<PaginatorDto> {
+    let params: string = this.buildParams(name, accessGranted, page, size);
+    return this.http.get<PaginatorDto>(`/api/layers?${params}`);
   }
 
-  public getLayers(): Observable<Array<Layer>> {
-    return this.http.get<Array<Layer>>('/api/layers');
+  private buildParams(name: string, accessGranted: number, page: number, size: number): string {
+    let params: string = '';
+    if (name !== null && name !== undefined) {
+      params += `name=${name}&`;
+    }
+    if (accessGranted !== null && accessGranted !== undefined) {
+      params += `access_granted=${accessGranted}&`;
+    }
+    if (page !== null && page !== undefined) {
+      params += `page=${page}&`;
+    }
+    if (size !== null && size !== undefined) {
+      params += `size=${size}&`;
+    }
+    return params;
+  }
+
+  public updateAccess(access: AccessRequest): Observable<AccessRequest> {
+    return this.http.put<AccessRequest>(`/api/access-request/${access.id}`, access);
   }
 
   public editLayer(layer: Layer): Observable<Layer> {

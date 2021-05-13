@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { LazyLoadEvent } from 'primeng/api';
+import { LazyLoadEvent, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 import { AccessRequest } from 'src/app/model/AccessRequest';
+import { DetailRequestComponent } from '../detail-request/detail-request.component';
 import { AdminService } from './../../services/admin.service';
 
 @Component({
   selector: 'app-requests',
   templateUrl: './requests.component.html',
   styleUrls: ['./requests.component.scss'],
-  providers: [AdminService]
+  providers: [AdminService, DialogService, MessageService]
 })
 export class RequestsComponent implements OnInit {
 
@@ -40,21 +42,21 @@ export class RequestsComponent implements OnInit {
     }
   ];
   optionFilterSelected: number = 1;
-  accessGranted: number = 2;
+  accessGranted: number = 1;
   approved: boolean = null;
 
 
-  constructor(private service: AdminService) { }
+  constructor(private service: AdminService, private dialogService: DialogService, private messageService: MessageService) { }
 
   ngOnInit(): void {
   }
 
   changeFilter(): void {
     if (this.optionFilterSelected === 1) {
-      this.accessGranted = 2;
+      this.accessGranted = 1;
       this.approved = null;
     } else if (this.optionFilterSelected >= 2) {
-      this.accessGranted = 3;
+      this.accessGranted = 2;
       if (this.optionFilterSelected === 2) {
         this.approved = true;
       } else if (this.optionFilterSelected === 3) {
@@ -79,10 +81,21 @@ export class RequestsComponent implements OnInit {
     })
   }
 
-  openDialog(data: any) {
-    console.log(data);
-    this.valueDialog = data;
-    this.display = true;
+  public openDialog(access: AccessRequest) {
+    let dialog = this.dialogService.open(DetailRequestComponent, {
+      header: this.optionFilterSelected === 4 ? 'Aprobar solicitud' : 'Información de solicitud',
+      width: '50%',
+      data: {
+        access: access,
+        optionFilterSelected: this.optionFilterSelected
+      }
+    });
+    dialog.onClose.subscribe(res => {
+      if (res !== null && res !== undefined) {
+        this.messageService.add({severity: 'success', detail: `La solicitud ha sido ${res.approved ? 'aceptada' : 'rechazada'} satisfactoriamente`, summary: 'Verificación de solicitudes'});
+      }
+      this.getFilterAccessRequest(this.eventPage);
+    });
   }
 
   accept() {
