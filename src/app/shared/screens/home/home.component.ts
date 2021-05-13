@@ -45,7 +45,12 @@ export class HomeComponent implements OnInit {
     this.value = value;
     let name: string = event !== null && event.filters.name !== null && event.filters.name !== undefined ? event.filters.name.value : null;
     this.service.getLayers(name, this.value, event !== null ? event.first / event.rows : null, event !== null ? event.rows : null).subscribe(res => {
-      this.layers = res.data;
+      let data: Array<Layer> = [];
+      for (const r of res.data) {
+        let layer: Layer = new Layer().fromJSON(r);
+        data.push(layer);
+      }
+      this.layers = data;
       this.numberOfRows = res.numberRows;
       this.loading = false;
     }, err => {

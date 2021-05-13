@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
         label: 'Solicitudes',
         icon: 'pi pi-pw pi-file',
         command: () => {
-          this.router.navigate(['admin/layer']);
+          this.router.navigate(['admin/requests']);
         }
       },
       {

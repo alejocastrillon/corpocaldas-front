@@ -3,9 +3,10 @@
   optionValue="code">
 </p-dropdown>
 <div class="table">
-  <p-table class="esri-widget__table" [lazy]="true" (onLazyLoad)="getFilterAccessRequest($event)"
-    [paginator]="true" [rows]="10" [totalRecords]="numberOfRows" [loading]="loading"
-    [globalFilterFields]="['name', 'email']" [value]="accessRequests" styleClass="p-datatable-striped">
+  <p-table class="esri-widget__table" [lazy]="true" (onLazyLoad)="getFilterAccessRequest($event)" [paginator]="true"
+    [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="numberOfRows" [loading]="loading"
+    [globalFilterFields]="['name', 'email']" [value]="accessRequests" [showCurrentPageReport]="true"
+    currentPageReportTemplate="{first} - {last} de {totalRecords} Capas" styleClass="p-datatable-striped">
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th>
