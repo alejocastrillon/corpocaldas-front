@@ -1,7 +1,6 @@
 <form [formGroup]="accessRequestForm" (ngSubmit)="accessRequestForm.valid && saveAccessRequest()">
     <div class="p-g p-fluid">
         <div class="p-field p-col-12 p-md-12">
-            <br>
             <div class="p-inputgroup">
                 <span class="p-float-label">
                     <input type="email" id="email" autofocus formControlName="email" [(ngModel)]="accessRequest.email"
@@ -23,7 +22,6 @@
         </div>
         <br>
         <div class="p-field p-col-12 p-md-12">
-            <br>
             <div class="p-inputgroup">
                 <span class="p-float-label">
                     <input type="text" id="name" autofocus formControlName="name" [(ngModel)]="accessRequest.name"
@@ -42,7 +40,6 @@
         </div>
         <br>
         <div class="p-field p-col-12 p-md-12">
-            <br>
             <div class="p-inputgroup">
                 <span class="p-float-label">
                     <input type="text" id="company" autofocus formControlName="company"

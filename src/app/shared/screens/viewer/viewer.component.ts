@@ -117,7 +117,7 @@ export class ViewerComponent implements OnInit {
     const link = document.createElement('a');
     link.target = '_blank';
     link.download = this.name;
-    link.href = 'http://18.209.57.83:8080/geoserver/' + this.layer.workspace +
+    link.href = 'http://54.91.220.9:8080/geoserver/' + this.layer.workspace +
       '/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=' + this.layer.workspace + '%3A' + this.name + '&maxFeatures=50&outputFormat=SHAPE-ZIP';
     document.body.appendChild(link);
     link.click();
@@ -129,7 +129,7 @@ export class ViewerComponent implements OnInit {
     this.service.getLayerByName(this.name).subscribe(res => {
       this.layer = res;
       this.name = this.layer.referenceName;
-      const layer = L.tileLayer.wms('http://18.209.57.83:8080/geoserver/' + this.layer.workspace + '/wms?', {
+      const layer = L.tileLayer.wms('http://54.91.220.9:8080/geoserver/' + this.layer.workspace + '/wms?', {
         layers: this.name,
         format: 'image/png',
         transparent: true,
