@@ -26,6 +26,8 @@ export class RegisterAccessRequestComponent implements OnInit {
   private validateForm(): void {
     this.accessRequestForm = this.formBuilder.group({
       'email': [this.accessRequest.email, [Validators.required, Validators.email]],
+      'name': [this.accessRequest.name, [Validators.required]],
+      'company': [this.accessRequest.company, [Validators.required]],
       'description': [this.accessRequest.description, [Validators.required]]
     });
   }

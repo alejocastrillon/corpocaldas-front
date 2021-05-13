@@ -15,6 +15,7 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { PublicResourcesComponent } from './components/public-resources/public-resources.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -29,6 +30,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DashboardComponent,
     RequestsComponent,
     DetailRequestComponent,
+    PublicResourcesComponent,
     LayerComponent,
     CreateLayerComponent
   ],
@@ -37,6 +39,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AdminRoutingModule,
     SharedModule,
     MatSidenavModule,
+    FormsModule,
+    ReactiveFormsModule,
     PanelMenuModule,
     CardModule,
     TableModule,
@@ -49,7 +53,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    DropdownModule
   ]
 })
 export class AdminModule { }

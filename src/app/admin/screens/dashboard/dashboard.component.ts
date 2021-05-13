@@ -28,7 +28,13 @@ export class DashboardComponent implements OnInit {
         label: 'Registros',
         icon: 'pi pi-fw pi-pencil',
         items: [
-          { label: 'Recursos Públicos', icon: 'pi pi-fw pi-globe' }
+          {
+            label: 'Recursos Públicos',
+            icon: 'pi pi-fw pi-globe',
+            command: () => {
+              this.router.navigate(['admin/public-resources']);
+            }
+          }
         ]
       }
     ];
