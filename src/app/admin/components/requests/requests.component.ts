@@ -70,8 +70,8 @@ export class RequestsComponent implements OnInit {
     debugger;
     this.loading = true;
     this.eventPage = event;
-    let name: string = event.filters.name !== undefined ? event.filters.name.value : null;
-    let email: string = event.filters.email !== undefined ? event.filters.email.value : null;
+    let name: string = event !== null && event.filters.name !== undefined && event.filters.name !== null ? event.filters.name.value : null;
+    let email: string = event !== null && event.filters.email !== undefined && event.filters.email != null ? event.filters.email.value : null;
     this.service.filterAccessRequest(name, email, null, null, this.accessGranted, this.approved, event != null ? event.first / event.rows : null, event != null ? event.rows : null).subscribe(res => {
       this.accessRequests = res.data;
       this.numberOfRows = res.numberRows;
