@@ -6,6 +6,7 @@ import { SharedModule } from './../../shared.module';
 import { HomeComponent } from '../home/home.component';
 
 import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { TableModule } from 'primeng/table';
     CommonModule,
     HomeRoutingModule,
     SharedModule,
-    TableModule
+    TableModule,
+    DropdownModule
   ]
 })
 export class HomeModule { }

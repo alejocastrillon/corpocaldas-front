@@ -28,7 +28,22 @@ export class LayerComponent implements OnInit {
       code: 2
     }
   ];
-  value: number;
+  optionsVisibleFilter: Array<any> = [
+    {
+      name: "Todas las capas",
+      value: null
+    },
+    {
+      name: "Visible",
+      value: true
+    },
+    {
+      name: "No visible",
+      value: false
+    }
+  ]
+  valueAccess: number;
+  valueVisible: boolean;
   numberOfRows: number;
   eventPage: LazyLoadEvent = null;
   loading: boolean = false;
@@ -52,7 +67,7 @@ export class LayerComponent implements OnInit {
       if (response !== null && response !== undefined) {
         this.service.saveLayer(response).subscribe(() => {
           this.messageService.add({ severity: 'success', summary: 'Capas', detail: 'La capa ha sido creada exitosamente' });
-          this.getLayers(this.eventPage, this.value);
+          this.getLayers(this.eventPage, this.valueAccess, this.valueVisible);
         }, error => {
           this.messageService.add({ severity: 'error', summary: 'Capas', detail: 'Error : ' + error.status + error.message });
         });
@@ -74,7 +89,7 @@ export class LayerComponent implements OnInit {
           } else {
             this.messageService.add({ severity: 'warning', summary: 'Capas', detail: 'La capa no ha sido eliminada exitosamente' });
           }
-          this.getLayers(this.eventPage, this.value);
+          this.getLayers(this.eventPage, this.valueAccess, this.valueVisible);
         }, error => {
           this.messageService.add({ severity: 'error', summary: 'Capas', detail: 'Error: ' + error.status + ' ' + error.statusText });
         });
@@ -94,7 +109,7 @@ export class LayerComponent implements OnInit {
       if (response !== null) {
         this.service.editLayer(response).subscribe(() => {
           this.messageService.add({ severity: 'success', summary: 'Capas', detail: 'La capa ha sido modificada exitosamente' });
-          this.getLayers(this.eventPage, this.value);
+          this.getLayers(this.eventPage, this.valueAccess, this.valueVisible);
         }, error => {
           this.messageService.add({ severity: 'error', summary: 'Capas', detail: 'Error: ' + error.status + ' ' + error.statusText });
         });
@@ -104,12 +119,12 @@ export class LayerComponent implements OnInit {
     });
   }
 
-  public getLayers(event: LazyLoadEvent, value: number): void {
-    debugger;
+  public getLayers(event: LazyLoadEvent, valueAccess: number, valueVisible: boolean): void {
     this.loading = true;
-    this.value = value;
+    this.valueAccess = valueAccess;
+    this.valueVisible = valueVisible;
     let name: string = event !== null && event.filters.name !== null && event.filters.name !== undefined ? event.filters.name.value : null;
-    this.service.getLayers(name, this.value, event !== null ? event.first / event.rows : null, event !== null ? event.rows : null).subscribe((success: PaginatorDto) => {
+    this.service.getLayers(name, this.valueAccess, this.valueVisible, event !== null ? event.first / event.rows : null, event !== null ? event.rows : null).subscribe((success: PaginatorDto) => {
       let data:Array<Layer> = [];
       if (success.data !== null && success.data.length > 0) {
         for (const r of success.data) {
@@ -118,7 +133,6 @@ export class LayerComponent implements OnInit {
         }
       }
       this.layers = data;
-      debugger;
       this.numberOfRows = success.numberRows;
       this.loading = false;
     }, error => {

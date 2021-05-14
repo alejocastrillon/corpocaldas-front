@@ -8,42 +8,49 @@
 <div class="content">
 
   <div class="create">
-    <!-- <span class="p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-        placeholder="Búsqueda..." />
-    </span> -->
     <button pButton pRipple type="button" label="Nueva capa" icon="pi pi-plus"
       class="p-button-raised p-button-success p-button-sm" (click)="createLayer()"></button>
   </div>
 
-  <p-table #dt class="esri-widget__table" [value]="layers" [lazy]="true" (onLazyLoad)="getLayers($event, value)"
+  <p-table #dt class="esri-widget__table" [value]="layers" [lazy]="true" (onLazyLoad)="getLayers($event, valueAccess, valueVisible)"
     [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="numberOfRows" [loading]="loading"
-    [globalFilterFields]="['name', 'accessGranted']" styleClass="p-datatable-sm" [paginator]="true" [rows]="10"
+    [globalFilterFields]="['name', 'accessGranted', 'visible']" styleClass="p-datatable-sm" [paginator]="true" [rows]="10"
     [showCurrentPageReport]="true" currentPageReportTemplate="{first} - {last} de {totalRecords} Capas">
-    <ng-template pTemplate="header" let-columns>
+    <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="name">
           Nombre de la Capa <p-sortIcon field="name"></p-sortIcon>
         </th>
         <th pSortableColumn="url">
-          URL <p-sortIcon field="url"></p-sortIcon>
+          Espacio de trabajo <p-sortIcon field="workspace"></p-sortIcon>
         </th>
         <th pSortableColumn="accessGranted">
           Nivel de sensibilidad <p-sortIcon field="accessGranted"></p-sortIcon>
+        </th>
+        <th pSortableColumn="visible">
+          Visibilidad <p-sortIcon field="visible"></p-sortIcon>
         </th>
         <th class="actions"></th>
       </tr>
       <tr>
         <th>
-          <p-columnFilter type="text" field="name"></p-columnFilter>
+          <p-columnFilter type="text" field="name" [showMenu]="false"></p-columnFilter>
         </th>
         <th></th>
         <th>
           <p-columnFilter field="accessGranted" [showMenu]="false">
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-              <p-dropdown [ngModel]="value" [options]="optionsFilter" (onChange)="getLayers(eventPage, $event.value)"
+              <p-dropdown [ngModel]="value" [options]="optionsFilter" (onChange)="getLayers(eventPage, $event.value, valueVisible)"
                 optionLabel="name" optionValue="code" [showClear]="true">
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter field="visible" [showMenu]="false">
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-dropdown [ngModel]="value" [options]="optionsVisibleFilter" (onChange)="getLayers(eventPage, valueAccess, $event.value)"
+                optionLabel="name" optionValue="value" [showClear]="true">
               </p-dropdown>
             </ng-template>
           </p-columnFilter>
@@ -57,10 +64,13 @@
           {{layer.name}}
         </td>
         <td>
-          {{layer.url}}
+          {{layer.workspace}}
         </td>
         <td>
           {{layer.accessType}}
+        </td>
+        <td>
+          {{layer.visibility}}
         </td>
         <td class="actions">
           <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info"
@@ -71,7 +81,7 @@
       </tr>
     </ng-template>
 
-    <ng-template pTemplate="emptymessage" let-columns>
+    <ng-template pTemplate="emptymessage">
       <tr>
         <td colspan="4" class="emptymessage">
           <b>No se encontraron capas</b>

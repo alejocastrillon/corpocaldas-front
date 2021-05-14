@@ -69,7 +69,6 @@ export class RequestsComponent implements OnInit {
   }
 
   public getFilterAccessRequest(event: LazyLoadEvent): void {
-    debugger;
     this.loading = true;
     this.eventPage = event;
     let name: string = event !== null && event.filters.name !== undefined && event.filters.name !== null ? event.filters.name.value : null;

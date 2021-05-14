@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
       code: 2
     }
   ];
-  value: number;
+  valueAccess: number;
   eventPage: LazyLoadEvent = null;
   numberOfRows: number;
   loading: boolean = false;
@@ -39,16 +39,18 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public getLayers(event: LazyLoadEvent, value: number): void {
+  public getLayers(event: LazyLoadEvent, valueAccess: number): void {
     this.eventPage = event;
     this.loading = true;
-    this.value = value;
+    this.valueAccess = valueAccess;
     let name: string = event !== null && event.filters.name !== null && event.filters.name !== undefined ? event.filters.name.value : null;
-    this.service.getLayers(name, this.value, event !== null ? event.first / event.rows : null, event !== null ? event.rows : null).subscribe(res => {
+    this.service.getLayers(name, this.valueAccess, true,  event !== null ? event.first / event.rows : null, event !== null ? event.rows : null).subscribe(res => {
       let data: Array<Layer> = [];
-      for (const r of res.data) {
-        let layer: Layer = new Layer().fromJSON(r);
-        data.push(layer);
+      if (res.data !== null && res.data.length > 0) {
+        for (const r of res.data) {
+          let layer: Layer = new Layer().fromJSON(r);
+          data.push(layer);
+        }
       }
       this.layers = data;
       this.numberOfRows = res.numberRows;

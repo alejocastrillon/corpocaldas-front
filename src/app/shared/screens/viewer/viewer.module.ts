@@ -24,6 +24,7 @@ import { VerifyAccessTokenComponent } from './verify-access-token/verify-access-
   imports: [
     CommonModule,
     ViewerRoutingModule,
+    DropdownModule,
     FormsModule,
     ReactiveFormsModule,
     DynamicDialogModule,
@@ -31,8 +32,7 @@ import { VerifyAccessTokenComponent } from './verify-access-token/verify-access-
     ToastModule,
     InputTextModule,
     InputTextareaModule,
-    ButtonModule,
-    DropdownModule
+    ButtonModule
   ]
 })
 export class ViewerModule { }

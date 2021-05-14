@@ -1,7 +1,7 @@
 <div class="table">
   <p-table class="esri-widget__table" [lazy]="true" [rowsPerPageOptions]="[10,25,50]"
     currentPageReportTemplate="{first} - {last} de {totalRecords} Capas" [showCurrentPageReport]="true"
-    (onLazyLoad)="getLayers($event, value)" [paginator]="true" [rows]="10" [totalRecords]="numberOfRows"
+    (onLazyLoad)="getLayers($event, valueAccess)" [paginator]="true" [rows]="10" [totalRecords]="numberOfRows"
     [loading]="loading" [globalFilterFields]="['name', 'accessGranted']" [value]="layers"
     styleClass="p-datatable-striped">
     <ng-template pTemplate="header">
@@ -15,7 +15,7 @@
       </tr>
       <tr>
         <th>
-          <p-columnFilter type="text" field="name"></p-columnFilter>
+          <p-columnFilter type="text" field="name" [showMenu]="false"></p-columnFilter>
         </th>
         <th>
           <p-columnFilter field="accessGranted" [showMenu]="false">

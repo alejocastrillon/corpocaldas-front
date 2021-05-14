@@ -50,12 +50,12 @@ export class AdminService {
     return params;
   }
 
-  public getLayers(name: string, accessGranted: number, page: number, size: number): Observable<PaginatorDto> {
-    let params: string = this.buildParams(name, accessGranted, page, size);
+  public getLayers(name: string, accessGranted: number, visible: boolean, page: number, size: number): Observable<PaginatorDto> {
+    let params: string = this.buildParams(name, accessGranted, visible, page, size);
     return this.http.get<PaginatorDto>(`/api/layers?${params}`);
   }
 
-  private buildParams(name: string, accessGranted: number, page: number, size: number): string {
+  private buildParams(name: string, accessGranted: number, visible: boolean, page: number, size: number): string {
     let params: string = '';
     if (name !== null && name !== undefined) {
       params += `name=${name}&`;
@@ -68,6 +68,9 @@ export class AdminService {
     }
     if (size !== null && size !== undefined) {
       params += `size=${size}&`;
+    }
+    if (visible !== null && visible !== undefined) {
+      params += `visible=${visible}&`;
     }
     return params;
   }
