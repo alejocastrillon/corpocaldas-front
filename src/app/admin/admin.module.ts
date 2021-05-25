@@ -18,12 +18,16 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TreeTableModule } from 'primeng/treetable';
+import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { DetailRequestComponent } from './components/detail-request/detail-request.component';
 import { LayerComponent } from './components/layer/layer.component';
 import { CreateLayerComponent } from './components/create-layer/create-layer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { WorkspaceComponent } from './components/workspace/workspace.component';
+import { CreateWorkspaceComponent } from './components/create-workspace/create-workspace.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RequestsComponent,
     DetailRequestComponent,
     LayerComponent,
-    CreateLayerComponent
+    CreateLayerComponent,
+    WorkspaceComponent,
+    CreateWorkspaceComponent
   ],
   imports: [
     CommonModule,
@@ -51,6 +57,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ToastModule,
     FormsModule,
     ReactiveFormsModule,
+    TreeTableModule,
+    MessagesModule,
     HttpClientModule,
     DynamicDialogModule,
     ToggleButtonModule

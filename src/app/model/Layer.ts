@@ -4,7 +4,8 @@ export class Layer extends Serializable {
     public id: number;
     public name: string;
     public referenceName: string;
-    public workspace: string;
+    public idWorkspace: number;
+    public nameWorkspace: string;
     public accessGranted: number;
     public visible: boolean = true;
 

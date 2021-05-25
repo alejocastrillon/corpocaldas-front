@@ -121,6 +121,7 @@ export class LayerComponent implements OnInit {
 
   public getLayers(event: LazyLoadEvent, valueAccess: number, valueVisible: boolean): void {
     this.loading = true;
+    this.eventPage = event;
     this.valueAccess = valueAccess;
     this.valueVisible = valueVisible;
     let name: string = event !== null && event.filters.name !== null && event.filters.name !== undefined ? event.filters.name.value : null;

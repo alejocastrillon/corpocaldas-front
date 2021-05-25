@@ -23,10 +23,15 @@ export class DashboardComponent implements OnInit {
         command: () => {
           this.router.navigate(['admin/requests']);
         }
-      },
-      {
+      },{
+        label: 'Espacios de Trabajo',
+        icon: 'pi pi-fw pi-images',
+        command: () => {
+          this.router.navigate(['admin/workspaces'])
+        }
+      },{
         label: 'Capas',
-        icon: 'pi pi-fw pi-clone',
+        icon: 'pi pi-fw pi-map',
         command: () => {
           this.router.navigate(['admin/layer']);
         }

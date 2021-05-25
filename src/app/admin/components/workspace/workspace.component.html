@@ -1,0 +1,25 @@
+<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>
+<button pButton label="Crear espacio" class="p-button-success" icon="pi pi-plus" (click)="addWorkspace()"></button>
+<br>
+<p-treeTable [value]="workspaces" [paginator]="true" [rows]="10" [lazy]="true" (onLazyLoad)="getWorkSpaces($event)"
+    [totalRecords]="totalRecords" [loading]="loading">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 3em;"></th>
+            <th>
+                Nombre
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <tr>
+            <td>
+                <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+            </td>
+            <td (click)="editWorkspace(rowData)">
+                {{rowData.name}}
+            </td>
+        </tr>
+    </ng-template>
+</p-treeTable>

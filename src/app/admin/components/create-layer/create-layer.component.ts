@@ -32,10 +32,11 @@ export class CreateLayerComponent implements OnInit {
       'id': [this.layer.id],
       'name': [this.layer.name, [Validators.required]],
       'referenceName': [this.layer.referenceName, [Validators.required]],
-      'workspace': [this.layer.workspace, [Validators.required]],
+      'workspace': [this.layer.idWorkspace, [Validators.required]],
       'accessGranted': [this.layer.accessGranted, [Validators.required]],
       'visible': [this.layer.visible]
     });
+
   }
 
   public cancel(): void {

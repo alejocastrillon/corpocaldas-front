@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AccessRequest } from 'src/app/model/AccessRequest';
 import { Layer } from 'src/app/model/Layer';
 import { PaginatorDto } from 'src/app/model/PaginatorDto';
+import { WorkSpaceDto } from 'src/app/model/WorkSpaceDto';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,11 @@ export class AdminService {
   }
 
   public filterAccessRequest(name: string, email: string, company: string, layername: string, accessGranted: number, approved: boolean, page: number, size: number): Observable<PaginatorDto> {
-    let params: string = this.buildParamsFilter(name, email, company, layername, accessGranted, approved, page, size);
+    let params: string = this.buildAccessRequestParamsFilter(name, email, company, layername, accessGranted, approved, page, size);
     return this.http.get<PaginatorDto>(`/api/access-request?${params}`);
   }
 
-  private buildParamsFilter(name: string, email: string, company: string, layername: string, accessGranted: number, approved: boolean, page: number, size: number): string {
+  private buildAccessRequestParamsFilter(name: string, email: string, company: string, layername: string, accessGranted: number, approved: boolean, page: number, size: number): string {
     let params: string = '';
     if (name !== null && name !== undefined) {
       params += `name=${name}&`;
@@ -50,12 +51,31 @@ export class AdminService {
     return params;
   }
 
+  public getWorkspaces(name: string, page: number, size: number) : Observable<PaginatorDto> {
+    let params: string = this.buildWorkspaceParamsFilter(name, page, size);
+    return this.http.get<PaginatorDto>(`/api/workspaces?${params}`);
+  }
+
+  private buildWorkspaceParamsFilter(name: string, page: number, size: number): string {
+    let params: string = '';
+    if (name !== null && name !== undefined) {
+      params += `name=${name}&`;
+    }
+    if (page !== null && page !== undefined) {
+      params += `page=${page}&`;
+    }
+    if (size !== null && size !== undefined) {
+      params += `size=${size}&`;
+    }
+    return params;
+  }
+
   public getLayers(name: string, accessGranted: number, visible: boolean, page: number, size: number): Observable<PaginatorDto> {
-    let params: string = this.buildParams(name, accessGranted, visible, page, size);
+    let params: string = this.buildLayerParamsFilter(name, accessGranted, visible, page, size);
     return this.http.get<PaginatorDto>(`/api/layers?${params}`);
   }
 
-  private buildParams(name: string, accessGranted: number, visible: boolean, page: number, size: number): string {
+  private buildLayerParamsFilter(name: string, accessGranted: number, visible: boolean, page: number, size: number): string {
     let params: string = '';
     if (name !== null && name !== undefined) {
       params += `name=${name}&`;
@@ -85,6 +105,10 @@ export class AdminService {
 
   public saveLayer(layer: Layer): Observable<Layer> {
     return this.http.post<Layer>('/api/layers', layer);
+  }
+
+  public saveWorkspace(workspace: WorkSpaceDto): Observable<WorkSpaceDto> {
+    return this.http.post<WorkSpaceDto>('/api/workspaces', workspace);
   }
 
   public deleteLayer(idLayer: number): Observable<boolean> {
