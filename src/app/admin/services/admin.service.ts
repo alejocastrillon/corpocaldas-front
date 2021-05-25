@@ -5,6 +5,7 @@ import { AccessRequest } from 'src/app/model/AccessRequest';
 import { Layer } from 'src/app/model/Layer';
 import { PaginatorDto } from 'src/app/model/PaginatorDto';
 import { WorkSpaceDto } from 'src/app/model/WorkSpaceDto';
+import { TreeNode } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
@@ -113,6 +114,23 @@ export class AdminService {
 
   public deleteLayer(idLayer: number): Observable<boolean> {
     return this.http.delete<boolean>('/api/layers/' + idLayer);
+  }
+
+  public buildTree(workspaces: Array<WorkSpaceDto>): TreeNode[] {
+    return Object.keys(workspaces).reduce<TreeNode[]>((accumulator, key) => {
+      let value = workspaces[key];
+      let node: TreeNode = {};
+      node.label = value.name;
+      node.data = value;
+      if (value != null) {
+        if (typeof value["childrens"] === "object" && value["childrens"].length > 0) {
+          node.children = this.buildTree(value["childrens"]);
+        } else {
+          node.children = [];
+        }
+      }
+      return accumulator.concat(node);
+    }, []);
   }
 
 }

@@ -16,7 +16,7 @@ export class CreateLayerComponent implements OnInit {
   ];
 
   layer: Layer = new Layer();
-
+  error: boolean = false;
   layerForm: FormGroup;
 
   constructor(private fb: FormBuilder, private ref: DynamicDialogRef, private config: DynamicDialogConfig) {
@@ -32,11 +32,20 @@ export class CreateLayerComponent implements OnInit {
       'id': [this.layer.id],
       'name': [this.layer.name, [Validators.required]],
       'referenceName': [this.layer.referenceName, [Validators.required]],
-      'workspace': [this.layer.idWorkspace, [Validators.required]],
       'accessGranted': [this.layer.accessGranted, [Validators.required]],
       'visible': [this.layer.visible]
     });
 
+  }
+
+  public selectParentWorkspace(event: number): void {
+    if (event !== null && event !== undefined) {
+      this.layer.idWorkspace = event;
+      this.error = false;
+    } else {
+      this.layer.idWorkspace = null;
+      this.error = true;
+    }
   }
 
   public cancel(): void {

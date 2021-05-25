@@ -5,7 +5,8 @@
         <div class="p-field p-col-12 p-md-12">
             <div class="p-inputgroup">
                 <span class="p-float-label">
-                    <input type="text" id="name" autofocus formControlName="name" [(ngModel)]="workspace.name" pInputText>
+                    <input type="text" id="name" autofocus formControlName="name" [(ngModel)]="workspace.name"
+                        pInputText>
                     <label for="name">Nombre del espacio de trabajo</label>
                 </span>
                 <span class="p-inputgroup-addon"><i class="pi pi-images"></i></span>
@@ -22,24 +23,8 @@
     <br>
     <label for="parent">Seleccione el nodo padre del espacio de trabajo:</label>
     <div id="parent" style="max-height: 300px; overflow-y: scroll;">
-        <p-treeTable [value]="workspaces" selectionMode="single" [(selection)]="selectedNode" dataKey="name"
-            (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>
-                        Nombre
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
-                <tr [ttRow]="rowNode" [ttRow]="rowNode" [ttSelectableRow]="rowNode">
-                    <td>
-                        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-                        {{rowData.name}}
-                    </td>
-                </tr>
-            </ng-template>
-        </p-treeTable>
+        <app-select-workspace [workspaceSelected]="workspace.idParent" [workspaceId]="workspace.id"
+            (selectWorkspaceEvent)="selectParentWorkspace($event)"></app-select-workspace>
     </div>
     <div class="footer">
         <button pButton class="p-button-rounded p-button-success" [disabled]="!workspaceFormGroup.valid ||  error"

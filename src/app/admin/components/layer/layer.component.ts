@@ -58,7 +58,7 @@ export class LayerComponent implements OnInit {
 
   public createLayer(): void {
     const dialog = this.dialogService.open(CreateLayerComponent, {
-      width: '450px',
+      width: '80%',
       header: 'Crear capa',
       data: { layer: this.layer }
     });
@@ -100,7 +100,7 @@ export class LayerComponent implements OnInit {
   public editLayer(layer: Layer): void {
     console.log(layer);
     const dialog = this.dialogService.open(CreateLayerComponent, {
-      width: '450px',
+      width: '80%',
       header: 'Editar capa',
       data: { layer }
     });

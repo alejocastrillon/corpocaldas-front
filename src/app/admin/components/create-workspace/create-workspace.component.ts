@@ -22,38 +22,14 @@ export class CreateWorkspaceComponent implements OnInit {
   error: boolean = false;
 
   constructor(private config: DynamicDialogConfig, private ref: DynamicDialogRef, private formBuilder: FormBuilder, private service: AdminService, private messageService: MessageService) { 
-    this.workspace = this.config.data.workspace;
-    this.label = this.workspace.id !== undefined && this.workspace.id !== null ? 'Modificar' : 'Guardar';
     this.workspaces = this.config.data.workspaces;
-    this.workspace.id !== null ? this.removeReference(this.workspace.id, this.workspaces) : NullTemplateVisitor;
-    this.workspace.idParent !== null ? this.selectInitialParent(this.workspace.idParent, this.workspaces) : null;
+    this.workspace = this.config.data.workspace;
+    debugger;
+    this.label = this.workspace.id !== undefined && this.workspace.id !== null ? 'Modificar' : 'Guardar';
   }
 
   ngOnInit(): void {
     this.validateForm();
-  }
-
-  private removeReference(id: number, nodes: TreeNode[]): void {
-    for (const node of nodes) {
-      if (node.data.id === id) {
-        node.selectable = false;
-        node.draggable = true;
-        break;
-      } else {
-        this.removeReference(id, node.children);
-      }
-    }
-  }
-
-  private selectInitialParent(idParent: number, nodes: TreeNode[]): void {
-    for (const node of nodes) {
-      if (node.data.id === idParent) {
-        this.selectedNode = node;
-        break;
-      } else {
-        this.selectInitialParent(idParent, node.children);
-      }
-    }
   }
 
   private validateForm(): void {
@@ -62,26 +38,15 @@ export class CreateWorkspaceComponent implements OnInit {
     });
   }
 
-  public nodeSelect(event: any): void {
-    if (this.workspace.id !== event.node.data.id) {
-      this.workspace.idParent = event.node.data.id;
-      this.workspace.nameParent = event.node.data.name;
+  public selectParentWorkspace(event: number): void {
+    if (this.workspace.id !== event) {
+      this.workspace.idParent = event;
       this.messageService.clear();
     } else {
       this.messageService.add({severity: 'error', summary: 'Error', detail: "No se puede seleccionar el mismo espacio de trabajo como contenedor del mismo"});
       this.workspace.idParent = null;
-      this.workspace.nameParent = null;
-      this.selectedNode = null;
       this.error = true;
     }
-      
-  }
-
-  public nodeUnselect(event: any): void {
-    this.workspace.idParent = null;
-    this.workspace.nameParent = null
-    this.messageService.clear();
-    this.error = false;
   }
 
   public saveWorkSpace(): void {

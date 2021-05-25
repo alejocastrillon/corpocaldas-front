@@ -1,0 +1,19 @@
+<p-treeTable [value]="workspaces" selectionMode="single" [(selection)]="selectedNode" dataKey="name"
+    (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)" [paginator]="true" [rows]="10"
+    [lazy]="true" (onLazyLoad)="getWorkSpaces($event)" [totalRecords]="totalRecords" [loading]="loading">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>
+                Nombre
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <tr [ttRow]="rowNode" [ttRow]="rowNode" [ttSelectableRow]="rowNode">
+            <td>
+                <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                {{rowData.name}}
+            </td>
+        </tr>
+    </ng-template>
+</p-treeTable>

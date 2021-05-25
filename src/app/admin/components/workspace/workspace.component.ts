@@ -26,7 +26,7 @@ export class WorkspaceComponent implements OnInit {
     this.loading = true;
     this.eventPage = event;
     this.service.getWorkspaces(null, event !== null ? event.first / event.rows : null, event !== null ? event.rows : null).subscribe(res => {
-      this.workspaces = this.buildTree(res.data);
+      this.workspaces = this.service.buildTree(res.data);
       this.totalRecords = res.numberRows;
       this.loading = false;
     }, err => {
@@ -35,22 +35,7 @@ export class WorkspaceComponent implements OnInit {
     })
   }
 
-  public buildTree(workspaces: Array<WorkSpaceDto>): TreeNode[] {
-    return Object.keys(workspaces).reduce<TreeNode[]>((accumulator, key) => {
-      let value = workspaces[key];
-      let node: TreeNode = {};
-      node.label = value.name;
-      node.data = value;
-      if (value != null) {
-        if (typeof value["childrens"] === "object" && value["childrens"].length > 0) {
-          node.children = this.buildTree(value["childrens"]);
-        } else {
-          node.children = [];
-        }
-      }
-      return accumulator.concat(node);
-    }, []);
-  }
+  
 
   public addWorkspace(): void {
     this.openDialog(new WorkSpaceDto());
@@ -61,7 +46,7 @@ export class WorkspaceComponent implements OnInit {
   }
 
   private openDialog(workspace: WorkSpaceDto): void {
-    console.log(workspace);
+    console.log(this.workspaces);
     let dialog = this.dialogService.open(CreateWorkspaceComponent, {
       width: '50%',
       header: `${workspace.id !== undefined && workspace.id !== null ? 'Modificar' : 'Crear'} espacio de trabajo`,
