@@ -1,6 +1,7 @@
 <p-treeTable [value]="workspaces" selectionMode="single" [(selection)]="selectedNode" dataKey="name"
     (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)" [paginator]="true" [rows]="10"
-    [lazy]="true" (onLazyLoad)="getWorkSpaces($event)" [totalRecords]="totalRecords" [loading]="loading">
+    [lazy]="true" (onLazyLoad)="getWorkSpaces($event)" [totalRecords]="totalRecords" [loading]="loading"
+    (onNodeExpand)="onNodeExpand($event)">
     <ng-template pTemplate="header">
         <tr>
             <th>

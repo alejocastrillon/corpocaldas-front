@@ -112,6 +112,10 @@ export class AdminService {
     return this.http.post<WorkSpaceDto>('/api/workspaces', workspace);
   }
 
+  public getWorkspace(workspaceId: number): Observable<WorkSpaceDto> {
+    return this.http.get<WorkSpaceDto>(`/api/workspaces/${workspaceId}`);
+  }
+
   public deleteLayer(idLayer: number): Observable<boolean> {
     return this.http.delete<boolean>('/api/layers/' + idLayer);
   }
@@ -122,6 +126,7 @@ export class AdminService {
       let node: TreeNode = {};
       node.label = value.name;
       node.data = value;
+      node.leaf = !value.hasChildren;
       if (value != null) {
         if (typeof value["childrens"] === "object" && value["childrens"].length > 0) {
           node.children = this.buildTree(value["childrens"]);

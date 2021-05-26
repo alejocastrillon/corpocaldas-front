@@ -41,6 +41,25 @@ export class SelectWorkspaceComponent implements OnInit {
     })
   }
 
+  public onNodeExpand(event: any): void {
+    this.loading = true;
+    const node = event.node;
+    this.service.getWorkspace(node.data.id).subscribe(res => {
+      for (const workspace of res.workspaceChildrens) {
+        node.children.push({
+          data: {
+            id: workspace.id,
+            name: workspace.name
+          },
+          leaf: !workspace.hasChildren,
+          children: []
+        });
+      }
+      this.workspaces = [...this.workspaces];
+      this.loading = false;
+    })
+  }
+  
   private removeReference(id: number, nodes: TreeNode[]): void {
     for (const node of nodes) {
       if (node.data.id === id) {

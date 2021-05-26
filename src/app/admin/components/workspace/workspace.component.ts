@@ -35,6 +35,25 @@ export class WorkspaceComponent implements OnInit {
     })
   }
 
+  public onNodeExpand(event: any): void {
+    this.loading = true;
+    const node = event.node;
+    this.service.getWorkspace(node.data.id).subscribe(res => {
+      for (const workspace of res.workspaceChildrens) {
+        node.children.push({
+          data: {
+            id: workspace.id,
+            name: workspace.name
+          },
+          leaf: !workspace.hasChildren,
+          children: []
+        });
+      }
+      this.workspaces = [...this.workspaces];
+      this.loading = false;
+    })
+  }
+
   
 
   public addWorkspace(): void {

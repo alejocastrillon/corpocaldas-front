@@ -3,10 +3,9 @@
 <button pButton label="Crear espacio" class="p-button-success" icon="pi pi-plus" (click)="addWorkspace()"></button>
 <br>
 <p-treeTable [value]="workspaces" [paginator]="true" [rows]="10" [lazy]="true" (onLazyLoad)="getWorkSpaces($event)"
-    [totalRecords]="totalRecords" [loading]="loading">
+    [totalRecords]="totalRecords" [loading]="loading" (onNodeExpand)="onNodeExpand($event)">
     <ng-template pTemplate="header">
         <tr>
-            <th style="width: 3em;"></th>
             <th>
                 Nombre
             </th>
@@ -16,9 +15,7 @@
         <tr>
             <td>
                 <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-            </td>
-            <td (click)="editWorkspace(rowData)">
-                {{rowData.name}}
+                <span (click)="editWorkspace(rowData)">{{rowData.name}}</span>
             </td>
         </tr>
     </ng-template>

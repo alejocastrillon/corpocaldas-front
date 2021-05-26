@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { AccessRequest } from 'src/app/model/AccessRequest';
 import { Layer } from 'src/app/model/Layer';
 import { PaginatorDto } from 'src/app/model/PaginatorDto';
+import { WorkSpaceDto } from 'src/app/model/WorkSpaceDto';
 
 
 const API_BASE: string = "https://corpocaldas.herokuapp.com";
@@ -51,4 +53,47 @@ export class HomeService {
   public saveAccessRequest(accessRequest: AccessRequest): Observable<AccessRequest> {
     return this.http.post<AccessRequest>('/api/access-request', accessRequest);
   }
+
+  public getWorkspace(workspaceId: number): Observable<WorkSpaceDto> {
+    return this.http.get<WorkSpaceDto>(`/api/workspaces/${workspaceId}`);
+  }
+
+  public buildTree(workspaces: Array<WorkSpaceDto>): TreeNode[] {
+    return Object.keys(workspaces).reduce<TreeNode[]>((accumulator, key) => {
+      let value = workspaces[key];
+      let node: TreeNode = {};
+      node.label = value.name;
+      node.data = value;
+      node.leaf = !value.hasChildren;
+      node.data.icon = 'pi pi-fw pi-images';
+      if (value != null) {
+        if (typeof value["childrens"] === "object" && value["childrens"].length > 0) {
+          node.children = this.buildTree(value["childrens"]);
+        } else {
+          node.children = [];
+        }
+      }
+      return accumulator.concat(node);
+    }, []);
+  }
+
+  public getWorkspaces(name: string, page: number, size: number) : Observable<PaginatorDto> {
+    let params: string = this.buildWorkspaceParamsFilter(name, page, size);
+    return this.http.get<PaginatorDto>(`/api/workspaces?${params}`);
+  }
+
+  private buildWorkspaceParamsFilter(name: string, page: number, size: number): string {
+    let params: string = '';
+    if (name !== null && name !== undefined) {
+      params += `name=${name}&`;
+    }
+    if (page !== null && page !== undefined) {
+      params += `page=${page}&`;
+    }
+    if (size !== null && size !== undefined) {
+      params += `size=${size}&`;
+    }
+    return params;
+  }
+  
 }

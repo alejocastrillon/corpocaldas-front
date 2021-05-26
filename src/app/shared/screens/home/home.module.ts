@@ -7,6 +7,7 @@ import { HomeComponent } from '../home/home.component';
 
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
+import { TreeTableModule } from 'primeng/treetable';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { DropdownModule } from 'primeng/dropdown';
     HomeRoutingModule,
     SharedModule,
     TableModule,
-    DropdownModule
+    DropdownModule,
+    TreeTableModule
   ]
 })
 export class HomeModule { }

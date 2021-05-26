@@ -7,7 +7,8 @@ export class WorkSpaceDto extends Serializable {
     public name: string;
     public idParent: number;
     public nameParent: string;
-    public childrens: Array<WorkSpaceDto> = [];
+    public workspaceChildrens: Array<WorkSpaceDto> = [];
+    public hasChildren: boolean;
     public layers: Array<Layer> = [];
     
 }
