@@ -1,0 +1,56 @@
+.body {
+  background-color: rgb(248, 248, 248);
+  clear: both;
+  margin: 10px;
+  overflow-y: scroll;
+  padding: 10px;
+
+  p {
+    text-align: justify;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+  button {
+    width: 40%;
+  }
+}
+
+.data-table {
+  margin-bottom: 20px;
+
+  thead tr th {
+    text-align: center;
+  }
+}
+
+.esri-widget__table tr td,
+.esri-widget__table tr th {
+  padding: 0.1em 0.1em !important;
+  border: 1px solid #ddd;
+}
+
+h2,
+h4 {
+  margin: 0;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.terms-header {
+  display: grid;
+  grid-template-columns: auto auto;
+  margin: 10px;
+}
+
+tr:nth-child(even),
+thead {
+  background-color: #f2f2f2;
+}

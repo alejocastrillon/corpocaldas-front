@@ -13,13 +13,15 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { VerifyAccessTokenComponent } from './verify-access-token/verify-access-token.component';
+import { TermsComponent } from './terms/terms.component';
 
 
 @NgModule({
   declarations: [
     ViewerComponent,
     RegisterAccessRequestComponent,
-    VerifyAccessTokenComponent
+    VerifyAccessTokenComponent,
+    TermsComponent
   ],
   imports: [
     CommonModule,
