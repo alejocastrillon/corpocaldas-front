@@ -1,40 +1,63 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { User } from 'src/app/model/User';
 import { UsersService } from '../../services/users.service';
+import { EditUserComponent } from '../edit-user/edit-user.component';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService, MessageService, DialogService]
 })
 export class UsersComponent implements OnInit {
   cols = cols;
+
   users: Array<any> = [];
 
-  constructor(private confirmService: ConfirmationService, private messageService: MessageService, private userService: UsersService) { }
+  constructor(private confirmService: ConfirmationService, private messageService: MessageService, private userService: UsersService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
   }
 
   createUser(): void {
-    const response = undefined;
-    this.userService.saveUser(response).subscribe(() => {
-      this.messageService.add({ severity: 'success', summary: 'Usuarios', detail: 'El usuario ha sido creado exitosamente' });
-      this.getUsers();
+    const user = new User();
+    this.dialogService.open(EditUserComponent, {
+      header: 'Crear Usuario',
+      width: '80%',
+      data: { user }
+    }).onClose.subscribe(response => {
+      if (response !== null && response !== undefined) {
+        this.userService.saveUser(response).subscribe(() => {
+          this.messageService.add({ severity: 'success', summary: 'Usuarios', detail: 'El usuario ha sido creado exitosamente' });
+          this.getUsers();
+        }, error => {
+          this.messageService.add({ severity: 'error', summary: 'Usuarios', detail: 'Error : ' + error.status + error.message });
+        });
+      }
     }, error => {
-      this.messageService.add({ severity: 'error', summary: 'Usuarios', detail: 'Error : ' + error.status + error.message });
+      console.error(error);
     });
   }
 
   updateUser(user): void {
-    const response = undefined;
-    this.userService.updateUser(response.id, response).subscribe(() => {
-      this.messageService.add({ severity: 'success', summary: 'Usuarios', detail: 'El usuario ha sido modificado exitosamente' });
-      this.getUsers();
+    this.dialogService.open(EditUserComponent, {
+      header: 'Editar Usuario',
+      width: '80%',
+      data: { user }
+    }).onClose.subscribe(response => {
+      if (response !== null && response !== undefined) {
+        this.userService.updateUser(response.id, response).subscribe(() => {
+          this.messageService.add({ severity: 'success', summary: 'Usuarios', detail: 'El usuario ha sido modificado exitosamente' });
+          this.getUsers();
+        }, error => {
+          this.messageService.add({ severity: 'error', summary: 'Usuarios', detail: 'Error : ' + error.status + error.message });
+        });
+      }
     }, error => {
-      this.messageService.add({ severity: 'error', summary: 'Usuarios', detail: 'Error : ' + error.status + error.message });
-    });
+      console.error(error);
+    })
   }
 
   deleteUser(user): void { }

@@ -1,0 +1,26 @@
+.p-inputtext.p-inputtext-sm {
+  width: 100% !important;
+}
+
+.p-field {
+  margin-bottom: 10px;
+}
+
+label {
+  font-size: 14px;
+}
+
+.footer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  margin: 40px 20px 0px 20px;
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  overflow-y: unset !important;
+}
+
+::ng-deep .p-fluid .p-button {
+  width: 40%;
+}
