@@ -1,0 +1,36 @@
+<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>
+
+<h2>Usuarios</h2>
+
+<div class="content">
+
+  <button pButton pRipple type="button" label="Nuevo usuario" icon="pi pi-user-plus"
+    class="p-button-raised p-button-success p-button-sm" (click)="createUser()"></button>
+
+  <div class="users-table">
+    <p-table class="esri-widget__table" [columns]="cols" [value]="users" styleClass="p-datatable-sm">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{col.header}}
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            {{rowData[col.field]}}
+          </td>
+          <td class="actions">
+            <button pButton pRipple icon="pi pi-user-edit" class="p-button-rounded p-button-info"
+              (click)="updateUser(rowData)"></button> &nbsp;
+            <!-- <button pButton pRipple icon="pi pi-user-minus" class="p-button-rounded p-button-warning"
+              (click)="deleteUser(rowData)"></button> -->
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<form [formGroup]="formUser" class="p-fluid" (ngSubmit)="saveUser()">
+  <div class="p-grid p-fluid">
+    <div class="p-col-12 p-md-6">
+      <div class="p-field">
+        <label>Nombres</label>
+        <input type="text" class="p-inputtext-sm" pInputText id="name" formControlName="name" required autofocus />
+      </div>
+    </div>
+    <div class="p-col-12 p-md-6">
+      <div class="p-field">
+        <label>Apellidos</label>
+        <input type="text" class="p-inputtext-sm" pInputText id="name" formControlName="lastname" required />
+      </div>
+    </div>
+    <div class="p-col-12 p-md-6">
+      <div class="p-field">
+        <label>Correo</label>
+        <input type="text" class="p-inputtext-sm" pInputText id="name" formControlName="email" required />
+      </div>
+    </div>
+    <div class="p-col-12 p-md-6">
+      <div class="p-field">
+        <label>Usuario</label>
+        <input type="text" class="p-inputtext-sm" pInputText id="name" formControlName="username" required />
+      </div>
+    </div>
+    <div class="p-col-12 p-md-6">
+      <div class="p-field">
+        <label>Rol</label>
+        <input type="text" class="p-inputtext-sm" pInputText id="name" formControlName="role" required />
+      </div>
+    </div>
+    <div class="p-col-12 p-md-6">
+      <div class="p-field">
+        <label>Contraseña</label>
+        <input type="text" class="p-inputtext-sm" pInputText id="name" formControlName="password" required />
+      </div>
+    </div>
+    <div class="p-col-12 p-md-6">
+      <div class="p-field">
+        <label>Habilitado</label>
+        <br>
+        <p-toggleButton formControlName="enabled" onLabel="Habilitado" offLabel="No habilitado" onIcon="pi pi-eye"
+          offIcon="pi pi-eye-slash" [style]="{'width': '10em'}"></p-toggleButton>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-raised p-button-success"
+      [disabled]="!formUser.valid"></button> &nbsp;
+    <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-raised p-button-warning" type="button"
+      (click)="cancel()"></button>
+  </div>
+</form>

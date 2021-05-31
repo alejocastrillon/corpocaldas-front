@@ -29,6 +29,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WorkspaceComponent } from './components/workspace/workspace.component';
 import { CreateWorkspaceComponent } from './components/create-workspace/create-workspace.component';
 import { SelectWorkspaceComponent } from './components/select-workspace/select-workspace.component';
+import { UsersComponent } from './components/users/users.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { SelectWorkspaceComponent } from './components/select-workspace/select-w
     CreateLayerComponent,
     WorkspaceComponent,
     CreateWorkspaceComponent,
-    SelectWorkspaceComponent
+    SelectWorkspaceComponent,
+    UsersComponent,
+    EditUserComponent
   ],
   imports: [
     CommonModule,
