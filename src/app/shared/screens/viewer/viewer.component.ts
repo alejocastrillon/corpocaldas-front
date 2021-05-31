@@ -6,6 +6,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { Layer } from 'src/app/model/Layer';
 import { HomeService } from '../home/home.service';
 import { RegisterAccessRequestComponent } from './register-access-request/register-access-request.component';
+import { TermsComponent } from './terms/terms.component';
 import { VerifyAccessTokenComponent } from './verify-access-token/verify-access-token.component';
 
 declare let L;
@@ -107,22 +108,34 @@ export class ViewerComponent implements OnInit {
 
   public downloadLayer(): void {
     if (this.layer.accessGranted === 1) {
-      this.sendRequestAccessLayer();
+      this.downloadShapefile();
     } else if (this.layer.accessGranted === 2) {
+      this.sendRequestAccessLayer();
       this.haveCredentials();
     }
   }
 
   public downloadShapefile(): void {
-    const link = document.createElement('a');
-    link.target = '_blank';
-    link.download = this.name;
-    link.href = 'http://54.91.220.9:8080/geoserver/' + this.layer.nameWorkspace +
-      '/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=' + this.layer.nameWorkspace + '%3A' + this.name + '&maxFeatures=50&outputFormat=SHAPE-ZIP';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    link.remove();
+    this.dialogService.open(TermsComponent, {
+      width: 'auto',
+      closable: false,
+      closeOnEscape: false
+    }).onClose.subscribe(result => {
+      if (result) {
+        this.messageService.add({ severity: 'success', summary: 'Descarga', detail: 'En un momento será redirigido a la descarga.' });
+        const link = document.createElement('a');
+        link.target = '_blank';
+        link.download = this.name;
+        link.href = 'http://54.91.220.9:8080/geoserver/' + this.layer.nameWorkspace +
+          '/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=' + this.layer.nameWorkspace + '%3A' + this.name + '&maxFeatures=50&outputFormat=SHAPE-ZIP';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        link.remove();
+      } else {
+        this.messageService.add({ severity: 'warn', summary: 'Descarga', detail: 'Debido a que no aceptó los términos de acceso a la información no podrá descargarla.' });
+      }
+    });
   }
 
   private getLayerInfo(): void {

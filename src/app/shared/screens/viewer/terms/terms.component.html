@@ -1,9 +1,7 @@
 <div class="terms">
-  <div class="terms-header">
-    <div>
-      <h2>Plataforma Virtual SIG-SIR</h2>
-      <h4>Términos y Condiciones</h4>
-    </div>
+  <div>
+    <h2>Plataforma Virtual SIG-SIR</h2>
+    <h4>Términos y Condiciones</h4>
   </div>
   <div class="body">
     <table class="data-table esri-widget__table">
@@ -56,7 +54,9 @@
     </p>
   </div>
   <div class="buttons">
-    <button pButton type="button" icon="pi pi-times" label="No Acepto" class="p-button-warning"></button>
-    <button pButton type="button" icon="pi pi-check" label="Acepto" class="p-button-success"></button>
+    <button pButton type="button" icon="pi pi-times" label="No Acepto" class="p-button-warning p-button-sm"
+      (click)="close(false)"></button>
+    <button pButton type="button" icon="pi pi-check" label="Acepto" class="p-button-success p-button-sm"
+      (click)="close(true)"></button>
   </div>
 </div>

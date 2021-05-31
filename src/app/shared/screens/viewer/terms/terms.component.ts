@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-terms',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TermsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private ref: DynamicDialogRef) { }
 
   ngOnInit(): void {
+  }
+
+  close(agree: boolean) {
+    this.ref.close(agree);
   }
 
 }
