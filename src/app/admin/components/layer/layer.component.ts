@@ -20,11 +20,11 @@ export class LayerComponent implements OnInit {
       code: null
     },
     {
-      name: "Publico",
+      name: "Información Corpocaldas",
       code: 1
     },
     {
-      name: "Privado",
+      name: "Información de otras entidades",
       code: 2
     }
   ];
