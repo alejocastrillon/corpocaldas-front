@@ -1,0 +1,16 @@
+<div class="login-form">
+  <img src="assets/images/logo-corpocaldas.png" alt="" width="170px" height="123px">
+
+  <form [formGroup]="loginForm">
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+      <input type="text" pInputText placeholder="Correo" formControlName="username">
+    </div>
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+      <input type="text" pInputText placeholder="Contraseña" formControlName="password">
+    </div>
+  </form>
+
+  <button class="btn-login" pButton label="Ingresar" [disabled]="!loginForm.valid"></button>
+</div>

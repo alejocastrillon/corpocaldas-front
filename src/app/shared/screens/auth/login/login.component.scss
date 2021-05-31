@@ -1,0 +1,29 @@
+@import "src/styles/lib/variables";
+
+.p-button {
+  background: $color-brand;
+  border: 1px solid $color-brand;
+
+  &:enabled:hover {
+    background:  $color-brand;
+    border-color:  $color-brand;
+  }
+}
+
+.login-form {
+  align-items: center;
+  background-color: $color-header;
+  border-radius: 3px;
+  box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  justify-content: center;
+  margin: auto;
+  margin-top: 100px;
+  width: 500px;
+}
+
+.p-inputgroup {
+  margin-bottom: 10px;
+}
