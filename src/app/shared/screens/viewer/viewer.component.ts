@@ -110,7 +110,6 @@ export class ViewerComponent implements OnInit {
     if (this.layer.accessGranted === 1) {
       this.downloadShapefile();
     } else if (this.layer.accessGranted === 2) {
-      this.sendRequestAccessLayer();
       this.haveCredentials();
     }
   }
