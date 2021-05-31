@@ -41,7 +41,25 @@ export class ViewerComponent implements OnInit {
     this.addScaleControl();
     this.addSearchControl();
     this.addZoomControl();
+    this.addBackControl()
     this.addDownloadControl();
+  }
+
+  public addBackControl(): void {
+    const back = L.control({ position: 'topleft' });
+    back.onAdd = () => {
+      const button = L.DomUtil.create('button', 'btn-control');
+      button.classList.add('leaflet-control', 'leaflet-control-layers');
+      button.title = 'Volver';
+      button.addEventListener('click', () => {
+        window.history.back();
+      });
+      const icon = document.createElement('i');
+      icon.classList.add('pi', 'pi-arrow-circle-left');
+      button.appendChild(icon);
+      return button;
+    }
+    back.addTo(this.map);
   }
 
   /**
@@ -58,19 +76,20 @@ export class ViewerComponent implements OnInit {
   }
 
   private addDownloadControl(): void {
-    const controls = document.getElementsByClassName('leaflet-top leaflet-left')[0];
-    const button = document.createElement('button');
-    button.classList.add('leaflet-control');
-    button.classList.add('leaflet-control-layers');
-    button.setAttribute('style', 'padding: 5px 7px !important; cursor: pointer;');
-    button.addEventListener('click', () => {
-      this.downloadLayer();
-    });
-    const icon = document.createElement('i');
-    icon.classList.add('pi');
-    icon.classList.add('pi-download');
-    button.appendChild(icon);
-    controls.appendChild(button);
+    const download = L.control({ position: 'topleft' });
+    download.onAdd = () => {
+      const button = L.DomUtil.create('button', 'btn-control');
+      button.classList.add('leaflet-control', 'leaflet-control-layers');
+      button.title = 'Descargar';
+      button.addEventListener('click', () => {
+        this.downloadLayer();
+      });
+      const icon = document.createElement('i');
+      icon.classList.add('pi', 'pi-download');
+      button.appendChild(icon);
+      return button;
+    }
+    download.addTo(this.map);
   }
 
   /**
