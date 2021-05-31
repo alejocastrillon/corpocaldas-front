@@ -1,4 +1,7 @@
 <p-toast></p-toast>
+
+<h2>Solicitudes</h2>
+
 <p-dropdown [options]="optionsFilter" [(ngModel)]="optionFilterSelected" (onChange)="changeFilter()" optionLabel="name"
   optionValue="code">
 </p-dropdown>
@@ -6,7 +9,7 @@
   <p-table class="esri-widget__table" [lazy]="true" (onLazyLoad)="getFilterAccessRequest($event)" [paginator]="true"
     [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="numberOfRows" [loading]="loading"
     [globalFilterFields]="['name', 'email']" [value]="accessRequests" [showCurrentPageReport]="true"
-    currentPageReportTemplate="{first} - {last} de {totalRecords} Capas" styleClass="p-datatable-striped">
+    currentPageReportTemplate="{first} - {last} de {totalRecords} Capas" styleClass="p-datatable-sm">
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th>
