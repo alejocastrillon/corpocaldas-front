@@ -214,8 +214,8 @@ export class ViewerComponent implements OnInit {
   private haveCredentials(): void {
     this.confirmService.confirm({
       message: `¿Tienes las credenciales para acceder a ${this.layer.name}?`,
-      acceptLabel: 'Si',
-      rejectLabel: 'No',
+      acceptLabel: 'Si, descargar con token.',
+      rejectLabel: 'No, hacer solicitud.',
       accept: () => {
         this.verifyTokenAccess();
       },
