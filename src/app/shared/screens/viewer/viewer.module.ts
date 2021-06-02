@@ -14,6 +14,7 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { VerifyAccessTokenComponent } from './verify-access-token/verify-access-token.component';
 import { TermsComponent } from './terms/terms.component';
+import { MessagesModule } from 'primeng/messages';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { TermsComponent } from './terms/terms.component';
     DynamicDialogModule,
     ConfirmDialogModule,
     ToastModule,
+    MessagesModule,
     InputTextModule,
     InputTextareaModule,
     ButtonModule

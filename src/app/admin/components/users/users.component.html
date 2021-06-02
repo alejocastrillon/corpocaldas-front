@@ -9,19 +9,53 @@
     class="p-button-raised p-button-success p-button-sm" (click)="createUser()"></button>
 
   <div class="users-table">
-    <p-table class="esri-widget__table" [columns]="cols" [value]="users" styleClass="p-datatable-sm">
+    <p-table class="esri-widget__table" [value]="users" styleClass="p-datatable-sm" [lazy]="true" (onLazyLoad)="getUsers($event, valueEnabled)"
+    [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="numberOfRows" [loading]="loading"
+    [globalFilterFields]="['name', 'lastname', 'email', 'isEnabled']" styleClass="p-datatable-sm" [paginator]="true" [rows]="10"
+    [showCurrentPageReport]="true" currentPageReportTemplate="{first} - {last} de {totalRecords} Usuarios">
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th *ngFor="let col of columns">
-            {{col.header}}
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Correo electrónico</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>
+            <p-columnFilter type="text" field="name" [showMenu]="false"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="lastname" [showMenu]="false"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="email" [showMenu]="false"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter field="isEnabled" [showMenu]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-dropdown [ngModel]="value" [options]="optionsFilter" (onChange)="getUsers(eventPage, $event.value)"
+                  optionLabel="name" optionValue="code" [showClear]="true">
+                </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
           </th>
           <th></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <ng-template pTemplate="body" let-user>
         <tr>
-          <td *ngFor="let col of columns">
-            {{rowData[col.field]}}
+          <td>
+            {{user.name}}
+          </td>
+          <td>
+            {{user.lastname}}
+          </td>
+          <td>
+            {{user.email}}
+          </td>
+          <td>
+            {{user.state}}
           </td>
           <td class="actions">
             <button pButton pRipple icon="pi pi-user-edit" class="p-button-rounded p-button-info"

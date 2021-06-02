@@ -24,14 +24,16 @@ export class SelectWorkspaceComponent implements OnInit {
   constructor(private service: AdminService) { }
 
   ngOnInit(): void {
-    debugger;
+    
   }
 
   public getWorkSpaces(event: LazyLoadEvent): void {
     this.loading = true;
     this.eventPage = event;
     this.service.getWorkspaces(null, event !== null ? event.first / event.rows : null, event !== null ? event.rows : null).subscribe(res => {
-      this.workspaces = this.service.buildTree(res.data);
+      if (res.data !== null && res.data.length > 0) {
+        this.workspaces = this.service.buildTree(res.data);
+      }
       this.workspaceSelected !== null && this.workspaceSelected !== undefined ? this.selectInitialParent(this.workspaceSelected, this.workspaces) : null;
       this.workspaceId !== null && this.workspaceId !== undefined ? this.removeReference(this.workspaceId, this.workspaces) : null;
       this.totalRecords = res.numberRows;
@@ -42,22 +44,24 @@ export class SelectWorkspaceComponent implements OnInit {
   }
 
   public onNodeExpand(event: any): void {
-    this.loading = true;
     const node = event.node;
-    this.service.getWorkspace(node.data.id).subscribe(res => {
-      for (const workspace of res.workspaceChildrens) {
-        node.children.push({
-          data: {
-            id: workspace.id,
-            name: workspace.name
-          },
-          leaf: !workspace.hasChildren,
-          children: []
-        });
-      }
-      this.workspaces = [...this.workspaces];
-      this.loading = false;
-    })
+    if (node.children === undefined ||node.children.length === 0) {
+      this.loading = true;
+      this.service.getWorkspace(node.data.id).subscribe(res => {
+        for (const workspace of res.workspaceChildrens) {
+          node.children.push({
+            data: {
+              id: workspace.id,
+              name: workspace.name
+            },
+            leaf: !workspace.hasChildren,
+            children: []
+          });
+        }
+        this.workspaces = [...this.workspaces];
+        this.loading = false;
+      });
+    }
   }
   
   private removeReference(id: number, nodes: TreeNode[]): void {
@@ -72,13 +76,13 @@ export class SelectWorkspaceComponent implements OnInit {
     }
   }
 
-  private selectInitialParent(idParent: number, nodes: TreeNode[]): void {
+  private selectInitialParent(parentId: number, nodes: TreeNode[]): void {
     for (const node of nodes) {
-      if (node.data.id === idParent) {
+      if (node.data.id === parentId) {
         this.selectedNode = node;
         break;
       } else {
-        this.selectInitialParent(idParent, node.children);
+        this.selectInitialParent(parentId, node.children);
       }
     }
   }

@@ -1,16 +1,31 @@
+<p-toast></p-toast>
 <div class="login-form">
   <img src="assets/images/logo-corpocaldas.png" alt="" width="170px" height="123px">
 
-  <form [formGroup]="loginForm">
+  <form [formGroup]="loginForm" (ngSubmit)="loginForm.valid && login()">
     <div class="p-inputgroup">
       <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
       <input type="text" pInputText placeholder="Correo" formControlName="username">
     </div>
+    <div class="error"
+      *ngIf="loginForm.controls.username.touched && loginForm.controls.username.dirty && loginForm.controls.username.invalid">
+      <span class="pi pi-times"></span>
+      <span *ngIf="loginForm.controls.username.errors.required">
+        El nombre de usuario o el correo electrónico es requerido
+      </span>
+    </div>
     <div class="p-inputgroup">
       <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
-      <input type="text" pInputText placeholder="Contraseña" formControlName="password">
+      <p-password [feedback]="false" [toggleMask]="true" placeholder="Contraseña" formControlName="password">
+      </p-password>
     </div>
+    <div class="error"
+      *ngIf="loginForm.controls.password.touched && loginForm.controls.password.dirty && loginForm.controls.password.invalid">
+      <span class="pi pi-times"></span>
+      <span *ngIf="loginForm.controls.password.errors.required">
+        La contraseña es requerida
+      </span>
+    </div>
+    <button type="submit" class="btn-login" pButton label="Ingresar" [disabled]="!loginForm.valid"></button>
   </form>
-
-  <button class="btn-login" pButton label="Ingresar" [disabled]="!loginForm.valid"></button>
 </div>

@@ -4,28 +4,30 @@
     <div class="p-col-12 p-md-6">
       <div class="p-field">
         <label>Nombre</label>
-        <input type="text" class="p-inputtext-sm" pInputText id="name" formControlName="name" required autofocus />
+        <input type="text" class="p-inputtext-sm" pInputText id="name" [(ngModel)]="layer.name" formControlName="name"
+          required autofocus />
       </div>
     </div>
     <div class="p-col-12 p-md-6">
       <div class="p-field">
         <label>Nombre de referencia</label>
-        <input type="text" class="p-inputtext-sm" pInputText id="referenceName" formControlName="referenceName" />
+        <input type="text" class="p-inputtext-sm" pInputText id="referenceName" [(ngModel)]="layer.referenceName"
+          formControlName="referenceName" />
       </div>
     </div>
     <div class="p-col-12 p-md-6">
       <div class="p-field">
         <label>Nivel de acceso</label>
-        <p-dropdown [options]="accessGrantedOptions" formControlName="accessGranted" optionLabel="name"
-          optionValue="code" placeholder="Seleccione"></p-dropdown>
+        <p-dropdown [options]="accessGrantedOptions" formControlName="accessGranted" [(ngModel)]="layer.accessGranted"
+          optionLabel="name" optionValue="code" placeholder="Seleccione"></p-dropdown>
       </div>
     </div>
     <div class="p-col-12 p-md-6">
       <div class="p-field">
         <label>Visibilidad</label>
         <br>
-        <p-toggleButton formControlName="visible" onLabel="Visible" offLabel="No visible" onIcon="pi pi-eye"
-          offIcon="pi pi-eye-slash" [style]="{'width': '10em'}"></p-toggleButton>
+        <p-toggleButton formControlName="visible" [(ngModel)]="layer.visible" onLabel="Visible" offLabel="No visible"
+          onIcon="pi pi-eye" offIcon="pi pi-eye-slash" [style]="{'width': '10em'}"></p-toggleButton>
       </div>
     </div>
     <div class="p-col-12 p-md-12">

@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [MessageService]
 })
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private route: Router) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private route: Router, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -19,8 +21,8 @@ export class LoginComponent implements OnInit {
 
   initializeForm() {
     this.loginForm = this.fb.group({
-      username: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.compose([Validators.required])]
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     });
   }
 
@@ -29,10 +31,14 @@ export class LoginComponent implements OnInit {
       const username = this.loginForm.value.username;
       const password = this.loginForm.value.password;
       this.authService.login(username, password).subscribe((response) => {
+        this.messageService.clear();
         sessionStorage.setItem('ACCESS_TOKEN', response.token);
+        sessionStorage.setItem('ACCESS_USER', response.userId);
+        sessionStorage.setItem('ACCESS_ROLE', response.userRole);
         this.route.navigate(['/admin']);
       }, error => {
         console.log(error);
+        this.messageService.add({severity: 'error', summary: 'Login', detail: 'Nombre de usuario o contraseña erroneos'});
       });
     }
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, LazyLoadEvent, MessageService, TreeNode } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
+import { SaveWorkspace } from 'src/app/model/SaveWorkspace';
 import { WorkSpaceDto } from 'src/app/model/WorkSpaceDto';
 import { AdminService } from '../../services/admin.service';
 import { CreateWorkspaceComponent } from '../create-workspace/create-workspace.component';
@@ -26,7 +27,9 @@ export class WorkspaceComponent implements OnInit {
     this.loading = true;
     this.eventPage = event;
     this.service.getWorkspaces(null, event !== null ? event.first / event.rows : null, event !== null ? event.rows : null).subscribe(res => {
-      this.workspaces = this.service.buildTree(res.data);
+      if (res.data !== null && res.data.length > 0) {
+        this.workspaces = this.service.buildTree(res.data);
+      }
       this.totalRecords = res.numberRows;
       this.loading = false;
     }, err => {
@@ -57,21 +60,31 @@ export class WorkspaceComponent implements OnInit {
   
 
   public addWorkspace(): void {
-    this.openDialog(new WorkSpaceDto());
+    this.openDialog(new SaveWorkspace());
   }
 
   public editWorkspace(workspace: WorkSpaceDto): void {
     this.openDialog(Object.assign({}, workspace));
   }
 
-  private openDialog(workspace: WorkSpaceDto): void {
+  private buildSaveObject(workspace: any): SaveWorkspace {
+    let work: SaveWorkspace = new SaveWorkspace();
+    work.id = workspace.id;
+    work.name = workspace.name;
+    work.parent = new SaveWorkspace();
+    work.parent.id = workspace.parentId;
+    return work;
+  }
+
+  private openDialog(workspace: any): void {
+    let saveWorkSpace: SaveWorkspace = this.buildSaveObject(workspace);
     console.log(this.workspaces);
     let dialog = this.dialogService.open(CreateWorkspaceComponent, {
       width: '50%',
       header: `${workspace.id !== undefined && workspace.id !== null ? 'Modificar' : 'Crear'} espacio de trabajo`,
       data: {
-        workspace: workspace,
-        workspaces: this.workspaces.slice()
+        workspace: saveWorkSpace,
+        workspaces: this.workspaces !== undefined ? this.workspaces.slice() : null
       }
     });
     dialog.onClose.subscribe(res => {

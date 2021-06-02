@@ -45,7 +45,9 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     this.eventPage = event;
     this.service.getWorkspaces(null, event !== null ? event.first / event.rows : null, event !== null ? event.rows : null).subscribe(res => {
-      this.workspaces = this.service.buildTree(res.data);
+      if (res.data !== null && res.data.length > 0) {
+        this.workspaces = this.service.buildTree(res.data);
+      }
       this.totalRecords = res.numberRows;
       this.loading = false;
     }, err => {
@@ -65,7 +67,8 @@ export class HomeComponent implements OnInit {
               data: {
                 id: layer.id,
                 name: layer.name,
-                icon: 'pi pi-fw pi-map'
+                icon: 'pi pi-fw pi-map',
+                object: 'layer'
               }
             });
           }
@@ -75,7 +78,8 @@ export class HomeComponent implements OnInit {
             data: {
               id: workspace.id,
               name: workspace.name,
-              icon: 'pi pi-fw pi-images'
+              icon: 'pi pi-fw pi-images',
+              object: 'workspace'
             },
             leaf: !workspace.hasChildren,
             children: []
@@ -111,8 +115,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  public navigateToViewer(data: Layer): void {
-    this.router.navigate(['viewer'], { queryParams: { name: data.name } });
+  public navigateToViewer(data: any): void {
+    data.object === 'layer' ? this.router.navigate(['viewer'], { queryParams: { name: data.name }}) : null;
   }
 
 }

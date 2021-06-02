@@ -23,7 +23,7 @@
     <br>
     <label for="parent">Seleccione el nodo padre del espacio de trabajo:</label>
     <div id="parent" style="max-height: 300px; overflow-y: scroll;">
-        <app-select-workspace [workspaceSelected]="workspace.idParent" [workspaceId]="workspace.id"
+        <app-select-workspace [workspaceSelected]="workspace.parent.id" [workspaceId]="workspace.id"
             (selectWorkspaceEvent)="selectParentWorkspace($event)"></app-select-workspace>
     </div>
     <div class="footer">

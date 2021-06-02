@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
@@ -56,6 +56,7 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     CardModule,
     TableModule,
     ButtonModule,
+    HttpClientModule,
     DialogModule,
     InputTextModule,
     DropdownModule,

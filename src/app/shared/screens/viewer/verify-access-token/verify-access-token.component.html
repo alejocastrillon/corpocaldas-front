@@ -1,4 +1,5 @@
-<form [formGroup]="verifyForm">
+<p-messages></p-messages>
+<form [formGroup]="verifyForm" (ngSubmit)="verifyForm.valid && verifyAccess()">
     <div class="p-g p-fluid">
         <div class="p-field p-col-12 p-md-12">
             <br>
@@ -39,8 +40,8 @@
         </div>
         <br>
         <div class="button-container">
-            <button pButton [disabled]="!verifyForm.valid" icon="pi pi-check"
-                class="p-button-rounded p-button-success" label="Registrar"></button>
+            <button pButton [disabled]="!verifyForm.valid" icon="pi pi-check" class="p-button-rounded p-button-success"
+                label="Verificar"></button>
         </div>
         <div class="button-container">
             <button pButton icon="pi pi-times" class="p-button-rounded" label="Cancelar" type="button"

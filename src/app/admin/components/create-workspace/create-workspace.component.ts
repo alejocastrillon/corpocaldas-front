@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService, TreeNode } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { SaveWorkspace } from 'src/app/model/SaveWorkspace';
 import { WorkSpaceDto } from 'src/app/model/WorkSpaceDto';
 import { AdminService } from '../../services/admin.service';
 
@@ -15,7 +16,7 @@ import { AdminService } from '../../services/admin.service';
 export class CreateWorkspaceComponent implements OnInit {
 
   workspaces: TreeNode[];
-  workspace: WorkSpaceDto;
+  workspace: SaveWorkspace;
   workspaceFormGroup: FormGroup;
   selectedNode: any;
   label: string;
@@ -24,7 +25,7 @@ export class CreateWorkspaceComponent implements OnInit {
   constructor(private config: DynamicDialogConfig, private ref: DynamicDialogRef, private formBuilder: FormBuilder, private service: AdminService, private messageService: MessageService) { 
     this.workspaces = this.config.data.workspaces;
     this.workspace = this.config.data.workspace;
-    debugger;
+    
     this.label = this.workspace.id !== undefined && this.workspace.id !== null ? 'Modificar' : 'Guardar';
   }
 
@@ -39,12 +40,13 @@ export class CreateWorkspaceComponent implements OnInit {
   }
 
   public selectParentWorkspace(event: number): void {
+    this.workspace.parent = new SaveWorkspace();
     if (this.workspace.id !== event) {
-      this.workspace.idParent = event;
+      this.workspace.parent.id = event;
       this.messageService.clear();
     } else {
       this.messageService.add({severity: 'error', summary: 'Error', detail: "No se puede seleccionar el mismo espacio de trabajo como contenedor del mismo"});
-      this.workspace.idParent = null;
+      this.workspace.parent.id = null;
       this.error = true;
     }
   }

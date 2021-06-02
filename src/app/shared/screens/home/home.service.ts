@@ -64,6 +64,7 @@ export class HomeService {
       let node: TreeNode = {};
       node.label = value.name;
       node.data = value;
+      node.data.object = "workspace";
       node.leaf = !value.hasChildren;
       node.data.icon = 'pi pi-fw pi-images';
       if (value != null) {
@@ -94,6 +95,14 @@ export class HomeService {
       params += `size=${size}&`;
     }
     return params;
+  }
+
+  public verifyAccess(token: string, email: string, layerId: number): Observable<AccessRequest> {
+    const form = new FormData();
+    form.append('accessToken', token);
+    form.append('email', email);
+    form.append('layerId', layerId.toString());
+    return this.http.post<AccessRequest>('/api/access-request/validate-access', form);
   }
   
 }

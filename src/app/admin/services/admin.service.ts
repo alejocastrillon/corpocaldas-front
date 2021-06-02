@@ -6,30 +6,22 @@ import { Layer } from 'src/app/model/Layer';
 import { PaginatorDto } from 'src/app/model/PaginatorDto';
 import { WorkSpaceDto } from 'src/app/model/WorkSpaceDto';
 import { TreeNode } from 'primeng/api';
+import { SaveWorkspace } from 'src/app/model/SaveWorkspace';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  httpOptions = {
-    headers: new HttpHeaders()
-      .set('Content-Type', 'application/json;charset=UTF-8')
-      .set('Accept', 'application/json')
-      .set('Access-Control-Allow-Methods', '*')
-      .set('authorization-token', sessionStorage.getItem('ACCESS_TOKEN'))
-      .set('authorization-user', sessionStorage.getItem('ACCESS_USER'))
-  };
-
   constructor(private http: HttpClient) { }
 
   public waitingForApproval(): Observable<Array<AccessRequest>> {
-    return this.http.get<Array<AccessRequest>>('api/access-request/waiting-for-approval', { headers: this.httpOptions.headers });
+    return this.http.get<Array<AccessRequest>>('api/access-request/waiting-for-approval');
   }
 
   public filterAccessRequest(name: string, email: string, company: string, layername: string, accessGranted: number, approved: boolean, page: number, size: number): Observable<PaginatorDto> {
     let params: string = this.buildAccessRequestParamsFilter(name, email, company, layername, accessGranted, approved, page, size);
-    return this.http.get<PaginatorDto>(`/api/access-request?${params}`, { headers: this.httpOptions.headers });
+    return this.http.get<PaginatorDto>(`/api/access-request?${params}`);
   }
 
   private buildAccessRequestParamsFilter(name: string, email: string, company: string, layername: string, accessGranted: number, approved: boolean, page: number, size: number): string {
@@ -63,7 +55,7 @@ export class AdminService {
 
   public getWorkspaces(name: string, page: number, size: number) : Observable<PaginatorDto> {
     let params: string = this.buildWorkspaceParamsFilter(name, page, size);
-    return this.http.get<PaginatorDto>(`/api/workspaces?${params}`, { headers: this.httpOptions.headers });
+    return this.http.get<PaginatorDto>(`/api/workspaces?${params}`);
   }
 
   private buildWorkspaceParamsFilter(name: string, page: number, size: number): string {
@@ -82,7 +74,7 @@ export class AdminService {
 
   public getLayers(name: string, accessGranted: number, visible: boolean, page: number, size: number): Observable<PaginatorDto> {
     let params: string = this.buildLayerParamsFilter(name, accessGranted, visible, page, size);
-    return this.http.get<PaginatorDto>(`/api/layers?${params}`, { headers: this.httpOptions.headers });
+    return this.http.get<PaginatorDto>(`/api/layers?${params}`);
   }
 
   private buildLayerParamsFilter(name: string, accessGranted: number, visible: boolean, page: number, size: number): string {
@@ -106,27 +98,27 @@ export class AdminService {
   }
 
   public updateAccess(access: AccessRequest): Observable<AccessRequest> {
-    return this.http.put<AccessRequest>(`/api/access-request/${access.id}`, access, { headers: this.httpOptions.headers });
+    return this.http.put<AccessRequest>(`/api/access-request/${access.id}`, access);
   }
 
   public editLayer(layer: Layer): Observable<Layer> {
-    return this.http.put<Layer>('/api/layers/' + layer.id, layer, { headers: this.httpOptions.headers });
+    return this.http.put<Layer>('/api/layers/' + layer.id, layer);
   }
 
   public saveLayer(layer: Layer): Observable<Layer> {
-    return this.http.post<Layer>('/api/layers', layer, { headers: this.httpOptions.headers });
+    return this.http.post<Layer>('/api/layers', layer);
   }
 
-  public saveWorkspace(workspace: WorkSpaceDto): Observable<WorkSpaceDto> {
-    return this.http.post<WorkSpaceDto>('/api/workspaces', workspace, { headers: this.httpOptions.headers });
+  public saveWorkspace(workspace: SaveWorkspace): Observable<WorkSpaceDto> {
+    return this.http.post<WorkSpaceDto>('/api/workspaces', workspace);
   }
 
   public getWorkspace(workspaceId: number): Observable<WorkSpaceDto> {
-    return this.http.get<WorkSpaceDto>(`/api/workspaces/${workspaceId}`, { headers: this.httpOptions.headers });
+    return this.http.get<WorkSpaceDto>(`/api/workspaces/${workspaceId}`);
   }
 
   public deleteLayer(idLayer: number): Observable<boolean> {
-    return this.http.delete<boolean>('/api/layers/' + idLayer, { headers: this.httpOptions.headers });
+    return this.http.delete<boolean>('/api/layers/' + idLayer);
   }
 
   public buildTree(workspaces: Array<WorkSpaceDto>): TreeNode[] {
@@ -145,6 +137,46 @@ export class AdminService {
       }
       return accumulator.concat(node);
     }, []);
+  }
+
+  public buildUserParamsFilter(name: string, lastname: string, email: string, isEnabled: boolean, page: number, size: number): string {
+    let params: string = '';
+    if (name !== null && name !== undefined) {
+      params += `name=${name}&`;
+    }
+    if (lastname !== null && lastname !== undefined) {
+      params += `lastname=${lastname}&`;
+    }
+    if (email !== null && email !== undefined) {
+      params += `email=${email}&`;
+    }
+    if (isEnabled !== null && isEnabled !== undefined) {
+      params += `is_enabled=${isEnabled}&`;
+    }
+    if (page !== null && page !== undefined) {
+      params += `page=${page}&`;
+    }
+    if (size !== null && size !== undefined) {
+      params += `size=${size}&`;
+    }
+    return params;
+  }
+
+  public getUsers(name: string, lastname: string, email: string, isEnabled: boolean, page: number, size: number): Observable<PaginatorDto> {
+    const params: string = this.buildUserParamsFilter(name, lastname, email, isEnabled, page, size);
+    return this.http.get<PaginatorDto>(`/api/users?${params}`);
+  }
+
+  public logout(): Observable<any> {
+    return this.http.get('/api/users/logout');
+  }
+
+  public saveUser(user): Observable<any> {
+    return this.http.post(`/api/users`, user);
+  }
+
+  public updateUser(userId, user): Observable<any> {
+    return this.http.put(`/api/users/${userId}`, user);
   }
 
 }

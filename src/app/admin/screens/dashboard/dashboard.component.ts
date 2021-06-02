@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MenuItem } from 'primeng/api';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,7 @@ export class DashboardComponent implements OnInit {
 
   items: MenuItem[];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private service: AdminService) { }
 
 
   ngOnInit(): void {
@@ -44,7 +45,23 @@ export class DashboardComponent implements OnInit {
         command: () => {
           this.router.navigate(['admin/users']);
         }
+      },
+      {
+        label: 'Cerrar Sesión',
+        icon: 'pi pi-fw pi-power-off',
+        command: () => {
+          this.logout();
+        }
       }
     ];
+  }
+
+  private logout(): void {
+    this.service.logout().subscribe(res => {
+      sessionStorage.clear();
+      this.router.navigate(['/auth/login']);
+    }, err => {
+      console.error(err);
+    });
   }
 }

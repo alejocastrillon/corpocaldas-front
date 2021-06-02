@@ -8,6 +8,7 @@ import { HomeService } from '../home/home.service';
 import { RegisterAccessRequestComponent } from './register-access-request/register-access-request.component';
 import { TermsComponent } from './terms/terms.component';
 import { VerifyAccessTokenComponent } from './verify-access-token/verify-access-token.component';
+import { environment } from "../../../../environments/environment";
 
 declare let L;
 
@@ -23,11 +24,13 @@ export class ViewerComponent implements OnInit {
   layer: Layer;
   map: any;
   name: string;
+  readonly geoServer: string = environment.geoServer;
 
   constructor(private route: ActivatedRoute, private service: HomeService, private confirmService: ConfirmationService,
     private messageService: MessageService, private dialogService: DialogService) {
     this.route.queryParams.subscribe(params => {
       this.name = params.name;
+      
       this.getLayerInfo();
     });
   }
@@ -144,8 +147,8 @@ export class ViewerComponent implements OnInit {
         const link = document.createElement('a');
         link.target = '_blank';
         link.download = this.name;
-        link.href = 'http://54.91.220.9:8080/geoserver/' + this.layer.nameWorkspace +
-          '/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=' + this.layer.nameWorkspace + '%3A' + this.name + '&maxFeatures=50&outputFormat=SHAPE-ZIP';
+        link.href = this.geoServer + this.layer.nameWorkspace.replace(' ', '_') +
+          '/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=' + this.layer.nameWorkspace.replace(' ', '_') + '%3A' + this.name + '&maxFeatures=50&outputFormat=SHAPE-ZIP';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -157,10 +160,11 @@ export class ViewerComponent implements OnInit {
   }
 
   private getLayerInfo(): void {
+    
     this.service.getLayerByName(this.name).subscribe(res => {
       this.layer = res;
       this.name = this.layer.referenceName;
-      const layer = L.tileLayer.wms('http://54.91.220.9:8080/geoserver/' + this.layer.nameWorkspace + '/wms?', {
+      const layer = L.tileLayer.wms(this.geoServer + this.layer.nameWorkspace.replace(' ', '_') + '/wms?', {
         layers: this.name,
         format: 'image/png',
         transparent: true,
@@ -262,6 +266,11 @@ export class ViewerComponent implements OnInit {
       data: { layerId: this.layer.id },
       header: 'Verificación de token'
     });
+    dialog.onClose.subscribe(res => {
+      if (res !== undefined && res !== null) {
+        this.downloadShapefile()
+      }
+    })
   }
 
   private sendRequestAccessLayer(): void {

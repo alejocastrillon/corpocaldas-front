@@ -11,8 +11,8 @@ import { Layer } from 'src/app/model/Layer';
 export class CreateLayerComponent implements OnInit {
 
   accessGrantedOptions = [
-    { name: 'Capa Pública', code: 1 },
-    { name: 'Capa Privada', code: 2 }
+    { name: 'Información Corpocaldas', code: 1 },
+    { name: 'Información de otras entidades', code: 2 }
   ];
 
   layer: Layer = new Layer();
@@ -53,7 +53,7 @@ export class CreateLayerComponent implements OnInit {
   }
 
   public saveLayer(): void {
-    this.ref.close(this.layerForm.value);
+    this.ref.close(this.layer);
   }
 
 }

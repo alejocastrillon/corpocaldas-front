@@ -14,7 +14,7 @@
         <td>
           <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
           <i [attr.class]="rowData.icon"></i>
-          {{rowData.name}}
+          <span (click)="navigateToViewer(rowData)">{{rowData.name}}</span>
         </td>
       </tr>
     </ng-template>

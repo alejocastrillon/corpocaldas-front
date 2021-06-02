@@ -8,6 +8,9 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { PasswordModule } from 'primeng/password';
+import { MessagesModule } from 'primeng/messages';
 
 
 @NgModule({
@@ -20,7 +23,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     ButtonModule,
     CardModule,
     InputTextModule,
-    ReactiveFormsModule
+    PasswordModule,
+    ReactiveFormsModule,
+    ToastModule,
+    MessagesModule
   ]
 })
 export class AuthModule { }
