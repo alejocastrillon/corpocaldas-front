@@ -1,9 +1,11 @@
 .header {
-  height: 123px;
-  // text-align: right;
+  align-items: center;
   background-color: $color-header;
   background-image: url('./../../assets/images/bg_header.png');
   background-repeat: space;
   background-position: right;
+  display: flex;
+  flex-direction: row;
+  height: 123px;
   padding-left: 40px;
 }

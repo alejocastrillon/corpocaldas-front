@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MenuItem } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { GuideComponent } from 'src/app/shared/components/guide/guide.component';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
@@ -13,7 +15,7 @@ export class DashboardComponent implements OnInit {
 
   items: MenuItem[];
 
-  constructor(private router: Router, private service: AdminService) { }
+  constructor(private router: Router, private service: AdminService, private dialogService: DialogService) { }
 
 
   ngOnInit(): void {
@@ -62,6 +64,13 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/auth/login']);
     }, err => {
       console.error(err);
+    });
+  }
+
+  public guide(): void {
+    this.dialogService.open(GuideComponent, {
+      header: 'Ayuda de Plataforma Virtual SIG-SIR - Administrador',
+      width: 'auto'
     });
   }
 }

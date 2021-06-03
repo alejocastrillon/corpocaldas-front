@@ -30,7 +30,7 @@ export class ViewerComponent implements OnInit {
     private messageService: MessageService, private dialogService: DialogService) {
     this.route.queryParams.subscribe(params => {
       this.name = params.name;
-      
+
       this.getLayerInfo();
     });
   }
@@ -160,7 +160,6 @@ export class ViewerComponent implements OnInit {
   }
 
   private getLayerInfo(): void {
-    
     this.service.getLayerByName(this.name).subscribe(res => {
       this.layer = res;
       this.name = this.layer.referenceName;

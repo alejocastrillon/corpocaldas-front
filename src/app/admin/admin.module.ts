@@ -14,7 +14,7 @@ import { RequestsComponent } from './components/requests/requests.component';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -71,6 +71,7 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     HttpClientModule,
     DynamicDialogModule,
     ToggleButtonModule
-  ]
+  ],
+  providers: [DialogService]
 })
 export class AdminModule { }

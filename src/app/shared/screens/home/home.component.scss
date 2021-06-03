@@ -1,3 +1,5 @@
+@import "src/styles/lib/variables";
+
 .actions {
   width: 100px !important;
 }
@@ -26,4 +28,33 @@ td {
 ::ng-deep .p-datatable .p-datatable-thead > tr > th {
   border-width: 1px;
   padding: 5px !important;
+}
+
+.title {
+  padding-left: 10px;
+}
+
+.float {
+  cursor: pointer;
+  position: fixed;
+  width: 45px;
+  height: 45px;
+  bottom: 40px;
+  right: 40px;
+  background-color: $color-green;
+  color: #fff;
+  border-radius: 50px;
+  text-align: center;
+  box-shadow: 2px 2px 3px #999;
+
+  .my-float {
+    font-size: 16px;
+    margin-top: 12px;
+    margin-left: 2px;
+
+  }
+}
+
+.esri-icon-question:before {
+  font-size: x-large;
 }
