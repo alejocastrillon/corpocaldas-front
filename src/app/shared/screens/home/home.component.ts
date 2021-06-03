@@ -127,7 +127,7 @@ export class HomeComponent implements OnInit {
     data.object === 'layer' ? this.router.navigate(['viewer'], { queryParams: { name: data.name } }) : null;
   }
 
-  public guide() {
+  public guide(): void {
     this.dialogService.open(GuideComponent, {
       header: 'Ayuda de Plataforma Virtual SIG-SIR',
       width: 'auto'
