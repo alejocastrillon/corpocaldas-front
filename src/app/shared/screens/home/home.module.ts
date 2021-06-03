@@ -8,6 +8,9 @@ import { HomeComponent } from '../home/home.component';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { TreeTableModule } from 'primeng/treetable';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
 
 
 @NgModule({
@@ -20,7 +23,10 @@ import { TreeTableModule } from 'primeng/treetable';
     SharedModule,
     TableModule,
     DropdownModule,
-    TreeTableModule
+    TreeTableModule,
+    MessagesModule,
+    MessageModule,
+    ToastModule
   ]
 })
 export class HomeModule { }

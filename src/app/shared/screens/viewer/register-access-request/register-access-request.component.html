@@ -66,21 +66,21 @@
                 <span class="p-float-label">
                     <textarea id="description" rows="5" cols="30" [(ngModel)]="accessRequest.description"
                         formControlName="description" pInputTextarea></textarea>
-                    <label for="description">Observación</label>
+                    <label for="description">Objeto de la descarga</label>
                 </span>
             </div>
             <div class="error"
                 *ngIf="accessRequestForm.controls.description.touched && accessRequestForm.controls.description.dirty && accessRequestForm.controls.description.invalid">
                 <span class="pi pi-times error"></span>
                 <span *ngIf="accessRequestForm.controls.description.errors.required">
-                    La observación es requerida
+                    El objeto de la descarga es requerido.
                 </span>
             </div>
         </div>
         <br>
         <div class="button-container">
             <button pButton [disabled]="!accessRequestForm.valid" icon="pi pi-check"
-                class="p-button-rounded p-button-success" label="Registrar"></button>
+                class="p-button-rounded p-button-success" label="Descargar"></button>
         </div>
         <div class="button-container">
             <button pButton icon="pi pi-times" class="p-button-rounded" label="Cancelar" type="button"
