@@ -247,30 +247,7 @@ export class ViewerComponent implements OnInit {
   }
 
   private haveCredentials(): void {
-    this.confirmService.confirm({
-      message: `¿Tienes las credenciales para acceder a ${this.layer.name}?`,
-      acceptLabel: 'Si, descargar con token.',
-      rejectLabel: 'No, hacer solicitud.',
-      accept: () => {
-        this.verifyTokenAccess();
-      },
-      reject: (type) => {
-        type === ConfirmEventType.REJECT ? this.sendRequestAccessLayer() : null;
-      }
-    });
-  }
-
-  private verifyTokenAccess(): void {
-    const dialog = this.dialogService.open(VerifyAccessTokenComponent, {
-      width: '50%',
-      data: { layerId: this.layer.id },
-      header: 'Verificación de token'
-    });
-    dialog.onClose.subscribe(res => {
-      if (res !== undefined && res !== null) {
-        this.downloadShapefile()
-      }
-    })
+     this.sendRequestAccessLayer();
   }
 
   private sendRequestAccessLayer(): void {
@@ -282,11 +259,7 @@ export class ViewerComponent implements OnInit {
     dialog.onClose.subscribe(res => {
       if (res !== null && res !== undefined) {
         this.service.saveAccessRequest(res).subscribe(() => {
-          if (this.layer.accessGranted === 1) {
             this.downloadShapefile();
-          } else {
-            this.messageService.add({ severity: 'success', summary: 'Petición de acceso', detail: 'La petición de acceso fue radicada exitosamente, en el transcurso de las 24 horas se le dará acceso' });
-          }
         }, err => {
           console.log(err);
         });

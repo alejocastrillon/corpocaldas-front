@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  geoServer: 'http://52.90.1.58:8080/geoserver/'
+  geoServer: 'http://54.221.165.188:8080/geoserver/'
 };

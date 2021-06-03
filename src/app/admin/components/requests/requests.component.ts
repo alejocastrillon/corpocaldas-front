@@ -25,24 +25,19 @@ export class RequestsComponent implements OnInit {
   valueDialog: any;
   optionsFilter: Array<any> = [
     {
-      name: 'No aplica aprobación',
+      name: 'Seleccione una opcion',
+      code: null
+    },
+    {
+      name: 'Información Corpocaldas',
       code: 1
     },
     {
-      name: 'Aprobadas',
+      name: 'Información de otras entidades',
       code: 2
-    },
-    {
-      name: 'Desaprobadas',
-      code: 3
-    },
-    {
-      name: 'Pendientes',
-      code: 4
     }
   ];
-  optionFilterSelected: number = 1;
-  accessGranted: number = 1;
+  valueAccess: number;
   approved: boolean = null;
 
 
@@ -51,30 +46,22 @@ export class RequestsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  changeFilter(): void {
-    if (this.optionFilterSelected === 1) {
-      this.accessGranted = 1;
-      this.approved = null;
-    } else if (this.optionFilterSelected >= 2) {
-      this.accessGranted = 2;
-      if (this.optionFilterSelected === 2) {
-        this.approved = true;
-      } else if (this.optionFilterSelected === 3) {
-        this.approved = false;
-      } else {
-        this.approved = null;
-      }
-    }
-    this.getFilterAccessRequest(null);
-  }
-
-  public getFilterAccessRequest(event: LazyLoadEvent): void {
+  public getFilterAccessRequest(event: LazyLoadEvent, valueAccess: number): void {
     this.loading = true;
     this.eventPage = event;
+    this.valueAccess = valueAccess;
     let name: string = event !== null && event.filters.name !== undefined && event.filters.name !== null ? event.filters.name.value : null;
     let email: string = event !== null && event.filters.email !== undefined && event.filters.email != null ? event.filters.email.value : null;
-    this.service.filterAccessRequest(name, email, null, null, this.accessGranted, this.approved, event != null ? event.first / event.rows : null, event != null ? event.rows : null).subscribe(res => {
-      this.accessRequests = res.data;
+    let layerName: string = event !== null && event.filters.layerName !== undefined && event.filters.layerName !== null ? event.filters.layerName.value : null;
+    this.service.filterAccessRequest(name, email, null, layerName, this.valueAccess, event != null ? event.first / event.rows : null, event != null ? event.rows : null).subscribe(res => {
+      let data: Array<AccessRequest> = [];
+      if (res.data !== null && res.data.length > 0) {
+        for (const r of res.data) {
+          let access: AccessRequest = new AccessRequest().fromJSON(r);
+          data.push(access);
+        }
+      }
+      this.accessRequests = data;
       this.numberOfRows = res.numberRows;
       this.loading = false;
     })
@@ -82,18 +69,11 @@ export class RequestsComponent implements OnInit {
 
   public openDialog(access: AccessRequest) {
     let dialog = this.dialogService.open(DetailRequestComponent, {
-      header: this.optionFilterSelected === 4 ? 'Aprobar solicitud' : 'Información de solicitud',
+      header: 'Información de solicitud',
       width: '50%',
       data: {
-        access: access,
-        optionFilterSelected: this.optionFilterSelected
+        access: access
       }
-    });
-    dialog.onClose.subscribe(res => {
-      if (res !== null && res !== undefined) {
-        this.messageService.add({severity: 'success', detail: `La solicitud ha sido ${res.approved ? 'aceptada' : 'rechazada'} satisfactoriamente`, summary: 'Verificación de solicitudes'});
-      }
-      this.getFilterAccessRequest(this.eventPage);
     });
   }
 

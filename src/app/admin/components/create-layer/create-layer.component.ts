@@ -48,6 +48,11 @@ export class CreateLayerComponent implements OnInit {
     }
   }
 
+  public onSelectFile(event: any): void {
+    debugger;
+    this.layer.file = event.value;
+  }
+
   public cancel(): void {
     this.ref.close(null);
   }

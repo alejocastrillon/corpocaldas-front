@@ -13,12 +13,3 @@
 <p>
     <b>Motivo de solicitud: </b>{{access.description}}
 </p>
-<div class="container" *ngIf="optionFilterSelected === 4">
-    <div>
-        <button pButton class="p-button-rounded p-button-success" (click)="update(true)" icon="pi pi-check"
-            label="Aprobar"></button>
-    </div>
-    <div class="p-col-12 p-md-6">
-        <button pButton class="p-button-rounded" icon="pi pi-times" (click)="update(false)" label="Cancelar"></button>
-    </div>
-</div>

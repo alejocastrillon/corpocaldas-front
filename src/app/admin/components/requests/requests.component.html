@@ -1,14 +1,10 @@
 <p-toast></p-toast>
 
 <h2>Solicitudes</h2>
-
-<p-dropdown [options]="optionsFilter" [(ngModel)]="optionFilterSelected" (onChange)="changeFilter()" optionLabel="name"
-  optionValue="code">
-</p-dropdown>
 <div class="table">
-  <p-table class="esri-widget__table" [lazy]="true" (onLazyLoad)="getFilterAccessRequest($event)" [paginator]="true"
+  <p-table class="esri-widget__table" [lazy]="true" (onLazyLoad)="getFilterAccessRequest($event, valueAccess)" [paginator]="true"
     [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="numberOfRows" [loading]="loading"
-    [globalFilterFields]="['name', 'email']" [value]="accessRequests" [showCurrentPageReport]="true"
+    [globalFilterFields]="['name', 'email', 'layerName']" [value]="accessRequests" [showCurrentPageReport]="true"
     currentPageReportTemplate="{first} - {last} de {totalRecords} Capas" styleClass="p-datatable-sm">
     <ng-template pTemplate="header" let-columns>
       <tr>
@@ -18,6 +14,12 @@
         <th>
           Correo Electrónico
         </th>
+        <th>
+          Capa
+        </th>
+        <th>
+          Tipo de Capa
+        </th>
       </tr>
       <tr>
         <th>
@@ -25,6 +27,18 @@
         </th>
         <th>
           <p-columnFilter type="text" field="email"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="layerName"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter field="visible" [showMenu]="false">
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-dropdown [ngModel]="value" [options]="optionsFilter" (onChange)="getFilterAccessRequest(eventPage, $event.value)"
+                optionLabel="name" optionValue="code" [showClear]="true">
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
         </th>
       </tr>
     </ng-template>
@@ -35,6 +49,12 @@
         </td>
         <td>
           {{access.email}}
+        </td>
+        <td>
+          {{access.nameLayer}}
+        </td>
+        <td>
+          {{access.sensibility}}
         </td>
       </tr>
     </ng-template>

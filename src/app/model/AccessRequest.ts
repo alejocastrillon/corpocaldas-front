@@ -1,4 +1,6 @@
-export class AccessRequest {
+import { Serializable } from "./Serializable";
+
+export class AccessRequest extends Serializable {
     public id: number;
     public email: string;
     public name: string;
@@ -6,6 +8,9 @@ export class AccessRequest {
     public description: string;
     public idLayer: number;
     public nameLayer: string;
-    public token: string;
-    public approved: boolean;
+    public accessGrantedLayer: number;
+
+    get sensibility(): string {
+        return this.accessGrantedLayer == 1 ? 'Información Corpocaldas' : 'Información de otras entidades';
+    }
 }

@@ -19,12 +19,12 @@ export class AdminService {
     return this.http.get<Array<AccessRequest>>('api/access-request/waiting-for-approval');
   }
 
-  public filterAccessRequest(name: string, email: string, company: string, layername: string, accessGranted: number, approved: boolean, page: number, size: number): Observable<PaginatorDto> {
-    let params: string = this.buildAccessRequestParamsFilter(name, email, company, layername, accessGranted, approved, page, size);
+  public filterAccessRequest(name: string, email: string, company: string, layername: string, accessGranted: number, page: number, size: number): Observable<PaginatorDto> {
+    let params: string = this.buildAccessRequestParamsFilter(name, email, company, layername, accessGranted, page, size);
     return this.http.get<PaginatorDto>(`/api/access-request?${params}`);
   }
 
-  private buildAccessRequestParamsFilter(name: string, email: string, company: string, layername: string, accessGranted: number, approved: boolean, page: number, size: number): string {
+  private buildAccessRequestParamsFilter(name: string, email: string, company: string, layername: string, accessGranted: number, page: number, size: number): string {
     let params: string = '';
     if (name !== null && name !== undefined) {
       params += `name=${name}&`;
@@ -40,9 +40,6 @@ export class AdminService {
     }
     if (accessGranted !== null && accessGranted !== undefined) {
       params += `access_granted=${accessGranted}&`;
-    }
-    if (approved !== null && approved !== undefined) {
-      params += `approved=${approved}&`;
     }
     if (page !== null && page !== undefined) {
       params += `page=${page}&`;
@@ -102,11 +99,24 @@ export class AdminService {
   }
 
   public editLayer(layer: Layer): Observable<Layer> {
-    return this.http.put<Layer>('/api/layers/' + layer.id, layer);
+    let formData: FormData = new FormData();
+    formData.append('name', layer.name);
+    formData.append('reference_name', layer.referenceName);
+    formData.append('access_granted', layer.accessGranted.toString());
+    formData.append('visible', String(layer.visible));
+    formData.append('metadata', layer.file);
+    return this.http.put<Layer>(`/api/layers/${layer.id}`, formData);
   }
 
   public saveLayer(layer: Layer): Observable<Layer> {
-    return this.http.post<Layer>('/api/layers', layer);
+    let formData: FormData = new FormData();
+    formData.append('id', layer.id.toString());
+    formData.append('name', layer.name);
+    formData.append('reference_name', layer.referenceName);
+    formData.append('access_granted', layer.accessGranted.toString());
+    formData.append('visible', String(layer.visible));
+    formData.append('metadata', layer.file);
+    return this.http.post<Layer>('/api/layers', formData);
   }
 
   public saveWorkspace(workspace: SaveWorkspace): Observable<WorkSpaceDto> {

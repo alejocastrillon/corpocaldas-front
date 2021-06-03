@@ -31,6 +31,13 @@
       </div>
     </div>
     <div class="p-col-12 p-md-12">
+      <div class="p-field">
+        <label>Seleccione el archivo de metadatos:</label>
+        <br>
+        <p-fileUpload mode="basic" maxFileSize="1000000" (onUpload)="onSelectFile($event)"></p-fileUpload>
+      </div>
+    </div>
+    <div class="p-col-12 p-md-12">
       <label for="parent">Seleccione el espacio de trabajo de la capa:</label>
       <div id="parent" style="max-height: 300px; overflow-y: scroll;">
         <app-select-workspace [workspaceSelected]="layer.idWorkspace" [workspaceId]="null"

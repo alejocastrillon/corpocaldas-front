@@ -8,6 +8,7 @@ export class Layer extends Serializable {
     public nameWorkspace: string;
     public accessGranted: number;
     public visible: boolean = true;
+    public file: File;
 
     get accessType(): string {
         return this.accessGranted === 1 ? 'Información Corpocaldas' : 'Información de otras entidades';
