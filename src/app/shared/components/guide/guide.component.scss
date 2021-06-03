@@ -1,0 +1,98 @@
+// .guide {
+//   display: grid;
+//   grid-template-columns: 25% 75%;
+// }
+
+.help-content {
+  max-width: 700px;
+  height: 500px;
+  overflow-y: auto;
+}
+
+#help-nav {
+  height: 490px;
+  overflow-y: auto;
+}
+
+h2,
+h3,
+h4 {
+  margin-top: 0;
+}
+
+img {
+  width: 100%;
+}
+
+p {
+  font-size: 13px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+}
+
+td,
+th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even),
+thead {
+  background-color: #f2f2f2;
+}
+
+.ui-g {
+}
+
+/* sidebar */
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+  list-style: none;
+}
+
+.sidebar {
+  margin-bottom: 20px;
+  padding-top: 0;
+  width: 200px;
+}
+
+/* all links */
+
+.sidebar .nav > li > a {
+  color: #999;
+  border-left: 2px solid transparent;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 400;
+  display: block;
+}
+
+/* active & hover links */
+
+.sidebar .nav > .active > a,
+.sidebar .nav > li > a:focus,
+.sidebar .nav > li > a:hover {
+  color: #44546a;
+  text-decoration: none;
+  background-color: transparent;
+  border-left-color: #44546a;
+}
+
+/* all active links */
+
+.sidebar .nav > .active > a,
+.sidebar .nav > .active:focus > a,
+.sidebar .nav > .active:hover > a {
+  font-weight: 700;
+}

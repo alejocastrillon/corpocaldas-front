@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ConfirmationService, LazyLoadEvent, Message, MessageService, TreeNode } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Layer } from 'src/app/model/Layer';
+import { GuideComponent } from '../../components/guide/guide.component';
 import { detailMessage } from '../../constants/message.constants';
 import { HomeService } from './home.service';
 
@@ -37,7 +38,7 @@ export class HomeComponent implements OnInit {
   workspaces: TreeNode[];
   totalRecords: number;
 
-  constructor(private router: Router, private service: HomeService, private messageService: MessageService) { }
+  constructor(private router: Router, private service: HomeService, private messageService: MessageService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.msgs = [
@@ -124,6 +125,13 @@ export class HomeComponent implements OnInit {
 
   public navigateToViewer(data: any): void {
     data.object === 'layer' ? this.router.navigate(['viewer'], { queryParams: { name: data.name } }) : null;
+  }
+
+  public guide() {
+    this.dialogService.open(GuideComponent, {
+      header: 'Ayuda de Plataforma Virtual SIG-SIR',
+      width: 'auto'
+    });
   }
 
 }

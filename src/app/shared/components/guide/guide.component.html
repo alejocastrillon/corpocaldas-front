@@ -1,0 +1,186 @@
+<div class="guide">
+  <!-- <div id="help-nav" class="sidebar">
+    <ul class="nav">
+      <li [ngClass]="{'active': isCurrentSection('h-introduccion')}" id="help-top">
+        <a href="#h-introduccion">1. Introducción</a>
+      </li>
+      <li [ngClass]="{'active': currentSection === 'h-acerca-de'}">
+        <a href="#h-acerca-de">2. Acerca de la Plataforma Virtual SIGSIR</a>
+      </li>
+
+      <li><a href="#help-top">Volver arriba</a></li>
+    </ul>
+  </div> -->
+  <div scrollSpy class="help-content" (sectionChange)="onSectionChange($event)">
+    <!-- Introducción -->
+    <div id="h-introduccion">
+      <h2>1. Introducción</h2>
+      <p>El Geovisor Corpocaldas es una aplicación SIG-Web que permite consultar la información geográfica generada por
+        Corpocaldas y que conforma en su mayoría las capas ambientales que continuamente son actualizadas y solicitadas,
+        además de la visualización de capas, se cuenta con un sistema de descarga de información que permite la descarga
+        solo a usuarios autorizados previamente mediante alguna de las diferentes herramientas de autorización .</p>
+    </div>
+
+    <!--2	Acerca de la Plataforma Virtual SIGSIR -->
+    <div id="h-acerca-de">
+      <br>
+      <h2>2. Acerca de la Plataforma Virtual SIG-SIR</h2>
+      <p>El Geovisor Corpocaldas fue desarrollado con el fin de visualizar la cartografía básica y temática que posee la
+        corporación, además de ser el punto donde se publicarán las diferentes capas para el cumplimiento de Datos
+        Abiertos, el aplicativo permite para el usuario externo la visualización, solicitud de información y descarga de
+        esta, para el usuario de la corporación, tendrá diferentes funcionalidades como la respuesta a las solicitudes
+        de acceso a la información, el estudio de las solicitudes y la publicación de las capas. La descarga de
+        información se dará en formato Shapefile, que tiene como salida un archivo .zip que contiene la información.</p>
+    </div>
+
+    <!-- Términos, Condiciones de Uso y Navegadores Compatibles -->
+    <div id="h-terminos">
+      <br>
+      <h3>2.1. Términos, Condiciones de Uso y Navegadores Compatibles</h3>
+      <p>Para obtener un buen rendimiento de la plataforma de Corpocaldas, se debe contar con la combinación de
+        navegadores y sistemas operativos mostrados en la siguiente tabla: </p>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 320px;">Navegador Web</th>
+              <th style="width: 130px;">Windows</th>
+              <th style="width: 250px;">Android 4.0 y superior</th>
+              <th>iOS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Última Versión de Firefox</td>
+              <td>X</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Última Versión de Google Chrome</td>
+              <td>X</td>
+              <td>X</td>
+              <td>X</td>
+            </tr>
+            <tr>
+              <td>Última Versión de Safari</td>
+              <td></td>
+              <td></td>
+              <td>X</td>
+            </tr>
+            <tr>
+              <td>Internet Explorer 9, 10, 11</td>
+              <td>X</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <p>Adicionalmente se debe contar con una resolución para dispositivos móviles de 1024*768 y una
+        conexión a internet mínimo de 1MB.</p>
+    </div>
+
+    <!-- Acceso al Geovisor -->
+    <div id="h-accesso-geovisor">
+      <br>
+      <h3>2.2 Acceso al Plataforma Virtual SIG-SIR</h3>
+      <p>Para la ejecución de la plataforma se debe contar con un navegador web según los requisitos mínimos de
+        ejecución, y acceder al portal web de la corporación o mediante un enlace externo publicado en Datos Abiertos.
+      </p>
+    </div>
+
+    <!-- Descripción del Geovisor ANH -->
+    <div id="h-descripcion">
+      <br>
+      <h2>3. Descripción de la Plataforma Virtual SIG-SIR</h2>
+      <p>En esta sección se describe la interfaz de trabajo de la plataforma para comprender con mayor detalle el
+        funcionamiento de la herramienta y su utilidad en la visualización de la cartografía básica y temática expuesta
+        por Corpocaldas.</p>
+      <p>La plataforma cuenta con diferentes vistas que va desde la tabla donde se encuentran listadas las diferentes
+        capas que pueden ser visualizadas, así como el visor donde se podrá observar la información gráfica. El visor
+        inicia cargando por defecto el mapa base Topográfico de Open Street Map y los servicios descarga y otros mapas
+        base, así como la capa que ha sido elegida para la carga. En la parte superior derecha podrá encontrar la barra
+        de búsqueda y la herramienta de zoom. En la parte superior izquierda podrá encontrar el logo de la corporación,
+        la herramienta de cambio de mapa base y la herramienta para controlar las capas. Luego de esta, podrá encontrar
+        la herramienta de descarga por donde podrá gestionar la solicitud de descarga de ser necesaria.</p>
+      <p>A continuación, se describe la funcionalidad de cada una de las herramientas:</p>
+    </div>
+
+    <!-- Herramientas de Medición -->
+    <div id="h-herramientas-medicion">
+      <br>
+      <h3>3.1. Lista de capas</h3>
+      <p>Lista de las capas a las que podrá ingresar sea por medio de un enlace externo publicado en la página de Datos
+        Abiertos, o realizando clic sobre el elemento en la tabla. </p>
+      <img src="assets//images/guide/n.png" alt="">
+    </div>
+
+    <!-- Medición de Área -->
+    <div id="h-medicion-area">
+      <br>
+      <h3>3.2 Descarga de capa</h3>
+      <p>Esta herramienta permite extraer información en formato .zip (Shapefile) de la capa que se encuentra cargada. .
+      </p>
+      <img src="assets//images/guide/3.png" alt="">
+      <p>La descarga de información cuando tienen cierto tipo de sensibilidad debe solicitarse por medio del siguiente
+        formulario:</p>
+      <img src="assets//images/guide/14.png" alt="">
+      <p>Si ya fue autorizado deberá llenar el siguiente formulario con los datos solicitados:</p>
+      <img src="assets//images/guide/15.png" alt="">
+    </div>
+
+    <!-- Medición de Distancia -->
+    <div id="h-medicion-distancia">
+      <br>
+      <h3>3.3 Búsqueda de Información</h3>
+      <p>En la parte superior derecha se encuentra la herramienta de búsqueda a través de la cual es posible hallar
+        información geográfica. Se puede buscar desde ciudades, municipios, departamentos o direcciones. Cuenta con un
+        excelente motor de búsqueda geográfica. </p>
+      <img src="assets//images/guide/7.png" alt="">
+      <img src="assets//images/guide/8.png" alt="">
+      <img src="assets//images/guide/13.png" alt="">
+    </div>
+
+    <!-- Medición de Ubicación -->
+    <div id="h-medicion-ubicacion">
+      <br>
+      <h3>3.4 Aumentar Zoom, Disminuir Zoom, Exportar Mapa</h3>
+      <p>Los botones +/- permiten acercar o disminuir el mapa o la escala. </p>
+      <img src="assets//images/guide/6.png" alt="">
+    </div>
+
+    <!-- Herramientas de Selección  -->
+    <div id="h-seleccion">
+      <br>
+      <h3>3.5 Mapa base</h3>
+      <p>Esta herramienta permite cambiar el mapa base, seleccionando por medio de un clic al nuevo mapa base que se
+        desea cargar. </p>
+      <img src="assets//images/guide/2.png" alt="">
+    </div>
+
+    <!-- Botón Identificar -->
+    <div id="h-identificar">
+      <br>
+      <h3>3.6 Control de capas</h3>
+      <p>Posibilita la elección de la capa de trabajo y aquellas que se deseen visualizar </p>
+      <img src="assets//images/guide/4.png" alt="">
+    </div>
+
+    <!-- ADMIN -->
+
+    <!-- Descargar capa -->
+    <!-- <div id="h-extraer-capa">
+      <br>
+      <h3>3.7 Solicitudes de acceso a la información</h3>
+      <p>Por medio de esta herramienta podrá visualizar las diferentes solicitudes que han sido realizadas al sistema
+        para la descarga de información, así como el registro de acceso a la información pública a la que se le realiza
+        seguimiento.</p>
+      <img src="assets//images/guide/9.png" alt="">
+      <img src="assets//images/guide/10.png" alt="">
+      <img src="assets//images/guide/11.png" alt="">
+      <img src="assets//images/guide/12.png" alt="">
+    </div> -->
+  </div>
+</div>
