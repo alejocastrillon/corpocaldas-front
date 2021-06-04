@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       {
-        label: 'Solicitudes',
+        label: 'Registros de descarga',
         icon: 'pi pi-pw pi-file',
         command: () => {
           this.router.navigate(['admin/requests']);

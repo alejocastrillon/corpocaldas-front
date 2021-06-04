@@ -91,87 +91,91 @@
       </p>
     </div>
 
-    <!-- Descripción del Geovisor ANH -->
-    <div id="h-descripcion">
-      <br>
-      <h2>3. Descripción de la Plataforma Virtual SIG-SIR</h2>
-      <p>En esta sección se describe la interfaz de trabajo de la plataforma para comprender con mayor detalle el
-        funcionamiento de la herramienta y su utilidad en la visualización de la cartografía básica y temática expuesta
-        por Corpocaldas.</p>
-      <p>La plataforma cuenta con diferentes vistas que va desde la tabla donde se encuentran listadas las diferentes
-        capas que pueden ser visualizadas, así como el visor donde se podrá observar la información gráfica. El visor
-        inicia cargando por defecto el mapa base Topográfico de Open Street Map y los servicios descarga y otros mapas
-        base, así como la capa que ha sido elegida para la carga. En la parte superior derecha podrá encontrar la barra
-        de búsqueda y la herramienta de zoom. En la parte superior izquierda podrá encontrar el logo de la corporación,
-        la herramienta de cambio de mapa base y la herramienta para controlar las capas. Luego de esta, podrá encontrar
-        la herramienta de descarga por donde podrá gestionar la solicitud de descarga de ser necesaria.</p>
-      <p>A continuación, se describe la funcionalidad de cada una de las herramientas:</p>
-    </div>
+    <div *ngIf="router.url === '/home'">
+      <!-- Descripción del Geovisor ANH -->
+      <div id="h-descripcion">
+        <br>
+        <h2>3. Descripción de la Plataforma Virtual SIG-SIR - Usuarios</h2>
+        <p>En esta sección se describe la interfaz de trabajo de la plataforma para comprender con mayor detalle el
+          funcionamiento de la herramienta y su utilidad en la visualización de la cartografía básica y temática
+          expuesta
+          por Corpocaldas.</p>
+        <p>La plataforma cuenta con diferentes vistas que va desde la tabla donde se encuentran listadas las diferentes
+          capas que pueden ser visualizadas, así como el visor donde se podrá observar la información gráfica. El visor
+          inicia cargando por defecto el mapa base Topográfico de Open Street Map y los servicios descarga y otros mapas
+          base, así como la capa que ha sido elegida para la carga. En la parte superior derecha podrá encontrar la
+          barra
+          de búsqueda y la herramienta de zoom. En la parte superior izquierda podrá encontrar el logo de la
+          corporación,
+          la herramienta de cambio de mapa base y la herramienta para controlar las capas. Luego de esta, podrá
+          encontrar
+          la herramienta de descarga por donde podrá gestionar la solicitud de descarga de ser necesaria.</p>
+        <p>A continuación, se describe la funcionalidad de cada una de las herramientas:</p>
+      </div>
 
-    <!--  Lista de capas -->
-    <div id="h-lista-capas">
-      <br>
-      <h3>3.1. Lista de capas</h3>
-      <p>Lista de las capas a las que podrá ingresar sea por medio de un enlace externo publicado en la página de Datos
-        Abiertos, o realizando clic sobre el elemento en la tabla. </p>
-      <img src="assets//images/guide/n.png" alt="">
-    </div>
+      <!--  Lista de coberturas -->
+      <div id="h-lista-coberturaas">
+        <br>
+        <h3>3.1. Lista de coberturas</h3>
+        <p>Lista de las coberturas que se encuentran registradas en el sistema.
+          El la parte inferior derecha podrá encontrar un botón flotante que lo llevará a este apartado. </p>
+        <img src="assets//images/guide/home.png" alt="">
+      </div>
 
-    <!-- Descarga de capa -->
-    <div id="h-descarga-capa">
-      <br>
-      <h3>3.2 Descarga de capa</h3>
-      <p>Esta herramienta permite extraer información en formato .zip (Shapefile) de la capa que se encuentra cargada. .
-      </p>
-      <img src="assets//images/guide/3.png" alt="">
-      <p>La descarga de información cuando tienen cierto tipo de sensibilidad debe solicitarse por medio del siguiente
-        formulario:</p>
-      <img src="assets//images/guide/14.png" alt="">
-      <p>Si ya fue autorizado deberá llenar el siguiente formulario con los datos solicitados:</p>
-      <img src="assets//images/guide/15.png" alt="">
-    </div>
+      <!-- Descarga de capa -->
+      <div id="h-descarga-capa">
+        <br>
+        <h3>3.2 Descarga de capa</h3>
+        <p>Esta herramienta permite extraer información en formato .zip (Shapefile) de la capa que se encuentra cargada.
+        </p>
+        <img src="assets//images/guide/3.png" alt="">
+        <p>Cuando se realiza la acción de descargar se muestran los términos y condiciones de la descarga. </p>
+        <img src="assets//images/guide/terms.png" alt="">
+        <p>También se debe diligenciar el siguiente formulario:</p>
+        <img src="assets//images/guide/layer-download.png" alt="">
+      </div>
 
-    <!-- Búsqueda de Información -->
-    <div id="h-busqueda-informacion">
-      <br>
-      <h3>3.3 Búsqueda de Información</h3>
-      <p>En la parte superior derecha se encuentra la herramienta de búsqueda a través de la cual es posible hallar
-        información geográfica. Se puede buscar desde ciudades, municipios, departamentos o direcciones. Cuenta con un
-        excelente motor de búsqueda geográfica. </p>
-      <img src="assets//images/guide/7.png" alt="">
-      <img src="assets//images/guide/8.png" alt="">
-      <img src="assets//images/guide/13.png" alt="">
-    </div>
+      <!-- Búsqueda de Información -->
+      <div id="h-busqueda-informacion">
+        <br>
+        <h3>3.3 Búsqueda de Información</h3>
+        <p>En la parte superior derecha se encuentra la herramienta de búsqueda a través de la cual es posible hallar
+          información geográfica. Se puede buscar desde ciudades, municipios, departamentos o direcciones. Cuenta con un
+          excelente motor de búsqueda geográfica. </p>
+        <img src="assets//images/guide/7.png" alt="">
+        <img src="assets//images/guide/8.png" alt="">
+        <img src="assets//images/guide/13.png" alt="">
+      </div>
 
-    <!-- Aumentar Zoom, Disminuir Zoom -->
-    <div id="h-zoom">
-      <br>
-      <h3>3.4 Aumentar Zoom, Disminuir Zoom</h3>
-      <p>Los botones +/- permiten acercar o disminuir el mapa o la escala. </p>
-      <img src="assets//images/guide/6.png" alt="">
-    </div>
+      <!-- Aumentar Zoom, Disminuir Zoom -->
+      <div id="h-zoom">
+        <br>
+        <h3>3.4 Aumentar Zoom, Disminuir Zoom</h3>
+        <p>Los botones +/- permiten acercar o disminuir el mapa o la escala. </p>
+        <img src="assets//images/guide/6.png" alt="">
+      </div>
 
-    <!--  Mapa base  -->
-    <div id="h-mapa-base">
-      <br>
-      <h3>3.5 Mapa base</h3>
-      <p>Esta herramienta permite cambiar el mapa base, seleccionando por medio de un clic al nuevo mapa base que se
-        desea cargar. </p>
-      <img src="assets//images/guide/2.png" alt="">
-    </div>
+      <!--  Mapa base  -->
+      <div id="h-mapa-base">
+        <br>
+        <h3>3.5 Mapa base</h3>
+        <p>Esta herramienta permite cambiar el mapa base, seleccionando por medio de un clic al nuevo mapa base que se
+          desea cargar. </p>
+        <img src="assets//images/guide/2.png" alt="">
+      </div>
 
-    <!-- Control de capas -->
-    <div id="h-control-capas">
-      <br>
-      <h3>3.6 Control de capas</h3>
-      <p>Posibilita la elección de la capa de trabajo y aquellas que se deseen visualizar </p>
-      <img src="assets//images/guide/4.png" alt="">
-    </div>
+      <!-- Control de capas -->
+      <div id="h-control-capas">
+        <br>
+        <h3>3.6 Control de capas</h3>
+        <p>Posibilita la elección de la capa de trabajo y aquellas que se deseen visualizar </p>
+        <img src="assets//images/guide/4.png" alt="">
+      </div>
 
-    <!-- ADMIN -->
+      <!-- ADMIN -->
 
-    <!-- Descargar capa -->
-    <!-- <div id="h-extraer-capa">
+      <!-- Descargar capa -->
+      <!-- <div id="h-extraer-capa">
       <br>
       <h3>3.7 Solicitudes de acceso a la información</h3>
       <p>Por medio de esta herramienta podrá visualizar las diferentes solicitudes que han sido realizadas al sistema
@@ -182,5 +186,42 @@
       <img src="assets//images/guide/11.png" alt="">
       <img src="assets//images/guide/12.png" alt="">
     </div> -->
+    </div>
+    <div *ngIf="admin">
+      <div id="h-descripcion">
+        <br>
+        <h2>3. Descripción de la Plataforma Virtual SIG-SIR - Administrador</h2>
+        <p>En esta sección se describe la interfaz de trabajo de la plataforma para comprender con mayor detalle el
+          funcionamiento de la herramienta y su utilidad en la visualización de la cartografía básica y temática
+          expuesta
+          por Corpocaldas.</p>
+        <p>A continuación, se describe la funcionalidad de cada una de las herramientas del administrador:</p>
+      </div>
+
+      <div id="h-descripcion">
+        <br>
+        <h4>3.1 Registros de descarga</h4>
+        <p>En esta sección podrá encontrar todos los registros de las descargar realizadas en el sistema.</p>
+        <img src="assets//images/guide/registros.png" alt="">
+      </div>
+
+      <div id="h-descripcion">
+        <br>
+        <h4>3.2 Espacios de trabajo</h4>
+        <p>En esta sección podrá encontrar todos los espacios de trabajo que corresponden en nuestra arquitectura a los Temas y Subtemas de coberturas, también podrá crearlos desde el botón de <b>Nuevo espacio</b>.</p>
+        <img src="assets//images/guide/workspaces.png" alt="">
+        <img src="assets//images/guide/workspace-create.png" alt="">
+      </div>
+
+      <div id="h-descripcion">
+        <br>
+        <h4>3.3 Capas</h4>
+        <p>En esta sección podrá encontrar todas las capas o coberturas registradas en el sistema, así como también podrá crearlas desde el botón de <b>Nueva capa</b>.</p>
+        <img src="assets//images/guide/layers.png" alt="">
+        <img src="assets//images/guide/layer-create.png" alt="">
+      </div>
+    </div>
   </div>
+
+
 </div>
