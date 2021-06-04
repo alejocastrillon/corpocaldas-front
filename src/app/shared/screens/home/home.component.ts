@@ -53,6 +53,7 @@ export class HomeComponent implements OnInit {
       .subscribe(res => {
         if (res.data !== null && res.data.length > 0) {
           this.workspaces = this.service.buildTree(res.data);
+          console.log(this.workspaces);
         }
         this.totalRecords = res.numberRows;
         this.loading = false;
@@ -74,7 +75,8 @@ export class HomeComponent implements OnInit {
                 id: layer.id,
                 name: layer.name,
                 icon: 'pi pi-fw pi-map',
-                object: 'layer'
+                object: 'layer',
+                owner: this.getNameOptionsFilter(layer.accessGranted)
               }
             });
           }
@@ -85,7 +87,8 @@ export class HomeComponent implements OnInit {
               id: workspace.id,
               name: workspace.name,
               icon: 'pi pi-fw pi-images',
-              object: 'workspace'
+              object: 'workspace',
+              owner: ''
             },
             leaf: !workspace.hasChildren,
             children: []
@@ -132,6 +135,10 @@ export class HomeComponent implements OnInit {
       header: 'Ayuda de Plataforma Virtual SIG-SIR',
       width: 'auto'
     });
+  }
+
+  getNameOptionsFilter(accessGranted): string {
+    return this.optionsFilter.find(x => x.code === accessGranted).name;
   }
 
 }
