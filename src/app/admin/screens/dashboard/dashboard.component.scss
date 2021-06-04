@@ -35,9 +35,14 @@
 }
 
 .float {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
   cursor: pointer;
   position: fixed;
-  width: 45px;
+  width: 90px;
   height: 45px;
   bottom: 55px;
   right: 40px;
@@ -50,8 +55,7 @@
 
   .my-float {
     font-size: 16px;
-    margin-top: 12px;
-    margin-left: 2px;
+    margin-right: 5px;
   }
 }
 
