@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TreeNode } from 'primeng/api';
-import { Observable } from 'rxjs';
+import { bindNodeCallback, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { AccessRequest } from 'src/app/model/AccessRequest';
 import { Layer } from 'src/app/model/Layer';
 import { PaginatorDto } from 'src/app/model/PaginatorDto';
@@ -103,6 +104,10 @@ export class HomeService {
     form.append('email', email);
     form.append('layerId', layerId.toString());
     return this.http.post<AccessRequest>('/api/access-request/validate-access', form);
+  }
+
+  public getXmlData(fileName: string): Observable<any> {
+    return this.http.get(`/api/files/${fileName}`);
   }
   
 }

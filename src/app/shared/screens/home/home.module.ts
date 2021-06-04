@@ -11,15 +11,21 @@ import { TreeTableModule } from 'primeng/treetable';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
+import { MetadataComponent } from './metadata/metadata.component';
+import { ButtonModule } from 'primeng/button';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
+    MetadataComponent,
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
+    ProgressBarModule,
+    ButtonModule,
     SharedModule,
     TableModule,
     DropdownModule,

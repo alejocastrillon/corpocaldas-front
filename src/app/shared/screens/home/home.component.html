@@ -6,12 +6,12 @@
   </div>
   <p-treeTable [value]="workspaces" dataKey="name" [paginator]="true" [rows]="10" [lazy]="true"
     (onLazyLoad)="getWorkSpaces($event)" [totalRecords]="totalRecords" [loading]="loading"
-    (onNodeExpand)="onNodeExpand($event)">
+    (onNodeExpand)="onNodeExpand($event)" tableStyleClass="p-datatable-sm">
     <ng-template pTemplate="header">
       <tr>
-        <th>
-          Nombre
-        </th>
+        <th> Nombre </th>
+        <th> Propietario</th>
+        <th style="width: 150px;">Metadato</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
@@ -21,6 +21,11 @@
           <i [attr.class]="rowData.icon"></i>
           <span (click)="navigateToViewer(rowData)">{{rowData.name}}</span>
         </td>
+        <td>{{rowData.owner}}</td>
+        <td>
+          <button title="Metadatos" class="p-button-rounded" (click)="metadataInfo(rowData)" pButton
+            icon="pi pi-fw pi-book" *ngIf="rowData.object === 'layer'"></button>
+        </td>
       </tr>
     </ng-template>
   </p-treeTable>
@@ -28,4 +33,5 @@
 
 <a (click)="guide()" class="float">
   <i class="esri-icon-question my-float"></i>
+  <span> Ayuda</span>
 </a>

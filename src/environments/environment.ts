@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-	gateway: 'https://corpocaldas.herokuapp.com',
+  gateway: 'https://corpocaldas.herokuapp.com',
   geoServer: 'http://54.221.165.188:8080/geoserver/'
 };
 

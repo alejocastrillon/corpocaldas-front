@@ -8,10 +8,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class GuideComponent implements OnInit {
   currentSection: string;
+  admin = false;
 
-  constructor(private router: Router) { }
+  constructor(public router: Router) { }
 
   ngOnInit(): void {
+    this.admin = this.router.url.startsWith('/admin');
     console.log(this.router.url);
   }
 

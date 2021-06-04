@@ -253,7 +253,7 @@ export class ViewerComponent implements OnInit {
     const dialog = this.dialogService.open(RegisterAccessRequestComponent, {
       width: '50%',
       data: { layer: this.layer },
-      header: `Petición de acceso a ${this.layer.name}`
+      header: `Acceso a ${this.layer.name}`
     });
     dialog.onClose.subscribe(res => {
       if (res !== null && res !== undefined) {

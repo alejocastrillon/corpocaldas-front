@@ -34,7 +34,8 @@
       <div class="p-field">
         <label>Seleccione el archivo de metadatos:</label>
         <br>
-        <p-fileUpload mode="basic" maxFileSize="1000000" (onUpload)="onSelectFile($event)"></p-fileUpload>
+        <p-fileUpload chooseLabel="Seleccione el archivo" mode="basic" maxFileSize="1000000"
+          (onSelect)="onSelectFile($event)"></p-fileUpload>
       </div>
     </div>
     <div class="p-col-12 p-md-12">

@@ -6,6 +6,7 @@ import { Layer } from 'src/app/model/Layer';
 import { GuideComponent } from '../../components/guide/guide.component';
 import { detailMessage } from '../../constants/message.constants';
 import { HomeService } from './home.service';
+import { MetadataComponent } from './metadata/metadata.component';
 
 @Component({
   selector: 'app-home',
@@ -53,6 +54,7 @@ export class HomeComponent implements OnInit {
       .subscribe(res => {
         if (res.data !== null && res.data.length > 0) {
           this.workspaces = this.service.buildTree(res.data);
+          console.log(this.workspaces);
         }
         this.totalRecords = res.numberRows;
         this.loading = false;
@@ -73,8 +75,10 @@ export class HomeComponent implements OnInit {
               data: {
                 id: layer.id,
                 name: layer.name,
+                metadataUrl: layer.metadataUrl,
                 icon: 'pi pi-fw pi-map',
-                object: 'layer'
+                object: 'layer',
+                owner: this.getNameOptionsFilter(layer.accessGranted)
               }
             });
           }
@@ -85,7 +89,8 @@ export class HomeComponent implements OnInit {
               id: workspace.id,
               name: workspace.name,
               icon: 'pi pi-fw pi-images',
-              object: 'workspace'
+              object: 'workspace',
+              owner: ''
             },
             leaf: !workspace.hasChildren,
             children: []
@@ -123,6 +128,16 @@ export class HomeComponent implements OnInit {
       });
   }
 
+  public metadataInfo(layer: Layer): void {
+    this.dialogService.open(MetadataComponent, {
+      width: '60%',
+      header: `Metadatos de ${layer.name}`,
+      data: {
+        layer: layer
+      }
+    });
+  }
+
   public navigateToViewer(data: any): void {
     data.object === 'layer' ? this.router.navigate(['viewer'], { queryParams: { name: data.name } }) : null;
   }
@@ -132,6 +147,10 @@ export class HomeComponent implements OnInit {
       header: 'Ayuda de Plataforma Virtual SIG-SIR',
       width: 'auto'
     });
+  }
+
+  getNameOptionsFilter(accessGranted): string {
+    return this.optionsFilter.find(x => x.code === accessGranted).name;
   }
 
 }

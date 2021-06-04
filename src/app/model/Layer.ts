@@ -9,6 +9,7 @@ export class Layer extends Serializable {
     public accessGranted: number;
     public visible: boolean = true;
     public file: File;
+    public metadataUrl: string;
 
     get accessType(): string {
         return this.accessGranted === 1 ? 'Información Corpocaldas' : 'Información de otras entidades';

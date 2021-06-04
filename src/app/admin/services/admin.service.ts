@@ -100,8 +100,10 @@ export class AdminService {
 
   public editLayer(layer: Layer): Observable<Layer> {
     let formData: FormData = new FormData();
+    formData.append('id', layer.id.toString());
     formData.append('name', layer.name);
     formData.append('reference_name', layer.referenceName);
+    formData.append('id_workspace', layer.idWorkspace.toString());
     formData.append('access_granted', layer.accessGranted.toString());
     formData.append('visible', String(layer.visible));
     formData.append('metadata', layer.file);
@@ -110,9 +112,9 @@ export class AdminService {
 
   public saveLayer(layer: Layer): Observable<Layer> {
     let formData: FormData = new FormData();
-    formData.append('id', layer.id.toString());
     formData.append('name', layer.name);
     formData.append('reference_name', layer.referenceName);
+    formData.append('id_workspace', layer.idWorkspace.toString());
     formData.append('access_granted', layer.accessGranted.toString());
     formData.append('visible', String(layer.visible));
     formData.append('metadata', layer.file);

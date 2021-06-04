@@ -1,0 +1,30 @@
+<br>
+<p-progressBar *ngIf="loading" mode="indeterminate" [style]="{'height': '6px', 'width': '100%'}"></p-progressBar>
+<br>
+<div *ngIf="!loading" class="p-grid p-fluid">
+    <div class="p-col-12 p-md-6">
+        <b>Nombre: </b>{{response.nombre}}
+    </div>
+    <div class="p-col-12 p-md-6">
+        <b>Definición: </b>{{response.definicion}}
+    </div>
+    <div class="p-col-12 p-md-4">
+        <b>Objeto Geografico: </b><i [attr.class]="response.objeto_geografico"></i>
+    </div>
+    <div class="p-col-12 p-md-4">
+        <b>Escala: </b>{{response.escala}}
+    </div>
+    <div class="p-col-12 p-md-4">
+        <b>Tipo de archivo: </b>{{response.tipo_archivo}}
+    </div>
+    <div class="p-col-12 p-md-12">
+        <b>Fuente de Información: </b>{{response.fuente_informacion}}
+    </div>
+    <div class="p-col-12 p-md-6">
+        <b>Información de referencia: </b>
+    </div>
+    <div class="p-col-12 p-md-6">
+        <b>Proyección: </b>{{response.proyeccion}}
+        <br>
+        <b>Elipsoide: </b>{{response.elipsoide}} <b>Datum: </b>{{response.datum}}
+    </div>

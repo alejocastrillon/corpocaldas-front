@@ -50,7 +50,7 @@ export class CreateLayerComponent implements OnInit {
 
   public onSelectFile(event: any): void {
     debugger;
-    this.layer.file = event.value;
+    this.layer.file = event.files !== null && event.files.length > 0 ? event.files[0] : null;
   }
 
   public cancel(): void {
