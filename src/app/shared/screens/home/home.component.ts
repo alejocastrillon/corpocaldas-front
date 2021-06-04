@@ -84,17 +84,19 @@ export class HomeComponent implements OnInit {
           }
         }
         for (const workspace of res.workspaceChildrens) {
-          node.children.push({
-            data: {
-              id: workspace.id,
-              name: workspace.name,
-              icon: 'pi pi-fw pi-images',
-              object: 'workspace',
-              owner: ''
-            },
-            leaf: !workspace.hasChildren,
-            children: []
-          });
+          if (node.children.find(x => x.data.id === workspace.id) === undefined) {
+            node.children.push({
+              data: {
+                id: workspace.id,
+                name: workspace.name,
+                icon: 'pi pi-fw pi-images',
+                object: 'workspace',
+                owner: ''
+              },
+              leaf: !workspace.hasChildren,
+              children: []
+            });
+          }
         }
         node.children.sort((a, b) => {
           return a.data.name.localeCompare(b.data.name);

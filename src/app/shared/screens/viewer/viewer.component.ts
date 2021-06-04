@@ -163,12 +163,11 @@ export class ViewerComponent implements OnInit {
     this.service.getLayerByName(this.name).subscribe(res => {
       this.layer = res;
       this.name = this.layer.referenceName;
-      const layer = L.tileLayer.wms(this.geoServer + this.layer.nameWorkspace.replace(' ', '_') + '/wms?', {
+      const layer = L.tileLayer.wms(this.geoServer + res.nameWorkspace.replace(' ', '_') + '/wms?', {
         layers: this.name,
         format: 'image/png',
         transparent: true,
       }).addTo(this.map);
-
       this.layersControl.addOverlay(layer, this.layer.name);
     }, err => {
       console.error(err);
