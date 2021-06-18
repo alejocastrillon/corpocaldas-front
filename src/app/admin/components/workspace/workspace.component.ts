@@ -43,10 +43,13 @@ export class WorkspaceComponent implements OnInit {
     const node = event.node;
     this.service.getWorkspace(node.data.id).subscribe(res => {
       for (const workspace of res.workspaceChildrens) {
+        let parent: SaveWorkspace = new SaveWorkspace();
+        parent.id = node.data.id;
         node.children.push({
           data: {
             id: workspace.id,
-            name: workspace.name
+            name: workspace.name,
+            parent: parent
           },
           leaf: !workspace.hasChildren,
           children: []
@@ -72,7 +75,7 @@ export class WorkspaceComponent implements OnInit {
     work.id = workspace.id;
     work.name = workspace.name;
     work.parent = new SaveWorkspace();
-    work.parent.id = workspace.parentId;
+    work.parent.id = workspace.parent.id;
     return work;
   }
 

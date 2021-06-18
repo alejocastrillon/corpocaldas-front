@@ -106,7 +106,7 @@ export class LayerComponent implements OnInit {
     });
 
     dialog.onClose.subscribe(response => {
-      if (response !== null) {
+      if (response !== null && response !== undefined) {
         this.service.editLayer(response).subscribe(() => {
           this.messageService.add({ severity: 'success', summary: 'Capas', detail: 'La capa ha sido modificada exitosamente' });
           this.getLayers(this.eventPage, this.valueAccess, this.valueVisible);

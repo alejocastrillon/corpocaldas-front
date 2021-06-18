@@ -1,56 +1,59 @@
-<form [formGroup]="layerForm" class="p-fluid" (ngSubmit)="saveLayer()">
+<div style="max-height: 500px; overflow-y: scroll;">
+  <form [formGroup]="layerForm" class="p-fluid" (ngSubmit)="saveLayer()">
 
-  <div class="p-grid p-fluid">
-    <div class="p-col-12 p-md-6">
-      <div class="p-field">
-        <label>Nombre</label>
-        <input type="text" class="p-inputtext-sm" pInputText id="name" [(ngModel)]="layer.name" formControlName="name"
-          required autofocus />
+    <div class="p-grid p-fluid">
+      <div class="p-col-12 p-md-6">
+        <div class="p-field">
+          <label>Nombre</label>
+          <input type="text" class="p-inputtext-sm" pInputText id="name" [(ngModel)]="layer.name" formControlName="name"
+            required autofocus />
+        </div>
+      </div>
+      <div class="p-col-12 p-md-6">
+        <div class="p-field">
+          <label>Nombre de referencia</label>
+          <input type="text" class="p-inputtext-sm" pInputText id="referenceName" [(ngModel)]="layer.referenceName"
+            formControlName="referenceName" />
+        </div>
+      </div>
+      <div class="p-col-12 p-md-6">
+        <div class="p-field">
+          <label>Nivel de acceso</label>
+          <p-dropdown [options]="accessGrantedOptions" formControlName="accessGranted" [(ngModel)]="layer.accessGranted"
+            optionLabel="name" optionValue="code" placeholder="Seleccione"></p-dropdown>
+        </div>
+      </div>
+      <div class="p-col-12 p-md-6">
+        <div class="p-field">
+          <label>Visibilidad</label>
+          <br>
+          <p-toggleButton formControlName="visible" [(ngModel)]="layer.visible" onLabel="Visible" offLabel="No visible"
+            onIcon="pi pi-eye" offIcon="pi pi-eye-slash" [style]="{'width': '10em'}"></p-toggleButton>
+        </div>
+      </div>
+      <div class="p-col-12 p-md-12">
+        <div class="p-field">
+          <label>Seleccione el archivo de metadatos:</label>
+          <br>
+          <p-fileUpload chooseLabel="Seleccione el archivo" maxFileSize="1000000" (onSelect)="onSelectFile($event)"
+            accept=".json" [showUploadButton]="false" [showCancelButton]="false">
+          </p-fileUpload>
+        </div>
+      </div>
+      <div class="p-col-12 p-md-12">
+        <label for="parent">Seleccione el espacio de trabajo de la capa:</label>
+        <div id="parent" style="max-height: 300px; overflow-y: scroll;">
+          <app-select-workspace [workspaceSelected]="layer.idWorkspace" [workspaceId]="null"
+            (selectWorkspaceEvent)="selectParentWorkspace($event)"></app-select-workspace>
+        </div>
       </div>
     </div>
-    <div class="p-col-12 p-md-6">
-      <div class="p-field">
-        <label>Nombre de referencia</label>
-        <input type="text" class="p-inputtext-sm" pInputText id="referenceName" [(ngModel)]="layer.referenceName"
-          formControlName="referenceName" />
-      </div>
+    <div class="footer">
+      <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-raised p-button-success"
+        [disabled]="!layerForm.valid || error"></button>
+      <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-raised p-button-warning" type="button"
+        (click)="cancel()"></button>
     </div>
-    <div class="p-col-12 p-md-6">
-      <div class="p-field">
-        <label>Nivel de acceso</label>
-        <p-dropdown [options]="accessGrantedOptions" formControlName="accessGranted" [(ngModel)]="layer.accessGranted"
-          optionLabel="name" optionValue="code" placeholder="Seleccione"></p-dropdown>
-      </div>
-    </div>
-    <div class="p-col-12 p-md-6">
-      <div class="p-field">
-        <label>Visibilidad</label>
-        <br>
-        <p-toggleButton formControlName="visible" [(ngModel)]="layer.visible" onLabel="Visible" offLabel="No visible"
-          onIcon="pi pi-eye" offIcon="pi pi-eye-slash" [style]="{'width': '10em'}"></p-toggleButton>
-      </div>
-    </div>
-    <div class="p-col-12 p-md-12">
-      <div class="p-field">
-        <label>Seleccione el archivo de metadatos:</label>
-        <br>
-        <p-fileUpload chooseLabel="Seleccione el archivo" mode="basic" maxFileSize="1000000"
-          (onSelect)="onSelectFile($event)"></p-fileUpload>
-      </div>
-    </div>
-    <div class="p-col-12 p-md-12">
-      <label for="parent">Seleccione el espacio de trabajo de la capa:</label>
-      <div id="parent" style="max-height: 300px; overflow-y: scroll;">
-        <app-select-workspace [workspaceSelected]="layer.idWorkspace" [workspaceId]="null"
-          (selectWorkspaceEvent)="selectParentWorkspace($event)"></app-select-workspace>
-      </div>
-    </div>
-  </div>
-  <div class="footer">
-    <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-raised p-button-success"
-      [disabled]="!layerForm.valid || error"></button>
-    <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-raised p-button-warning" type="button"
-      (click)="cancel()"></button>
-  </div>
-
-</form>
+  
+  </form>
+</div>

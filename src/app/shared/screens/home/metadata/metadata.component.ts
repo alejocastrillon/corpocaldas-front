@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Layer } from 'src/app/model/Layer';
 import { HomeService } from '../home.service';
 
@@ -14,7 +14,7 @@ export class MetadataComponent implements OnInit {
   loading: boolean = true;
   response: any;
 
-  constructor(private config: DynamicDialogConfig, private service: HomeService) {
+  constructor(private config: DynamicDialogConfig, private ref: DynamicDialogRef, private service: HomeService) {
     this.layer = this.config.data.layer;
     this.getData();
   }
@@ -28,6 +28,9 @@ export class MetadataComponent implements OnInit {
       this.loading = false;
     }, err => {
       console.error(err);
+      if (err.status === 404) {
+        this.ref.close(err.error.details[0]);
+      }
     });
   }
 

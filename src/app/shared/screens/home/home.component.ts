@@ -131,11 +131,16 @@ export class HomeComponent implements OnInit {
   }
 
   public metadataInfo(layer: Layer): void {
-    this.dialogService.open(MetadataComponent, {
+    let dialog = this.dialogService.open(MetadataComponent, {
       width: '60%',
       header: `Metadatos de ${layer.name}`,
       data: {
         layer: layer
+      }
+    });
+    dialog.onClose.subscribe(res => {
+      if (res !== null && res !== undefined) {
+        this.messageService.add({severity: 'error', detail: res, summary: 'Archivos de metadata'});
       }
     });
   }

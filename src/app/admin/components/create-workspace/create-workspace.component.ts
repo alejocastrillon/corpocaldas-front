@@ -25,7 +25,7 @@ export class CreateWorkspaceComponent implements OnInit {
   constructor(private config: DynamicDialogConfig, private ref: DynamicDialogRef, private formBuilder: FormBuilder, private service: AdminService, private messageService: MessageService) { 
     this.workspaces = this.config.data.workspaces;
     this.workspace = this.config.data.workspace;
-    
+    debugger;
     this.label = this.workspace.id !== undefined && this.workspace.id !== null ? 'Modificar' : 'Guardar';
   }
 

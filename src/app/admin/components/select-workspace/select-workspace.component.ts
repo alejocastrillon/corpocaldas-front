@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LazyLoadEvent, TreeNode } from 'primeng/api';
+import { SaveWorkspace } from 'src/app/model/SaveWorkspace';
 import { WorkSpaceDto } from 'src/app/model/WorkSpaceDto';
 import { AdminService } from '../../services/admin.service';
 
@@ -34,6 +35,7 @@ export class SelectWorkspaceComponent implements OnInit {
       if (res.data !== null && res.data.length > 0) {
         this.workspaces = this.service.buildTree(res.data);
       }
+      debugger;
       this.workspaceSelected !== null && this.workspaceSelected !== undefined ? this.selectInitialParent(this.workspaceSelected, this.workspaces) : null;
       this.workspaceId !== null && this.workspaceId !== undefined ? this.removeReference(this.workspaceId, this.workspaces) : null;
       this.totalRecords = res.numberRows;
@@ -44,19 +46,29 @@ export class SelectWorkspaceComponent implements OnInit {
   }
 
   public onNodeExpand(event: any): void {
+    debugger;
     const node = event.node;
     if (node.children === undefined ||node.children.length === 0) {
       this.loading = true;
       this.service.getWorkspace(node.data.id).subscribe(res => {
         for (const workspace of res.workspaceChildrens) {
-          node.children.push({
+          let parent: SaveWorkspace = new SaveWorkspace();
+          parent.id = node.data.id;
+          let nodeData: TreeNode = {
             data: {
               id: workspace.id,
-              name: workspace.name
+              name: workspace.name,
+              parent: parent
             },
             leaf: !workspace.hasChildren,
             children: []
-          });
+          };
+          if (this.selectedNode == null || this.selectedNode == undefined) {
+            if (workspace.id === this.workspaceSelected) {
+              this.selectedNode = nodeData;
+            }
+          }
+          node.children.push(nodeData);
         }
         this.workspaces = [...this.workspaces];
         this.loading = false;
@@ -78,11 +90,10 @@ export class SelectWorkspaceComponent implements OnInit {
 
   private selectInitialParent(parentId: number, nodes: TreeNode[]): void {
     for (const node of nodes) {
+      debugger;
       if (node.data.id === parentId) {
         this.selectedNode = node;
         break;
-      } else {
-        this.selectInitialParent(parentId, node.children);
       }
     }
   }
