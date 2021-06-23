@@ -44,7 +44,7 @@ export class UsersComponent implements OnInit {
     this.dialogService.open(EditUserComponent, {
       header: 'Crear Usuario',
       width: '80%',
-      data: { user }
+      data: { user: user, isEditing: false }
     }).onClose.subscribe(response => {
       if (response !== null && response !== undefined) {
         this.service.saveUser(response).subscribe(() => {
@@ -65,7 +65,7 @@ export class UsersComponent implements OnInit {
     this.dialogService.open(EditUserComponent, {
       header: 'Editar Usuario',
       width: '80%',
-      data: { user }
+      data: { user: user, isEditing: true }
     }).onClose.subscribe(response => {
       if (response !== null && response !== undefined) {
         this.service.updateUser(response.id, response).subscribe(() => {

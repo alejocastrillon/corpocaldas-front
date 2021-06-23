@@ -12,9 +12,11 @@ export class EditUserComponent implements OnInit {
 
   formUser: FormGroup;
   user: User = new User();
+  isEditing: boolean;
 
   constructor(private fb: FormBuilder, private ref: DynamicDialogRef, private config: DynamicDialogConfig) {
     this.user = config.data.user;
+    this.isEditing = config.data.isEditing;
   }
 
   ngOnInit(): void {
@@ -23,12 +25,12 @@ export class EditUserComponent implements OnInit {
 
   initializeForm(): void {
     this.formUser = this.fb.group({
-      id: [this.user.id],
+      id: [this.user.id, Validators.required],
       email: [this.user.email, Validators.compose([Validators.required, Validators.email])],
       enabled: [this.user.enabled, Validators.compose([Validators.required])],
       lastname: [this.user.lastname, Validators.compose([Validators.required])],
       name: [this.user.name, Validators.compose([Validators.required])],
-      password: [this.user.password, Validators.compose([Validators.required])],
+      password: [this.user.password, !this.isEditing ? Validators.compose([Validators.required]) : null],
       role: ["admin", Validators.compose([Validators.required])],
       username: [this.user.username, Validators.compose([Validators.required])]
     });
