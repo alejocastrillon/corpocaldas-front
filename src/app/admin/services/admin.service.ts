@@ -15,13 +15,15 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  public waitingForApproval(): Observable<Array<AccessRequest>> {
-    return this.http.get<Array<AccessRequest>>('api/access-request/waiting-for-approval');
-  }
-
   public filterAccessRequest(name: string, email: string, company: string, layername: string, accessGranted: number, page: number, size: number): Observable<PaginatorDto> {
     let params: string = this.buildAccessRequestParamsFilter(name, email, company, layername, accessGranted, page, size);
-    return this.http.get<PaginatorDto>(`/api/access-request?${params}`);
+    let headers = new HttpHeaders()
+        .set('Content-Type', 'application/json;charset=UTF-8')
+        .set('Accept', 'application/json')
+        .set('Access-Control-Allow-Methods', '*')
+        .set('authorization-token', sessionStorage.getItem('ACCESS_TOKEN'))
+        .set('authorization-user', sessionStorage.getItem('ACCESS_USER'));
+    return this.http.get<PaginatorDto>(`/api/access-request?${params}`, { headers: headers });
   }
 
   private buildAccessRequestParamsFilter(name: string, email: string, company: string, layername: string, accessGranted: number, page: number, size: number): string {

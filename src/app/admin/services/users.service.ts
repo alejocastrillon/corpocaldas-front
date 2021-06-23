@@ -7,27 +7,18 @@ import { Observable } from 'rxjs';
 })
 export class UsersService {
 
-  httpOptions = {
-    headers: new HttpHeaders()
-      .set('Content-Type', 'application/json;charset=UTF-8')
-      .set('Accept', 'application/json')
-      .set('Access-Control-Allow-Methods', '*')
-      .set('authorization-token', sessionStorage.getItem('ACCESS_TOKEN'))
-      .set('authorization-user', sessionStorage.getItem('ACCESS_USER'))
-  };
-
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<any> {
-    return this.http.get(`/api/users`, { headers: this.httpOptions.headers });
+    return this.http.get(`/api/users`);
   }
 
   saveUser(user): Observable<any> {
-    return this.http.post(`/api/users`, user, { headers: this.httpOptions.headers });
+    return this.http.post(`/api/users`, user);
   }
 
   updateUser(userId, user): Observable<any> {
-    return this.http.put(`/api/users/${userId}`, user, { headers: this.httpOptions.headers });
+    return this.http.put(`/api/users/${userId}`, user);
   }
 
 }

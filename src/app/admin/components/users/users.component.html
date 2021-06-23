@@ -44,7 +44,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-user>
-        <tr>
+        <tr (click)="updateUser(user)">
           <td>
             {{user.name}}
           </td>

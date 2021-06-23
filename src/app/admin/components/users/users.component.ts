@@ -60,6 +60,8 @@ export class UsersComponent implements OnInit {
   }
 
   updateUser(user): void {
+    user = Object.assign(user, {});
+    user.password = null;
     this.dialogService.open(EditUserComponent, {
       header: 'Editar Usuario',
       width: '80%',

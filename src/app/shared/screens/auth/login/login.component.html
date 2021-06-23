@@ -1,5 +1,6 @@
 <p-toast></p-toast>
 <div class="login-form">
+
   <img src="assets/images/logo-corpocaldas.png" alt="" width="170px" height="123px">
 
   <form [formGroup]="loginForm" (ngSubmit)="loginForm.valid && login()">
@@ -28,4 +29,6 @@
     </div>
     <button type="submit" class="btn-login" pButton label="Ingresar" [disabled]="!loginForm.valid"></button>
   </form>
+  <br>
+  <p-progressBar mode="indeterminate" [style]="{'height': '6px'}" *ngIf="isLoading"></p-progressBar>
 </div>

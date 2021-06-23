@@ -2,6 +2,12 @@
   <div class="p-grid p-fluid">
     <div class="p-col-12 p-md-6">
       <div class="p-field">
+        <label>Cédula de ciudadanía</label>
+        <input type="text" class="p-inputtext-sm" pInputText id="id" formControlName="id" required autofocus />
+      </div>
+    </div>
+    <div class="p-col-12 p-md-6">
+      <div class="p-field">
         <label>Nombres</label>
         <input type="text" class="p-inputtext-sm" pInputText id="name" formControlName="name" required autofocus />
       </div>
@@ -24,16 +30,18 @@
         <input type="text" class="p-inputtext-sm" pInputText id="name" formControlName="username" required />
       </div>
     </div>
-    <div class="p-col-12 p-md-6">
+    <!-- <div class="p-col-12 p-md-6">
       <div class="p-field">
         <label>Rol</label>
         <input type="text" class="p-inputtext-sm" pInputText id="name" formControlName="role" required />
       </div>
-    </div>
+    </div> -->
     <div class="p-col-12 p-md-6">
       <div class="p-field">
         <label>Contraseña</label>
-        <input type="text" class="p-inputtext-sm" pInputText id="name" formControlName="password" required />
+        <p-password formControlName="password" [(ngModel)]="user.password" [toggleMask]="true"
+          weakLabel="Contraseña fragil" mediumLabel="Contraseña moderadamente fuerte" strongLabel="Contraseña fuerte">
+        </p-password>
       </div>
     </div>
     <div class="p-col-12 p-md-6">

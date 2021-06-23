@@ -22,6 +22,7 @@ import { TreeTableModule } from 'primeng/treetable';
 import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { PasswordModule } from 'primeng/password';
 import { FileUploadModule } from 'primeng/fileupload';
 import { DetailRequestComponent } from './components/detail-request/detail-request.component';
 import { LayerComponent } from './components/layer/layer.component';
@@ -70,7 +71,8 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     MessagesModule,
     HttpClientModule,
     DynamicDialogModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    PasswordModule
   ],
   providers: [DialogService]
 })

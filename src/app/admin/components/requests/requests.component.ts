@@ -3,7 +3,7 @@ import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AccessRequest } from 'src/app/model/AccessRequest';
 import { DetailRequestComponent } from '../detail-request/detail-request.component';
-import { AdminService } from './../../services/admin.service';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-requests',
@@ -41,7 +41,7 @@ export class RequestsComponent implements OnInit {
   approved: boolean = null;
 
 
-  constructor(private service: AdminService, private dialogService: DialogService, private messageService: MessageService) { }
+  constructor(private service: AdminService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
   }

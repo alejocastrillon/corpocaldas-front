@@ -29,7 +29,7 @@ export class EditUserComponent implements OnInit {
       lastname: [this.user.lastname, Validators.compose([Validators.required])],
       name: [this.user.name, Validators.compose([Validators.required])],
       password: [this.user.password, Validators.compose([Validators.required])],
-      role: [this.user.role, Validators.compose([Validators.required])],
+      role: ["admin", Validators.compose([Validators.required])],
       username: [this.user.username, Validators.compose([Validators.required])]
     });
   }

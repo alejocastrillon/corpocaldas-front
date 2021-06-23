@@ -10,6 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private router: Router) { }
 
     public intercept(request: HttpRequest<any>, next: HttpHandler): any {
+        debugger;
         const token = sessionStorage.getItem('ACCESS_TOKEN');
         const userId = sessionStorage.getItem('ACCESS_USER');
         if (token) {

@@ -1,6 +1,6 @@
 {
     "/api/*": {
-        "target": "https://corpocaldas.herokuapp.com",
+        "target": "http://52.90.41.236:8081/",
         "secure": false,
         "changeOrigin": true
     }

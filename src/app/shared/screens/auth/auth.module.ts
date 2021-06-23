@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { PasswordModule } from 'primeng/password';
 import { MessagesModule } from 'primeng/messages';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { MessagesModule } from 'primeng/messages';
     PasswordModule,
     ReactiveFormsModule,
     ToastModule,
-    MessagesModule
+    MessagesModule,
+    ProgressBarModule
   ]
 })
 export class AuthModule { }
