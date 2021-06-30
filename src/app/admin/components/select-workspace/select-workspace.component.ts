@@ -25,7 +25,7 @@ export class SelectWorkspaceComponent implements OnInit {
   constructor(private service: AdminService) { }
 
   ngOnInit(): void {
-    
+
   }
 
   public getWorkSpaces(event: LazyLoadEvent): void {
@@ -48,34 +48,36 @@ export class SelectWorkspaceComponent implements OnInit {
   public onNodeExpand(event: any): void {
     debugger;
     const node = event.node;
-    if (node.children === undefined ||node.children.length === 0) {
+    if (node.children === undefined || node.children.length === 0) {
       this.loading = true;
       this.service.getWorkspace(node.data.id).subscribe(res => {
         for (const workspace of res.workspaceChildrens) {
-          let parent: SaveWorkspace = new SaveWorkspace();
-          parent.id = node.data.id;
-          let nodeData: TreeNode = {
-            data: {
-              id: workspace.id,
-              name: workspace.name,
-              parent: parent
-            },
-            leaf: !workspace.hasChildren,
-            children: []
-          };
-          if (this.selectedNode == null || this.selectedNode == undefined) {
-            if (workspace.id === this.workspaceSelected) {
-              this.selectedNode = nodeData;
+          if (node.children.find(x => x.data.id === workspace.id) === undefined) {
+            let parent: SaveWorkspace = new SaveWorkspace();
+            parent.id = node.data.id;
+            let nodeData: TreeNode = {
+              data: {
+                id: workspace.id,
+                name: workspace.name,
+                parent: parent
+              },
+              leaf: !workspace.hasChildren,
+              children: []
+            };
+            if (this.selectedNode == null || this.selectedNode == undefined) {
+              if (workspace.id === this.workspaceSelected) {
+                this.selectedNode = nodeData;
+              }
             }
+            node.children.push(nodeData);
           }
-          node.children.push(nodeData);
         }
         this.workspaces = [...this.workspaces];
         this.loading = false;
       });
     }
   }
-  
+
   private removeReference(id: number, nodes: TreeNode[]): void {
     for (const node of nodes) {
       if (node.data.id === id) {
