@@ -54,7 +54,6 @@ export class HomeComponent implements OnInit {
       .subscribe(res => {
         if (res.data !== null && res.data.length > 0) {
           this.workspaces = this.service.buildTree(res.data);
-          console.log(this.workspaces);
         }
         this.totalRecords = res.numberRows;
         this.loading = false;
