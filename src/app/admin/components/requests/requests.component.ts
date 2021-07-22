@@ -4,6 +4,9 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { AccessRequest } from 'src/app/model/AccessRequest';
 import { DetailRequestComponent } from '../detail-request/detail-request.component';
 import { AdminService } from '../../services/admin.service';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-requests',
@@ -46,6 +49,48 @@ export class RequestsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public exportPdf(): void {
+    let doc = new jsPDF();
+    autoTable(doc, {
+      head: [['Id', 'Email', 'Nombre', 'Empresa', 'Descripción', 'Nombre de capa']],
+      body: this.buildPdfData()
+    });
+    doc.save('accesos.pdf');
+  }
+
+  private buildPdfData(): Array<Array<string>> {
+    let data: Array<any> = [];
+    for (const dato of this.accessRequests) {
+      let value: Array<string> = [];
+      value.push(dato.id.toString());
+      value.push(dato.email);
+      value.push(dato.name);
+      value.push(dato.company);
+      value.push(dato.description);
+      value.push(dato.nameLayer);
+      data.push(value);
+    }
+    return data;
+  }
+
+  public exportExcel(): void {
+    import("xlsx").then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(this.accessRequests);
+      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, "accesos");
+    });
+  }
+
+  public saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+  }
+
   public getFilterAccessRequest(event: LazyLoadEvent, valueAccess: number): void {
     this.loading = true;
     this.eventPage = event;
@@ -68,25 +113,13 @@ export class RequestsComponent implements OnInit {
   }
 
   public openDialog(access: AccessRequest) {
-    let dialog = this.dialogService.open(DetailRequestComponent, {
+    this.dialogService.open(DetailRequestComponent, {
       header: 'Información de solicitud',
       width: '50%',
       data: {
         access: access
       }
     });
-  }
-
-  accept() {
-    console.log('Se ha aceptado');
-    this.display = false;
-    this.valueDialog = null;
-  }
-
-  reject() {
-    console.log('No se ha aceptado');
-    this.display = false;
-    this.valueDialog = null;
   }
 
 }

@@ -33,6 +33,7 @@ import { CreateWorkspaceComponent } from './components/create-workspace/create-w
 import { SelectWorkspaceComponent } from './components/select-workspace/select-workspace.component';
 import { UsersComponent } from './components/users/users.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     DropdownModule,
     ConfirmDialogModule,
     ToastModule,
+    TooltipModule,
     FileUploadModule,
     FormsModule,
     ReactiveFormsModule,

@@ -129,34 +129,39 @@ export class ViewerComponent implements OnInit {
   }
 
   public downloadLayer(): void {
-    if (this.layer.accessGranted === 1) {
+    /* if (this.layer.accessGranted === 1) {
       this.downloadShapefile();
     } else if (this.layer.accessGranted === 2) {
       this.haveCredentials();
-    }
+    } */
+    this.modalTerms();
   }
 
-  public downloadShapefile(): void {
+  private modalTerms(): void {
     this.dialogService.open(TermsComponent, {
       width: 'auto',
       closable: false,
       closeOnEscape: false
     }).onClose.subscribe(result => {
       if (result) {
-        this.messageService.add({ severity: 'success', summary: 'Descarga', detail: 'En un momento será redirigido a la descarga.' });
-        const link = document.createElement('a');
-        link.target = '_blank';
-        link.download = this.name;
-        link.href = this.geoServer + this.layer.nameWorkspace.replace(' ', '_') +
-          '/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=' + this.layer.nameWorkspace.replace(' ', '_') + '%3A' + this.name + '&maxFeatures=50&outputFormat=SHAPE-ZIP';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        link.remove();
+        this.sendRequestAccessLayer();
       } else {
         this.messageService.add({ severity: 'warn', summary: 'Descarga', detail: 'Debido a que no aceptó los términos de acceso a la información no podrá descargarla.' });
       }
     });
+  }
+
+  public downloadShapefile(): void {
+    this.messageService.add({ severity: 'success', summary: 'Descarga', detail: 'En un momento será redirigido a la descarga.' });
+    const link = document.createElement('a');
+    link.target = '_blank';
+    link.download = this.name;
+    link.href = this.geoServer + this.layer.nameWorkspace.replace(' ', '_') +
+      '/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=' + this.layer.nameWorkspace.replace(' ', '_') + '%3A' + this.name + '&maxFeatures=50&outputFormat=SHAPE-ZIP';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    link.remove();
   }
 
   private getLayerInfo(): void {
@@ -245,7 +250,7 @@ export class ViewerComponent implements OnInit {
   }
 
   private haveCredentials(): void {
-     this.sendRequestAccessLayer();
+    this.sendRequestAccessLayer();
   }
 
   private sendRequestAccessLayer(): void {
@@ -257,7 +262,7 @@ export class ViewerComponent implements OnInit {
     dialog.onClose.subscribe(res => {
       if (res !== null && res !== undefined) {
         this.service.saveAccessRequest(res).subscribe(() => {
-            this.downloadShapefile();
+          this.downloadShapefile();
         }, err => {
           console.log(err);
         });
