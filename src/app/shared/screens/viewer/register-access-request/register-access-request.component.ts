@@ -14,8 +14,10 @@ export class RegisterAccessRequestComponent implements OnInit {
   accessRequest: AccessRequest = new AccessRequest();
 
   constructor(private formBuilder: FormBuilder, private config: DynamicDialogConfig, private ref: DynamicDialogRef) {
+    debugger;
     this.accessRequest.idLayer = this.config.data.layer.id;
     this.accessRequest.nameLayer = this.config.data.layer.name;
+    this.accessRequest.accessGrantedLayer = this.config.data.layer.accessGranted;
     this.validateForm();
   }
 

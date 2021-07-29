@@ -52,7 +52,7 @@ export class RequestsComponent implements OnInit {
   public exportPdf(): void {
     let doc = new jsPDF();
     autoTable(doc, {
-      head: [['Id', 'Email', 'Nombre', 'Empresa', 'Descripción', 'Nombre de capa']],
+      head: [['Id', 'Email', 'Nombre', 'Empresa', 'Descripción', 'Nombre de capa', 'Fecha de Realización']],
       body: this.buildPdfData()
     });
     doc.save('accesos.pdf');
@@ -68,6 +68,7 @@ export class RequestsComponent implements OnInit {
       value.push(dato.company);
       value.push(dato.description);
       value.push(dato.nameLayer);
+      value.push(dato.realizationDate.toString());
       data.push(value);
     }
     return data;

@@ -132,6 +132,7 @@ export class HomeComponent implements OnInit {
   public metadataInfo(layer: Layer): void {
     let dialog = this.dialogService.open(MetadataComponent, {
       width: '60%',
+      height: '350px',
       header: `Metadatos de ${layer.name}`,
       data: {
         layer: layer
@@ -145,7 +146,7 @@ export class HomeComponent implements OnInit {
   }
 
   public navigateToViewer(data: any): void {
-    data.object === 'layer' ? this.router.navigate(['viewer'], { queryParams: { name: data.name } }) : null;
+    data.object === 'layer' ? this.router.navigate(['viewer'], { queryParams: { id: data.id } }) : null;
   }
 
   public guide(): void {

@@ -6,6 +6,7 @@ export class AccessRequest extends Serializable {
     public name: string;
     public company: string;
     public description: string;
+    public realizationDate: Date;
     public idLayer: number;
     public nameLayer: string;
     public accessGrantedLayer: number;

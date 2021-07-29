@@ -24,13 +24,13 @@ export class ViewerComponent implements OnInit {
   layer: Layer;
   map: any;
   name: string;
+  id: number;
   readonly geoServer: string = environment.geoServer;
 
   constructor(private route: ActivatedRoute, private service: HomeService, private confirmService: ConfirmationService,
     private messageService: MessageService, private dialogService: DialogService) {
     this.route.queryParams.subscribe(params => {
-      this.name = params.name;
-
+      this.id = params.id;
       this.getLayerInfo();
     });
   }
@@ -165,7 +165,7 @@ export class ViewerComponent implements OnInit {
   }
 
   private getLayerInfo(): void {
-    this.service.getLayerByName(this.name).subscribe(res => {
+    this.service.getLayer(this.id).subscribe(res => {
       this.layer = res;
       this.name = this.layer.referenceName;
       const layer = L.tileLayer.wms(this.geoServer + res.nameWorkspace.replace(' ', '_') + '/wms?', {
