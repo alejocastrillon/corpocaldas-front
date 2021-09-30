@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as L from 'leaflet';
-import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Layer } from 'src/app/model/Layer';
 import { HomeService } from '../home/home.service';
 import { RegisterAccessRequestComponent } from './register-access-request/register-access-request.component';
 import { TermsComponent } from './terms/terms.component';
-import { VerifyAccessTokenComponent } from './verify-access-token/verify-access-token.component';
-import { environment } from "../../../../environments/environment";
+import { environment } from '../../../../environments/environment';
 
 declare let L;
 
@@ -27,8 +26,8 @@ export class ViewerComponent implements OnInit {
   id: number;
   readonly geoServer: string = environment.geoServer;
 
-  constructor(private route: ActivatedRoute, private service: HomeService, private confirmService: ConfirmationService,
-    private messageService: MessageService, private dialogService: DialogService) {
+  constructor(private route: ActivatedRoute, private service: HomeService, private router: Router,
+              private messageService: MessageService, private dialogService: DialogService) {
     this.route.queryParams.subscribe(params => {
       this.id = params.id;
       this.getLayerInfo();
@@ -55,13 +54,13 @@ export class ViewerComponent implements OnInit {
       button.classList.add('leaflet-control', 'leaflet-control-layers');
       button.title = 'Volver';
       button.addEventListener('click', () => {
-        window.history.back();
+        this.router.navigate(['./home']);
       });
       const icon = document.createElement('i');
       icon.classList.add('pi', 'pi-arrow-circle-left');
       button.appendChild(icon);
       return button;
-    }
+    };
     back.addTo(this.map);
   }
 
@@ -73,6 +72,10 @@ export class ViewerComponent implements OnInit {
     logo.onAdd = () => {
       const div = L.DomUtil.create('div', 'info');
       div.innerHTML = `<img src="assets/images/logo-corpocaldas.png" width="139px" height="100px"></img>`;
+      div.style.cursos = 'pointer';
+      div.addEventListener('click', () => {
+        this.router.navigate(['./home']);
+      });
       return div;
     };
     logo.addTo(this.map);
@@ -91,7 +94,7 @@ export class ViewerComponent implements OnInit {
       icon.classList.add('pi', 'pi-download');
       button.appendChild(icon);
       return button;
-    }
+    };
     download.addTo(this.map);
   }
 
@@ -129,12 +132,11 @@ export class ViewerComponent implements OnInit {
   }
 
   public downloadLayer(): void {
-    /* if (this.layer.accessGranted === 1) {
-      this.downloadShapefile();
+    if (this.layer.accessGranted === 1) {
+      this.modalTerms();
     } else if (this.layer.accessGranted === 2) {
-      this.haveCredentials();
-    } */
-    this.modalTerms();
+      this.sendRequestAccessLayer();
+    }
   }
 
   private modalTerms(): void {
