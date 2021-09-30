@@ -7,6 +7,7 @@ import { AdminService } from '../../services/admin.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as FileSaver from 'file-saver';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-requests',
@@ -49,38 +50,72 @@ export class RequestsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public exportPdf(): void {
-    let doc = new jsPDF();
-    autoTable(doc, {
-      head: [['Id', 'Email', 'Nombre', 'Empresa', 'Descripción', 'Nombre de capa', 'Fecha de Realización']],
-      body: this.buildPdfData()
-    });
-    doc.save('accesos.pdf');
-  }
-
-  private buildPdfData(): Array<Array<string>> {
-    let data: Array<any> = [];
-    for (const dato of this.accessRequests) {
-      let value: Array<string> = [];
-      value.push(dato.id.toString());
-      value.push(dato.email);
-      value.push(dato.name);
-      value.push(dato.company);
-      value.push(dato.description);
-      value.push(dato.nameLayer);
-      value.push(dato.realizationDate.toString());
-      data.push(value);
+  getFileName(response: HttpResponse<Blob>) {
+    let filename: string;
+    try {
+      const contentDisposition: string = response.headers.get('content-disposition');
+      const r = /(?:filename=")(.+)(?:;")/
+      filename = r.exec(contentDisposition)[1];
     }
-    return data;
+    catch (e) {
+      filename = 'myfile.txt'
+    }
+    return filename
   }
 
-  public exportExcel(): void {
-    import("xlsx").then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(this.accessRequests);
-      const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-      this.saveAsExcelFile(excelBuffer, "accesos");
+  public exportExcel(event: LazyLoadEvent, valueAccess: number): void {
+    this.loading = true;
+    this.eventPage = event;
+    this.valueAccess = valueAccess;
+    let name: string = event !== null && event.filters.name !== undefined && event.filters.name !== null ? event.filters.name.value : null;
+    let email: string = event !== null && event.filters.email !== undefined && event.filters.email != null ? event.filters.email.value : null;
+    let layerName: string = event !== null && event.filters.layerName !== undefined && event.filters.layerName !== null ? event.filters.layerName.value : null;
+    this.service.exportAccessRequest('excel', name, email, null, layerName, this.valueAccess).subscribe((response: HttpResponse<Blob>) => {
+      let filename: string = "accesos.xlsx";
+      let binaryData = [];
+      binaryData.push(response.body);
+      let downloadLink = document.createElement('a');
+      downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, { type: 'blob' }));
+      downloadLink.setAttribute('download', filename);
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      this.loading = false;
     });
+  }
+
+  public exportPdf(event: LazyLoadEvent, valueAccess: number): void {
+    this.loading = true;
+    this.eventPage = event;
+    this.valueAccess = valueAccess;
+    let name: string = event !== null && event.filters.name !== undefined && event.filters.name !== null ? event.filters.name.value : null;
+    let email: string = event !== null && event.filters.email !== undefined && event.filters.email != null ? event.filters.email.value : null;
+    let layerName: string = event !== null && event.filters.layerName !== undefined && event.filters.layerName !== null ? event.filters.layerName.value : null;
+    this.service.exportAccessRequest('pdf', name, email, null, layerName, this.valueAccess).subscribe((response: HttpResponse<Blob>) => {
+      let filename: string = "accesos.pdf";
+      let binaryData = [];
+      binaryData.push(response.body);
+      let downloadLink = document.createElement('a');
+      downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, { type: 'blob' }));
+      downloadLink.setAttribute('download', filename);
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      this.loading = false;
+    });
+  }
+
+  /**
+     * Method is use to download file.
+     * @param data - Array Buffer data
+     * @param type - type of the document.
+     */
+  downLoadFile(data: any, type: string) {
+    debugger
+    let blob = new Blob([data], { type: type });
+    let url = window.URL.createObjectURL(blob);
+    let pwa = window.open(url);
+    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+      alert('Please disable your Pop-up blocker and try again.');
+    }
   }
 
   public saveAsExcelFile(buffer: any, fileName: string): void {

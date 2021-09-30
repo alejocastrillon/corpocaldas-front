@@ -8,9 +8,9 @@
     currentPageReportTemplate="{first} - {last} de {totalRecords} Capas" styleClass="p-datatable-sm">
     <ng-template pTemplate="caption">
       <div class="p-d-flex">
-        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel(eventPage, valueAccess)"
           class="p-button-success p-mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
-        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
+        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf(eventPage, valueAccess)"
           class="p-button-warning p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
       </div>
     </ng-template>
@@ -21,6 +21,9 @@
         </th>
         <th>
           Correo Electrónico
+        </th>
+        <th>
+          Fecha
         </th>
         <th>
           Capa
@@ -35,6 +38,8 @@
         </th>
         <th>
           <p-columnFilter type="text" field="email"></p-columnFilter>
+        </th>
+        <th>
         </th>
         <th>
           <p-columnFilter type="text" field="layerName"></p-columnFilter>
@@ -58,6 +63,9 @@
         </td>
         <td>
           {{access.email}}
+        </td>
+        <td>
+          {{access.realizationDate}}
         </td>
         <td>
           {{access.nameLayer}}
