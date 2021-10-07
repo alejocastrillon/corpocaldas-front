@@ -23,6 +23,7 @@ export class AdminService {
         .set('Access-Control-Allow-Methods', '*')
         .set('authorization-token', sessionStorage.getItem('ACCESS_TOKEN'))
         .set('authorization-user', sessionStorage.getItem('ACCESS_USER'));
+        debugger;
     return this.http.get<PaginatorDto>(`/api/access-request?${params}`, { headers: headers });
   }
 
