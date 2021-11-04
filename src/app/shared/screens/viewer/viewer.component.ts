@@ -132,18 +132,17 @@ export class ViewerComponent implements OnInit {
   }
 
   public downloadLayer(): void {
-    if (this.layer.accessGranted === 1) {
-      this.modalTerms();
-    } else if (this.layer.accessGranted === 2) {
-      this.sendRequestAccessLayer();
-    }
+    this.modalTerms();
   }
 
   private modalTerms(): void {
     this.dialogService.open(TermsComponent, {
       width: 'auto',
       closable: false,
-      closeOnEscape: false
+      closeOnEscape: false,
+      data:{
+        layer: this.layer
+      } 
     }).onClose.subscribe(result => {
       if (result) {
         this.sendRequestAccessLayer();
@@ -159,7 +158,7 @@ export class ViewerComponent implements OnInit {
     link.target = '_blank';
     link.download = this.name;
     link.href = this.geoServer + this.layer.nameWorkspace.replace(' ', '_') +
-      '/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=' + this.layer.nameWorkspace.replace(' ', '_') + '%3A' + this.name + '&maxFeatures=50&outputFormat=SHAPE-ZIP';
+      '/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=' + this.layer.nameWorkspace.replace(' ', '_') + '%3A' + this.name + '&outputFormat=SHAPE-ZIP';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

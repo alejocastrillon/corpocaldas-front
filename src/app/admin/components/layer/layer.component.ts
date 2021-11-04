@@ -1,3 +1,4 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -141,4 +142,41 @@ export class LayerComponent implements OnInit {
     });
   }
 
+  public exportExcel(event: LazyLoadEvent, valueAccess: number, valueVisible: boolean): void {
+    this.loading = true;
+    this.eventPage = event;
+    this.valueAccess = valueAccess;
+    this.valueVisible = valueVisible;
+    let name: string = event !== null && event.filters.name !== undefined && event.filters.name !== null ? event.filters.name.value : null;
+    this.service.exportLayers('excel', name, this.valueAccess, this.valueVisible).subscribe((response: HttpResponse<Blob>) => {
+      let filename: string = "capas.xlsx";
+      let binaryData = [];
+      binaryData.push(response.body);
+      let downloadLink = document.createElement('a');
+      downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, { type: 'blob' }));
+      downloadLink.setAttribute('download', filename);
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      this.loading = false;
+    });
+  }
+
+  public exportPdf(event: LazyLoadEvent, valueAccess: number, valueVisible: boolean): void {
+    this.loading = true;
+    this.eventPage = event;
+    this.valueAccess = valueAccess;
+    this.valueVisible = valueVisible;
+    let name: string = event !== null && event.filters.name !== undefined && event.filters.name !== null ? event.filters.name.value : null;
+    this.service.exportLayers('pdf', name, this.valueAccess, this.valueVisible).subscribe((response: HttpResponse<Blob>) => {
+      let filename: string = "accesos.pdf";
+      let binaryData = [];
+      binaryData.push(response.body);
+      let downloadLink = document.createElement('a');
+      downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, { type: 'blob' }));
+      downloadLink.setAttribute('download', filename);
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      this.loading = false;
+    });
+  }
 }

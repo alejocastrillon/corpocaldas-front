@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-terms',
@@ -8,7 +8,11 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 })
 export class TermsComponent implements OnInit {
 
-  constructor(private ref: DynamicDialogRef) { }
+  layer: any;
+
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig) {
+    this.layer = this.config.data.layer;
+  }
 
   ngOnInit(): void {
   }

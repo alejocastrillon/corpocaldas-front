@@ -36,6 +36,15 @@ export class AdminService {
     return this.http.get(`/api/access-request/export-${typeFile}?${params}`, { observe: 'response', responseType: 'blob' as 'json', headers: headers });
   }
 
+  public exportLayers(typeFile: string, name: string, accessGranted: number, visible: boolean) {
+    let params: string = this.buildLayerParamsFilter(name, accessGranted, visible, null, null);
+    let headers = new HttpHeaders()
+        .set('Access-Control-Allow-Methods', '*')
+        .set('authorization-token', sessionStorage.getItem('ACCESS_TOKEN'))
+        .set('authorization-user', sessionStorage.getItem('ACCESS_USER'));
+    return this.http.get(`/api/layers/export-${typeFile}?${params}`, { observe: 'response', responseType: 'blob' as 'json', headers: headers });
+  }
+
   private buildAccessRequestParamsFilter(name: string, email: string, company: string, layername: string, accessGranted: number, page: number, size: number): string {
     let params: string = '';
     if (name !== null && name !== undefined) {

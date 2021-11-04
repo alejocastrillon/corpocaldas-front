@@ -43,13 +43,21 @@
         </tr>
       </tbody>
     </table>
-    <p>
+    <p *ngIf="layer.accessGranted === 1">
       El usuario solicitante reconoce que la información a que tenga acceso es de propiedad exclusiva de la
       Corporación Autónoma Regional de Caldas – CORPOCALDAS de conformidad con la ley 23 de 1982, la
       Decisión Andina 351 de 1993 régimen común sobre derechos de autor y derechos conexos, la ley 44 de
       1993 y demás normas relacionadas con los derechos de autor. Por lo anterior al usuario no le asiste ningún
       derecho de propiedad intelectual, pudiéndolos utilizar únicamente para el desarrollo de la presente solicitud,
       sin que se entiendan cedidos o licenciados a ningún título. De igual forma el usuario deberá respetar los
+      derechos de autor, para lo cual deberá realizar las citas correspondientes.
+    </p>
+    <p *ngIf="layer.accessGranted === 2">
+      El usuario solicitante reconoce que la información a que tenga acceso es de propiedad exclusiva del generador del
+      dato de conformidad con la ley 23 de 1982, la Decisión Andina 351 de 1993 régimen común sobre derechos de autor y 
+      derechos conexos, la ley 44 de 1993 y demás normas relacionadas con los derechos de autor. Por lo anterior al usuario 
+      no le asiste ningún derecho de propiedad intelectual, pudiéndolos utilizar únicamente para el desarrollo de la presente 
+      solicitud, sin que se entiendan cedidos o licenciados a ningún título. De igual forma el usuario deberá respetar los
       derechos de autor, para lo cual deberá realizar las citas correspondientes.
     </p>
   </div>
