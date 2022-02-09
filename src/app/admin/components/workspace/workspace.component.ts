@@ -62,8 +62,6 @@ export class WorkspaceComponent implements OnInit {
     })
   }
 
-  
-
   public addWorkspace(): void {
     this.openDialog(new SaveWorkspace());
   }
@@ -79,6 +77,21 @@ export class WorkspaceComponent implements OnInit {
     work.parent = new SaveWorkspace();
     work.parent.id = workspace.parent !== undefined ? workspace.parent.id : null;
     return work;
+  }
+
+  private deleteWorkspace(workspace: any): void {
+    this.confirmationService.confirm({
+      message: `Al realizar esta acción eliminará las capas asociadas al mismo y sus registros de descarga <br> ¿Deseas eliminar el espacio de trabajo ${workspace.name}?`,
+      accept: () => {
+        this.service.deleteWorkspace(workspace.id).subscribe(res => {
+          this.messageService.add({severity: 'success', summary: 'El espacio de trabajo ha sido eliminado exitosamente'});
+          this.getWorkSpaces(this.eventPage);
+        }, err => {
+          console.error(err);
+          this.messageService.add({severity: 'error', summary: 'Ha sucedido un error al ejecutar la acción'});
+        })
+      } 
+    })
   }
 
   private openDialog(workspace: any): void {

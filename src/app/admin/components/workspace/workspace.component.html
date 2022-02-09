@@ -12,7 +12,7 @@
     [totalRecords]="totalRecords" [loading]="loading" (onNodeExpand)="onNodeExpand($event)">
     <ng-template pTemplate="header">
       <tr>
-        <th>
+        <th colspan="2">
           Nombre
         </th>
       </tr>
@@ -22,6 +22,10 @@
         <td>
           <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
           <span (click)="editWorkspace(rowData)">{{rowData.name}}</span>
+        </td>
+        <td>
+          <button pButton icon="pi pi-trash" (click)="deleteWorkspace(rowData)">
+          </button>
         </td>
       </tr>
     </ng-template>

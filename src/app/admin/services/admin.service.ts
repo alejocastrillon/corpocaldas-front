@@ -150,8 +150,12 @@ export class AdminService {
     return this.http.get<WorkSpaceDto>(`/api/workspaces/${workspaceId}`);
   }
 
+  public deleteWorkspace(workspaceId: number): Observable<void> {
+    return this.http.delete<void>(`/api/workspaces/${workspaceId}`);
+  }
+
   public deleteLayer(idLayer: number): Observable<boolean> {
-    return this.http.delete<boolean>('/api/layers/' + idLayer);
+    return this.http.delete<boolean>(`/api/layers/${idLayer}`);
   }
 
   public buildTree(workspaces: Array<WorkSpaceDto>): TreeNode[] {

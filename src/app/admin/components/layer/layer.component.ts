@@ -80,16 +80,12 @@ export class LayerComponent implements OnInit {
 
   public deleteLayer(layer: Layer): void {
     this.confirmService.confirm({
-      message: `¿Deseas realmente eliminar la capa ${layer.name}?`,
+      message: `Esta acción eliminará los registros de descarga asociados a esta capa. <br>¿Deseas realmente eliminar la capa ${layer.name}?`,
       acceptLabel: 'Si',
       rejectLabel: 'No',
       accept: () => {
         this.service.deleteLayer(layer.id).subscribe(success => {
-          if (success) {
-            this.messageService.add({ severity: 'success', summary: 'Capas', detail: 'La capa ha sido eliminada exitosamente' });
-          } else {
-            this.messageService.add({ severity: 'warning', summary: 'Capas', detail: 'La capa no ha sido eliminada exitosamente' });
-          }
+          this.messageService.add({ severity: 'success', summary: 'Capas', detail: 'La capa ha sido eliminada exitosamente' });
           this.getLayers(this.eventPage, this.valueAccess, this.valueVisible);
         }, error => {
           this.messageService.add({ severity: 'error', summary: 'Capas', detail: 'Error: ' + error.status + ' ' + error.statusText });
